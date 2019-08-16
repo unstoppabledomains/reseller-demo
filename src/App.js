@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Router, Route, Switch } from "react-router-dom";
+import history from './history';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './styles/global.css';
+import Wallet from './components/Wallet';
+import LookUp from './components/LookUp';
+import SecondStep from './components/SecondStep';
+import Checkout from './components/Checkout';
+import Congratulations from './components/Congratulations/Congratulations';
+
+
+
+
+const App = () => {
+
+	return (
+		<>
+			<h1 style={{
+				textAlign: "center",
+				backgroundColor: "var(--main-bg-color)",
+				margin: 0,
+				fontSize: '6em',
+				color: 'white'
+			}}>Resseler buy demo</h1>
+			<div className="App">
+				<Router history={history}>
+					<Switch>
+						<Route path="/" exact component={Wallet} />
+						<Route path="/search" exact component={LookUp} />
+						<Route path="/second-step" exact component={SecondStep} />
+						<Route path="/checkout" exact component={Checkout} />
+						<Route path="/congratulations" exact component={Congratulations} />
+					</Switch>
+				</Router>
+
+			</div>
+		</>
+	)
 }
 
-export default App;
+export default App

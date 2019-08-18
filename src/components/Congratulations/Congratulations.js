@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { Link, Redirect } from 'react-router-dom';
 import { IconContext } from 'react-icons';
 
 import Footer from '../Layout/Footer';
@@ -8,17 +8,14 @@ import keys from '../../config';
 
 const Congratulations = (props) => {
 
-	const { location: { state: { order: { items, subtotal, orderNumber }, email } } } = props;
-	const [status, setStatus] = useState();
+
 	const [isMined, setIsMined] = useState(false);
-	console.log('congratulations got ', { items, subtotal, orderNumber, email });
+	console.log('congratulations got ', props);
 
-
-
-
-
-
+	const { location: { state } } = props;
 	useEffect(() => {
+		if (!state) return <Redirect to="/" />;
+		const { order: { orderNumber }, email } = state;
 		async function _fetchBlockchainStatus() {
 			if (isMined === true) return;
 			const url = `https://unstoppabledomains.com/api/v1/resellers/udtesting/users/${email}/orders/${orderNumber}`
@@ -30,16 +27,18 @@ const Congratulations = (props) => {
 				}
 			});
 			const payload = await resp.json();
-			if (resp.status === 200) {
-				setStatus(payload.order.items[0].blockchain.status);
+			if (resp.status === 200)
 				setIsMined(payload.order.items[0].blockchain.status === 'MINED');
-			}
 		}
+
 
 		const interval = setInterval(_fetchBlockchainStatus, 5000);
 		return () => clearInterval(interval);
 
-	}, [email, orderNumber, setStatus, isMined, setIsMined]);
+	}, [isMined, setIsMined, state]);
+	if (!state) return <Redirect to="/" />;
+	const { order: { items, orderNumber }, email } = state;
+
 
 	const _renderheader = () => (
 		<div />
@@ -53,8 +52,19 @@ const Congratulations = (props) => {
 		</div>
 	);
 
+	const _renderResolution = () => {
+		const { location: { state } } = props;
+		if (!state) return null;
+		console.log(state);
+		const { request: { name, owner, resolution: { crypto } } } = state;
+		console.log(crypto);
+		const resolves = Object.keys(crypto).map((resKey, index) => <p key={index}>{resKey} => {crypto[resKey].address}</p>)
+		return <div>{resolves}</div>
+
+	}
+
 	const _renderBody = () => (
-		<div>
+		<div className="Card" id="fill">
 			<div className="icon">
 				<IconContext.Provider value={{
 					style: {
@@ -71,18 +81,28 @@ const Congratulations = (props) => {
 				<h1>Congratulations!</h1>
 				<span> You own </span>
 				{items.map(item => <span key={item.name}>{item.name}</span>)}
-				<div className="row">
-					<p>Blockchain transaction status:</p>
-					{isMined ? <span>Mined</span> : _renderLinearSpinner()}
+				<div>
+					<p>Resolves to :</p>
+					{isMined ?
+						_renderResolution() : _renderLinearSpinner()}
 				</div>
 			</div>
-			<button className="PrimaryButton">Link Wallets to your domain</button>
+
+			<Link to={{
+				pathname: '/', state: {
+					url: `https://unstoppabledomains.com/api/v1/resellers/udtesting/users/${email}/orders/${orderNumber}`,
+					other: { ...props.location.state },
+				}
+			}}>
+				<button className="PrimaryButton">Go back</button>
+			</Link>
 		</div>
 	)
 
 
 	return (
 		<>
+			{!props.location.state ? <Redirect to="/" /> : null}
 			<div className="Wallet" style={{ background: "var(--wallet-lightbg-color) !important" }}>
 				{_renderheader()}
 				{_renderBody()}

@@ -1,20 +1,15 @@
 import React from 'react'
 import Search from './Search';
 import Footer from '../Layout/Footer';
-
+import { Redirect } from 'react-router-dom';
 import Header from '../Layout/Header';
 import ReactJson from 'react-json-view';
-
-const endpointData = [
-	{
-		url: 'api/v1/resellers/?udtesting?/domains/?domain-name?.zil'
-	}
-]
-
 
 
 const LookUp = (props) => {
 
+	if (!props.location.state)
+		return <Redirect to='/' />
 
 	const _renderLeftHints = () => {
 		const baseURL = 'https://unstoppabledomains.com/api/v1';
@@ -84,9 +79,14 @@ const LookUp = (props) => {
 		<div className="Card">
 			<h5>Test domain name space</h5>
 			<p style={{ fontSize: '1.0em' }}>For testing purporses please use folowing name conventions</p>
-			<code>[reseller-test-udtesting]-[any number].zil</code>
+			<code>[reseller-test-][reseller-ID]-[any number].zil</code>
 			<p style={{ fontSize: '1.0em' }}>Ex.</p>
-			<code>reseller-test-udtesting-85328.zil</code>
+			<code>reseller-test-udtesting-{Math.floor(Math.random() * 502562)}.zil</code>
+		</div>
+		<h1>Reseller ID</h1>
+		<div className="Card">
+			<h5>Get your id and API token from UD team</h5>
+			<p>You will need to use your API ID instead of hardcoded udtesting in examples above. You can the API ID and token from UD integration team</p>
 		</div>
 	</div>);
 
@@ -106,6 +106,7 @@ const LookUp = (props) => {
 			<div className="Hints">
 				{_renderRightHints()}
 			</div>
+
 		</>
 	)
 }

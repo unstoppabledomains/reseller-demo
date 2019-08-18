@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import history from './history';
 
 import './styles/global.css';
@@ -24,7 +24,7 @@ const App = () => {
 				color: 'white'
 			}}>Resseler buy demo</h1>
 			<div className="App">
-				<Router history={history}>
+				<Router history={history} basename='/'>
 					<Switch>
 						<Route path="/" exact component={Wallet} />
 						<Route path="/search" exact component={LookUp} />

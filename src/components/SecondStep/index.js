@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Footer from '../Layout/Footer';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Header from '../Layout/Header';
 
 const SecondStep = (props) => {
@@ -8,7 +8,11 @@ const SecondStep = (props) => {
 	const [email, setEmail] = useState('');
 	const [valid, setValid] = useState(false);
 
+	if (!props.location.state)
+		return <Redirect to="/" />
 	const { location: { state: { domain, owner, wallets } } } = props;
+
+	console.log('second step = props ', props);
 
 	const checkEmail = (email) => (/.+@.+\..+/.test(email));
 
@@ -85,6 +89,7 @@ const SecondStep = (props) => {
 
 	return (
 		<>
+
 			<div className="Hints">
 				{_renderLeftHints()}
 			</div>

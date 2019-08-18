@@ -97,6 +97,7 @@ const Checkout = (props) => {
 	const _placeOrder = (e) => {
 		const apiurl = `https://unstoppabledomains.com/api/v1/resellers/udtesting/users/${email}/orders`;
 		const body = {
+
 			order: {
 				domains:
 					[{
@@ -226,7 +227,17 @@ const Checkout = (props) => {
 
 
 	return (
-		_redirect ? <Redirect to={{ pathname: '/congratulations', state: { ...transactionResponse, email } }} /> :
+		_redirect ? <Redirect to={{
+			pathname: '/congratulations', state: {
+				...transactionResponse, email, request:
+				{
+					name: domain.name,
+					owner: owner,
+					resolution: wallets.resolution
+				}
+				,
+			}
+		}} /> :
 			<>
 				<div className="Hints">
 					{_renderLeftHints()}

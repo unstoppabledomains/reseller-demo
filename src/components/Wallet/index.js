@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import WalletList from './WalletList';
 import Footer from '../Layout/Footer';
-import ReactJson from 'react-json-view';
 import iconData from '../../styles/icons';
+import keys from '../../config';
 
-const Wallet = () => {
+const Wallet = (props) => {
 
 	let storedWallets = window.localStorage.getItem('wallets');
 	if (!storedWallets) storedWallets =
@@ -19,7 +19,34 @@ const Wallet = () => {
 
 	const [wallets, setWallets] = useState(JSON.parse(storedWallets).map(wallet => ({ ...wallet, icon: iconData['default'] })));
 	const [buyButton, setBuyButton] = useState(wallets.some(wallet => wallet.shortcut === 'ETH' || wallet.shortcut === 'ZIL'));
+	const [isMined, setIsMined] = useState(false);
 	const _checkBuyButton = (wallets) => setBuyButton(wallets.some(wallet => wallet.shortcut === 'ETH' || wallet.shortcut === 'ZIL'));
+
+	console.log('props = ', props);
+	useEffect(() => {
+		async function _fetchBlockchainStatus() {
+			if (isMined === true || !props.location.state) {
+				console.log('return from useEffect');
+				return;
+			}
+			const url = props.location.state.url;
+			const resp = await fetch(url, {
+				method: "GET",
+				headers: {
+					"Authentication": `Bearer ${keys.token}`,
+					"Content-Type": "application/json"
+				}
+			});
+			const payload = await resp.json();
+			if (resp.status === 200) {
+				setIsMined(payload.order.items[0].blockchain.status === 'MINED');
+			}
+		}
+		const interval = setInterval(_fetchBlockchainStatus, 5000);
+		return () => clearInterval(interval);
+	}, [isMined, props]);
+
+
 
 	const getOwner = () => {
 		if (wallets.some(wallet => wallet.shortcut === 'ZIL')) {
@@ -81,6 +108,31 @@ const Wallet = () => {
 		</div>
 	</div>);
 
+	const _renderLinearSpinner = () => (
+		<div className="spinner">
+			<div className="bounce1"></div>
+			<div className="bounce2"></div>
+			<div className="bounce3"></div>
+		</div>
+	);
+
+
+	const _renderSpinner = () => {
+		console.log('mining status = ', isMined);
+		console.log({ props, wallets, buyButton, isMined });
+		if (isMined)
+			return <Link to={{
+				pathname: '/congratulations', state: {
+					resolution: _getWallets(),
+					...props.location.state.other
+				}
+			}} ><button className="PrimaryButton">Manage your domain</button> </Link>
+
+
+		return _renderLinearSpinner();
+	};
+
+
 
 	return (
 		<>
@@ -92,18 +144,23 @@ const Wallet = () => {
 				<WalletList wallets={wallets} setWallets={setWallets} check={_checkBuyButton} />
 				<div className="Action-place">
 
-					<div>
-						{buyButton ?
-							<Link to={
-								{
-									pathname: "/search",
-									state: {
-										owner,
-										wallets: _getWallets()
-									}
-								}
-							}><button className="PrimaryButton">BUY .ZIL DOMAINS</button></Link>
-							: <h3>No ZIL or ETH wallet. Please add them to continue</h3>
+					<div style={{
+						display: "flex",
+						justifyContent: "center"
+					}}>
+						{
+							props.location.state ? _renderSpinner() :
+								buyButton ?
+									<Link to={
+										{
+											pathname: "/search",
+											state: {
+												owner,
+												wallets: _getWallets()
+											}
+										}
+									}><button className="PrimaryButton">BUY .ZIL DOMAINS</button></Link>
+									: <h3>No ZIL or ETH wallet. Please add them to continue</h3>
 
 						}
 					</div>

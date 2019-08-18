@@ -104,7 +104,6 @@ const Search = (props) => {
 
 	const _spinner = () => <div className="loader">Searching...</div>
 
-	console.log('errors = ', errors);
 	return (
 
 		<div className="Search">

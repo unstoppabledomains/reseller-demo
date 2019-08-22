@@ -8,7 +8,9 @@ const Checkout = (props) => {
 	const { state } = props.location;
 	const [creditCard, setCreditCard] = useState('4815821033352416');
 	const [transactionResponse, setTransactionResponse] = useState();
-	const [redirect, setRedirect] = useState(false)
+	const [redirect, setRedirect] = useState(false);
+	const [errors, setErrors] = useState(false);
+
 
 	if (!state) return <Redirect to="/" />
 
@@ -46,6 +48,8 @@ const Checkout = (props) => {
 		setTransactionResponse(res);
 		if (!res.errors)
 			setRedirect(true);
+		else
+			setErrors(res.errors);
 	}
 
 	const buy = (url, data) => {
@@ -103,6 +107,16 @@ const Checkout = (props) => {
 								</form>
 							</div>
 						</div>
+						{errors ?
+							<div className="card">
+								<div className="card-header">
+									<p className="card-title">Something went wrong</p>
+								</div>
+								<div className="card-body">
+									{errors.map(error => <p className="card-text text-danger" key={error.code}>{error.message}</p>)}
+								</div>
+							</div>
+							: null}
 					</div>
 					<AppFooter />
 				</div>

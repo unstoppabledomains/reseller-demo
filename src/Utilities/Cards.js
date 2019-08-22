@@ -1,6 +1,5 @@
 import React from 'react';
 import { MdHome, MdFolderOpen, MdCrop, MdDehaze } from 'react-icons/md';
-import { Link } from 'react-router-dom';
 
 const CardHeader = ({ title, secondLine }) => (
 	<div className="card-header main-bg">
@@ -11,7 +10,7 @@ const CardHeader = ({ title, secondLine }) => (
 
 const AppFooter = () => (
 	<div className="card-footer d-flex justify-content-around" id="FooterIcons">
-		<Link to="/reseller-demo/"><MdHome /></Link>
+		<MdHome />
 		<MdFolderOpen />
 		<MdCrop />
 		<MdDehaze />

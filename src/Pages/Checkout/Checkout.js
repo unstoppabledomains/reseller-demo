@@ -16,19 +16,6 @@ const Checkout = (props) => {
 
 	const { domain: { name }, owner, email } = state;
 
-	const _renderHints = () => {
-		return (
-			<div className="container-fluid">
-				<div className="card" style={{ width: "45rem", minHeight: "40rem" }}>
-					<div className="card-body">
-						<h5 className="card-title">Hints</h5>
-					</div>
-				</div>
-			</div >
-		);
-	}
-
-
 	const _redirectToFinish = (e) => {
 		setRedirect(false);
 		return props.history.push({ pathname: '/finish', state: { ...props.location.state, ...transactionResponse } })

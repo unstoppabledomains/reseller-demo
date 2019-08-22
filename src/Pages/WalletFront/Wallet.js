@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import iconData from '../../Utilities/IconData';
 
 const WalletListField = ({ walletInfo }) => {
-	const { name, shortcut, price, diff, icon: Icon } = walletInfo;
+	const { name, price, diff, icon: Icon } = walletInfo;
 	return (
 		<div className="card" id="list-field">
 			<div className="card-body">
@@ -38,22 +38,6 @@ const Wallet = (props) => {
 	const [name, setName] = useState('');
 	const [shortcut, setShortcut] = useState('');
 	const [address, setAddress] = useState('0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf');
-
-	const _getWallets = () => {
-
-		const walletsToSend = {};
-
-		wallets.forEach(wallet => {
-			if (wallet.shortcut === 'ZIL' || wallet.shortcut === 'ETH')
-				walletsToSend[wallet.shortcut] = { "address": wallet.address };
-		})
-
-		return {
-			"resolution": {
-				"crypto": walletsToSend
-			}
-		};
-	}
 
 	const _renderHeaderButtons = () => (
 		<div className="row justify-content-end" id="buttons">

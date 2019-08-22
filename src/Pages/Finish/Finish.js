@@ -29,19 +29,6 @@ const Finish = (props) => {
 		return () => clearInterval(interval);
 	}, [isMined, setIsMined, propstate]);
 
-
-	const _renderHints = () => {
-		return (
-			<div className="container-fluid">
-				<div className="card" style={{ width: "45rem", minHeight: "40rem" }}>
-					<div className="card-body">
-						<h5 className="card-title">Hints</h5>
-					</div>
-				</div>
-			</div >
-		);
-	}
-
 	const _renderCongratulationScreen = () => (
 		<div className="card d-flex align-items-md-center">
 			<img

@@ -37,7 +37,7 @@ const Search = (props) => {
 								<div className="card" id="list-field">
 									<div className="card-header">
 										<p className="card-text">
-											/resellers<code>resseler-id</code>/domains<code>/domain-name</code>.zil
+											/resellers<code>reseller-id</code>/domains<code>/domain-name.zil</code>
 										</p>
 									</div>
 									<div className="card-body">

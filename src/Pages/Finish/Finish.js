@@ -85,7 +85,7 @@ const Finish = (props) => {
 						<button className="btn btn-info btn-lg disabled">Post-configure your domain!</button>
 						<Link to="/landing"><button className="btn btn-success btn-lg">Homepage</button></Link>
 					</div>
-					<AppFooter history={props.history} />
+					<AppFooter />
 				</div>
 			</div >
 		)

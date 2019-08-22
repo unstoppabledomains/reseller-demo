@@ -66,7 +66,7 @@ function Email(props) {
 
 					</div>
 				</div>
-				<AppFooter history={props.history} />
+				<AppFooter />
 			</div>
 		</div >
 	)

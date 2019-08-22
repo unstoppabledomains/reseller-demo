@@ -247,7 +247,7 @@ const Search = (props) => {
 							<h4 className="card-subtitle">Learn more about .ZIL domain</h4>
 						</div>
 					</div>
-					<AppFooter history={props.history} />
+					<AppFooter />
 				</div>
 			</div >
 		)

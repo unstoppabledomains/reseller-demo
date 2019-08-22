@@ -136,7 +136,7 @@ const Wallet = (props) => {
 						</Link>
 					}
 				</div>
-				<AppFooter history={props.history} />
+				<AppFooter />
 			</div>
 		</div >
 	);

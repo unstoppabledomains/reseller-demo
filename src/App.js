@@ -15,7 +15,7 @@ const App = () => {
 		<div className="App">
 			<div className="container-fluid" id="tall">
 				<div className="row justify-content-md-center">
-					<h1>Resseler buy demo</h1>
+					<h1>Reseller buy demo</h1>
 				</div>
 				<Router history={history} basename='/'>
 					<Switch>
@@ -24,10 +24,6 @@ const App = () => {
 						<Route path="/email" exact component={Email} />
 						<Route path="/checkout" exact component={Checkout} />
 						<Route path="/finish" exact component={Finish} />
-						{/* <Route path="/search" exact component={LookUp} />
-	<Route path="/second-step" exact component={SecondStep} />
-	<Route path="/checkout" exact component={Checkout} />
-	<Route path="/congratulations" exact component={Congratulations} /> */}
 					</Switch>
 				</Router>
 			</div>

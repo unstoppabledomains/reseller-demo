@@ -81,8 +81,7 @@ const Finish = (props) => {
 				<div className="card" style={{ width: "45rem", minHeight: "40rem" }}>
 					<CardHeader title="Status Check" />
 					<div className="card-body" id="list-field">
-						{isMined ? _renderCongratulationScreen()
-
+						{!isMined ? _renderCongratulationScreen()
 							: _renderStatusCheck()}
 					</div>
 					<div className="row justify-content-md-center align-items-end">

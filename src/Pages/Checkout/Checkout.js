@@ -44,13 +44,11 @@ const Checkout = (props) => {
 
 	const _finalizeTransaction = (res) => {
 		setTransactionResponse(res);
-		console.log('res = ', res);
 		if (!res.errors)
 			setRedirect(true);
 	}
 
 	const buy = (url, data) => {
-		console.log('post data = ', data);
 		return fetch(url, {
 			method: "POST",
 			body: JSON.stringify(data),

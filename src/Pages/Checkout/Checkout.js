@@ -104,7 +104,7 @@ const Checkout = (props) => {
 							</div>
 						</div>
 					</div>
-					<AppFooter />
+					<AppFooter history={props.history} />
 				</div>
 			</div >
 		)

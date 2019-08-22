@@ -1,5 +1,4 @@
 import React from 'react';
-import { history } from '../history';
 import { MdHome, MdFolderOpen, MdCrop, MdDehaze } from 'react-icons/md';
 
 const CardHeader = ({ title, secondLine }) => (
@@ -9,7 +8,7 @@ const CardHeader = ({ title, secondLine }) => (
 	</div>
 );
 
-const AppFooter = () => (
+const AppFooter = ({ history }) => (
 	<div className="card-footer d-flex justify-content-around" id="FooterIcons">
 		<MdHome onClick={() => history.push('/')} />
 		<MdFolderOpen />

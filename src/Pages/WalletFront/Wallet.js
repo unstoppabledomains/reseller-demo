@@ -26,8 +26,8 @@ const WalletListField = ({ walletInfo }) => {
 const Wallet = (props) => {
 
 	let storedWallets = window.localStorage.getItem('wallets') || JSON.stringify([{
-		name: "JohnnyCoin",
-		shortcut: "JHC",
+		name: "Zilliqa",
+		shortcut: "ZIL",
 		address: "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf",
 		price: "24.32",
 		diff: "+5.90%"
@@ -55,9 +55,6 @@ const Wallet = (props) => {
 		};
 	}
 
-	console.log(JSON.stringify(_getWallets()));
-
-
 	const _renderHeaderButtons = () => (
 		<div className="row justify-content-end" id="buttons">
 			<button type="button" className="btn btn-dark btn-md" onClick={(e) => setShowModal(true)}>Add new wallet</button>
@@ -77,7 +74,6 @@ const Wallet = (props) => {
 	}
 
 	const _addWallet = (e) => {
-		console.log('add new wallet!', { name, shortcut, address });
 		e.preventDefault();
 		const update = [...wallets, { name, shortcut, address, diff: '-', icon: iconData['default'], price: 5 }]
 		setWallets(update);
@@ -122,7 +118,7 @@ const Wallet = (props) => {
 
 	const _renderAppScreen = () => (
 		<div className="container-fluid">
-			<div className="card" style={{ width: "30rem", minHeight: "40rem" }}>
+			<div className="card" style={{ width: "45rem", minHeight: "40rem" }}>
 				<CardHeader title="Wallets" secondLine={_renderHeaderButtons} />
 				<div className="card-body">
 					{showModal ? _renderForm() : _renderWalletList()}
@@ -134,11 +130,7 @@ const Wallet = (props) => {
 						</div>
 						:
 						<Link to={{
-							pathname: '/search',
-							state: {
-								wallets: _getWallets()
-							}
-
+							pathname: '/',
 						}}>
 							<button type="button" className="btn btn-primary btn-block" id="margin-top">Buy .ZIL domains</button>
 						</Link>
@@ -149,75 +141,16 @@ const Wallet = (props) => {
 		</div >
 	);
 
-	const _renderLeftHints = () => (
-		<div className="container-fluid">
-			<div className="card" style={{ width: "25rem", minHeight: "40rem" }}>
-				<div className="card-body">
-					<h5 className="card-title">Left Hints</h5>
-					<div className="card">
-						<div className="card-header">
-							<p className="card-text">You need to have a ZIL or ETH wallet in your list to  buy a domain</p>
-						</div>
-						<div className="card-body">
-							<ul style={{ paddingLeft: '15px' }}>
-								<li>Click on the add new wallet button at the top</li>
-								<li>Fill the form</li>
-								<li>Don't change the address</li>
-								<li>Submit is on the left</li>
-							</ul>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div >
-	)
-
-	const _renderRightHints = () => (
-		<div className="container-fluid">
-			<div className="card" style={{ width: "25rem", minHeight: "40rem" }}>
-				<div className="card-body">
-					<h5 className="card-title">Right Hints</h5>
-					<div className="card" id="list-field">
-						<div className="card-header">
-							<h5 className="card-title">Add new wallet</h5>
-						</div>
-						<div className="card-body">
-							<p className="card-text">For testing purporses you can create a mock wallet by pressing plus button on top</p>
-						</div>
-					</div>
-					<div className="card" id="list-field">
-						<div className="card-header">
-							<h5 className="card-title">Clean the list</h5>
-						</div>
-						<div className="card-body">
-							<p className="card-text">You can erase all wallets created earlier by pressing reset button</p>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div >
-	)
-
 	return (
-		<div className="row justify-content-md-center flex-nowrap">
-			<div className="col-md-fluid hidden-md-down">
-				<div className="container">
-					{_renderLeftHints()}
+		<>
+			<div className="row justify-content-md-center flex-nowrap mt-5">
+				<div className="col-lg-fluid">
+					<div className="container">
+						{_renderAppScreen()}
+					</div>
 				</div>
 			</div>
-			<div className="col-md-fluid">
-				<div className="container">
-					{_renderAppScreen()}
-				</div>
-			</div>
-			<div className="col-lg-fluid hidden-md-down">
-				<div className="container">
-					{_renderRightHints()}
-				</div>
-			</div>
-		</div>
+		</>
 	);
 }
 

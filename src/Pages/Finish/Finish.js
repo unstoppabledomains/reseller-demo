@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import keys from '../../config';
 import { CardHeader, AppFooter } from '../../Utilities/Cards';
 
 const Finish = (props) => {
 
-	const { state } = props.location;
-	console.log('finish props = ', state);
-
-
+	const { state: propstate } = props.location;
 
 	const [isMined, setIsMined] = useState(false);
 	useEffect(() => {
-		if (!state) return;
-		const { order: { orderNumber }, email } = state;
+		console.log('popstate = ', propstate);
+		if (!propstate) return;
+		const { order: { orderNumber }, email } = propstate;
 		async function _fetchBlockchainStatus() {
 			if (isMined === true) return;
 			const url = `https://unstoppabledomains.com/api/v1/resellers/udtesting/users/${email}/orders/${orderNumber}`
@@ -30,7 +28,7 @@ const Finish = (props) => {
 		}
 		const interval = setInterval(_fetchBlockchainStatus, 5000);
 		return () => clearInterval(interval);
-	}, [isMined, setIsMined, state]);
+	}, [isMined, setIsMined, propstate]);
 
 
 	const _renderHints = () => {
@@ -49,13 +47,13 @@ const Finish = (props) => {
 		<div className="card d-flex align-items-md-center">
 			<img
 				src="https://www.freeiconspng.com/uploads/youtube-like-png-14.png"
-				class="card-img-top col-6"
+				className="card-img-top col-6"
 				alt="Ok"
 			/>
 			<div className="card-body">
 				<h3 className="card-title">Congratulations!</h3>
 				<h5 className="card-subtitle text-center">You own</h5>
-				{state.order.items.map(item => <span key={item.name}>{item.name}</span>)}
+				{propstate.order.items.map(item => <span key={item.name}>{item.name}</span>)}
 			</div>
 		</div>
 	);
@@ -67,7 +65,7 @@ const Finish = (props) => {
 		<div className="card d-flex align-items-md-center">
 			<div className="card-header">
 				<h3 className="card-title">Order status</h3>
-				<h5 className="card-subtitle">Unfortunately, transactions on blockchain are not instantly. Use this page for status check</h5>
+				<h5 className="card-subtitle">Unfortunately, transactions on blockchain are not completed instantly. Use this page as a reference to the status of your transactions</h5>
 			</div>
 			<div className="card-body">
 				{_renderSpinner()}
@@ -85,7 +83,8 @@ const Finish = (props) => {
 							: _renderStatusCheck()}
 					</div>
 					<div className="row justify-content-md-center align-items-end">
-						<button className="btn btn-primary btn-lg">Post-configure your domain!</button>
+						<button className="btn btn-info btn-lg disabled">Post-configure your domain!</button>
+						<Link to="/landing"><button className="btn btn-success btn-lg">Homepage</button></Link>
 					</div>
 					<AppFooter />
 				</div>
@@ -93,7 +92,7 @@ const Finish = (props) => {
 		)
 	}
 
-	if (!state) return <Redirect to="/" />;
+	if (!propstate) return <Redirect to="/" />;
 
 	return (
 		<>
@@ -104,14 +103,6 @@ const Finish = (props) => {
 					</div>
 				</div>
 			</div>
-			<div className="row justify-content-md-center flex-nowrap mt-5">
-				<div className="col-lg-fluid">
-					<div className="container">
-						{_renderHints()}
-					</div>
-				</div>
-			</div>
-
 		</>
 	)
 }

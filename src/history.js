@@ -6,4 +6,4 @@ const history = createBrowserHistory({
 	keyLength: 6
 });
 
-export default history
+export { history };

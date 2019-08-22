@@ -1,5 +1,5 @@
 import React from 'react';
-import history from '../history';
+import { history } from '../history';
 import { MdHome, MdFolderOpen, MdCrop, MdDehaze } from 'react-icons/md';
 
 const CardHeader = ({ title, secondLine }) => (

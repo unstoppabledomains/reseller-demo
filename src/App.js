@@ -1,11 +1,12 @@
 import React from 'react'
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
-import history from './history';
+import { history } from './history';
 import Wallet from './Pages/WalletFront/Wallet';
 import Search from './Pages/Search/Search';
 import Email from './Pages/Email/Email';
 import Checkout from './Pages/Checkout/Checkout';
 import Finish from './Pages/Finish/Finish';
+
 
 
 
@@ -19,8 +20,8 @@ const App = () => {
 				</div>
 				<Router history={history} basename='/'>
 					<Switch>
-						<Route path="/landing" exact component={Wallet} />
 						<Route path="/" exact component={Search} />
+						<Route path="/landing" exact component={Wallet} />
 						<Route path="/email" exact component={Email} />
 						<Route path="/checkout" exact component={Checkout} />
 						<Route path="/finish" exact component={Finish} />
@@ -29,6 +30,8 @@ const App = () => {
 			</div>
 		</div>
 	)
+
 }
 
 export default App
+

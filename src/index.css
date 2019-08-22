@@ -23,8 +23,8 @@ button {
 html, body, #root, #root > div{
 	margin: 0;
 	padding: 0;
-	min-height: 100%;
-	width: 100%;
+	min-height: 100vh;
+	min-width: 100vw;
 	border: none;
 }
 

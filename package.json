@@ -1,6 +1,6 @@
 {
 	"name": "resellerdemov2",
-	"homepage": "https://unstoppabledomains.github.io/",
+	"homepage": "https://unstoppabledomains.github.io/reseller-demo/",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {

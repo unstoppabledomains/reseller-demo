@@ -4,18 +4,12 @@ import { CardHeader, AppFooter } from '../../Utilities/Cards';
 
 function Email(props) {
 
-	const [email, setEmail] = useState('johnny@unstoppabledomains.com');
-
-	console.log(props.location.state);
-	console.log(props);
+	const [email, setEmail] = useState('example@example.com');
 
 	const checkEmail = (email) => !(/.+@.+\..+/.test(email));
 	const [isValid, setIsValid] = useState(checkEmail(''));
 
 	const _handleFormSubmit = () => {
-		console.log(props);
-		console.log('submiting!!!', email);
-		console.log({ isValid, func: checkEmail(email), email });
 		if (isValid)
 			return props.history.push({
 				pathname: '/checkout',

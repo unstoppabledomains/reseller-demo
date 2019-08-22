@@ -9,7 +9,6 @@ const Checkout = (props) => {
 	const [creditCard, setCreditCard] = useState('4815821033352416');
 	const [transactionResponse, setTransactionResponse] = useState();
 	const [redirect, setRedirect] = useState(false)
-	console.log('checkout state = ', state);
 
 	if (!state) return <Redirect to="/" />
 
@@ -28,7 +27,10 @@ const Checkout = (props) => {
 	}
 
 
-	const _redirectToFinish = (e) => props.history.push({ pathname: '/finish', state: { ...props.location.state, ...transactionResponse } });
+	const _redirectToFinish = (e) => {
+		setRedirect(false);
+		return props.history.push({ pathname: '/finish', state: { ...props.location.state, ...transactionResponse } })
+	};
 	const _mockWalletResolution = () => ({
 		"crypto": {
 			"ZIL": {
@@ -89,21 +91,20 @@ const Checkout = (props) => {
 							</div>
 							<div className="card-body">
 								<form>
-									<div className="form-row mt-5 justify-content-md-center">
+									<div className="form-row mt-5">
 										<label htmlFor="creditCard" className="align-self-start">Credit card number</label>
 										<input
 											id="creditCard" type="text"
 											value={creditCard} className="form-control"
 											onChange={e => setCreditCard(e.target.value)}
 										/>
+									</div>
+									<div className="form-row mt-5 justify-content-md-center">
 										<button onClick={_handlePayment} className="btn btn-primary btn-lg mt-5">Buy {name}</button>
 									</div>
 								</form>
 							</div>
 						</div>
-					</div>
-					<div className="row justify-content-md-center align-items-end">
-						<h4 className="card-subtitle">Learn more about .ZIL domain</h4>
 					</div>
 					<AppFooter />
 				</div>
@@ -112,9 +113,9 @@ const Checkout = (props) => {
 	}
 
 
-	return (
+
+	return redirect ? _redirectToFinish() : (
 		<>
-			{redirect ? _redirectToFinish() : null}
 			<div className="row justify-content-md-center flex-nowrap mt-5">
 				<div className="col-lg-fluid">
 					<div className="container">
@@ -122,14 +123,6 @@ const Checkout = (props) => {
 					</div>
 				</div>
 			</div>
-			<div className="row justify-content-md-center flex-nowrap mt-5">
-				<div className="col-lg-fluid">
-					<div className="container">
-						{_renderHints()}
-					</div>
-				</div>
-			</div>
-
 		</>
 	);
 }

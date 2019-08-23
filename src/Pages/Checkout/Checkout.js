@@ -74,7 +74,7 @@ const Checkout = (props) => {
 				<div className="card" style={{ width: "45rem", minHeight: "40rem" }}>
 					<CardHeader title="Payment flow" />
 					<div className="card-body">
-						<div className="card">
+						<div className="card" id="list-field">
 							<div className="card-header">
 								<p className="card-title">Payment Flow Credit Card Mock</p>
 							</div>
@@ -95,7 +95,7 @@ const Checkout = (props) => {
 							</div>
 						</div>
 						{errors ?
-							<div className="card">
+							<div className="card" id="list-field">
 								<div className="card-header">
 									<p className="card-title">Something went wrong</p>
 								</div>

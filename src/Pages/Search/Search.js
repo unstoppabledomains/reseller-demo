@@ -3,6 +3,16 @@ import { Link } from 'react-router-dom';
 import { CardHeader, AppFooter } from '../../Utilities/Cards';
 import config from '../../config';
 import ReactJson from 'react-json-view';
+import Namicorn from 'namicorn';
+
+
+function isEmpty(obj) {
+	for (var key in obj) {
+		if (obj.hasOwnProperty(key))
+			return false;
+	}
+	return true;
+}
 
 const baseURL = 'https://unstoppabledomains.com/api/v1/resellers';
 
@@ -11,7 +21,7 @@ const Search = (props) => {
 	const [results, setResults] = useState(null);
 	const [spinner, setSpinner] = useState(false);
 	const owner = "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf";
-
+	const namicorn = new Namicorn();
 	const _renderLeftHints = () => {
 		const baseURL = 'https://unstoppabledomains.com/api/v1';
 		return (
@@ -147,9 +157,26 @@ const Search = (props) => {
 		e.preventDefault();
 		setResults(null);
 		const regexTLDpattern = /[.]\w{3}$/;
+		const regextTestpattern = /[reseller-test-udtesting-]+\d+[.zil]+/;
 		const domain = !regexTLDpattern.test(userInput) ? `${userInput}.zil` : userInput;
 		setSpinner(true);
-		const result = await fetchDomain(`${baseURL}/${config.reseller}/domains/${domain}`);
+
+		// const result = await namicorn.resolve(userInput);
+		const result = regextTestpattern.test(userInput) ?
+			await fetchDomain(`${baseURL}/${config.reseller}/domains/${domain}`)
+			: await namicorn.resolve(domain).then(res => (
+				{
+					domain: {
+						auction: null,
+						name: domain,
+						reselling: null,
+						resolve: isEmpty(res.addresses) ? null : {
+							addresses: res.addresses
+						}
+					}
+				}
+			));
+
 		setResults({ ...result });
 		setSpinner(false);
 	};
@@ -165,12 +192,33 @@ const Search = (props) => {
 		</div>
 	)
 
+	const _renderResolution = (addresses) =>
+		Object.keys(addresses).map((coin, index) => <p className="card-text" key={index}>{coin} => {addresses[coin]}</p>)
+
+
+
 	const _renderResult = () => {
 
 		if (results.errors != null)
 			return _renderErrors();
 
 		const { domain } = results;
+		console.log(domain);
+		if (domain && domain.resolve) {
+			return (
+				<div className="card" id="big">
+					<div className="card-header">
+						<h5 className="card-title">{domain.name}</h5>
+					</div>
+					<div className="card-body">
+						<h6 className="card-subtitle">This domain is already taken and resolves to:</h6>
+						{_renderResolution(domain.resolve.addresses)}
+					</div>
+				</div>
+			)
+		}
+
+
 		if (domain && !domain.reselling) {
 			return (
 				<div className="card" id="big">
@@ -220,7 +268,7 @@ const Search = (props) => {
 		return (
 			<div className="container-fluid">
 				<div className="card" style={{ width: "45rem", minHeight: "40rem" }}>
-					<CardHeader title="Buy Zil domain" />
+					<CardHeader title="Buy .ZIL domain" />
 					<div className="card-body d-flex flex-column justify-content-between">
 						<div className="card-fluid">
 							<form className="form-inline " onSubmit={_handleFormSubmit}>

@@ -36,7 +36,7 @@ const Wallet = (props) => {
 	const [wallets, setWallets] = useState(JSON.parse(storedWallets).map(wallet => ({ ...wallet, icon: iconData['default'] })));
 	const [showModal, setShowModal] = useState(false);
 	const [name, setName] = useState('');
-	const [shortcut, setShortcut] = useState('');
+	const [shortcut, setShortcut] = useState('ZIL');
 	const [address, setAddress] = useState('0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf');
 
 	const _renderHeaderButtons = () => (

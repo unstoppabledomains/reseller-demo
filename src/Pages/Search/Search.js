@@ -27,111 +27,18 @@ const Search = (props) => {
 	const [spinner, setSpinner] = useState(false);
 	const owner = "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf";
 	const namicorn = new Namicorn();
-	const _renderLeftHints = () => {
-		const baseURL = 'https://unstoppabledomains.com/api/v1';
-		return (
-			<div className="container-fluid">
-				<div className="card" style={{ width: "40rem", minHeight: "40rem" }}>
-					<div className="card-body">
-						<h5 className="card-title">Left Hints</h5>
-						<div className="card" id="list-field">
-							<div className="card-header">
-								<h5 className="card-title">Base URL</h5>
-							</div>
-							<div className="card-body">
-								<p className="card-text">
-									{baseURL}
-								</p>
-							</div>
-						</div>
-						<div className="card" id="list-field">
-							<div className="card-header">
-								<h5 className="card-title">API Calls</h5>
-							</div>
-							<div className="card-body">
-								<div className="card" id="list-field">
-									<div className="card-header">
-										<p className="card-text">
-											/resellers<code>reseller-id</code>/domains<code>/domain-name.zil</code>
-										</p>
-									</div>
-									<div className="card-body">
-										<ul>
-											<li>Method: GET</li>
-											<li>Response:
-	 							<ReactJson src={
-													{
-														domain: {
-															"name": "bogdantest.zil",
-															"owner": "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf",
-															"reselling": null,
-															"auction": null
-														}
-													}
-												}
-													collapsed={true}
-													displayDataTypes={false}
-													indentWidth={1}
-													collapseStringsAfterLength={10}
-													displayObjectSize={false}
-												/>
-											</li>
-											<li>Errors:
-									<ReactJson src={{
-													"errors": [
-														{
-															"code": "DOMAIN_NAME_INVALID",
-															"message": "Domain name is invalid"
-														}
-													]
-												}}
-													collapsed={true}
-													displayDataTypes={false}
-													indentWidth={1}
-													collapseStringsAfterLength={20}
-													displayObjectSize={false}
-												/>
-											</li>
-										</ul>
-									</div>
 
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div >
-		);
-	}
-
-	const _renderRightHints = () => (
+	const _renderHints = () => (
 		<div className="container-fluid">
 			<div className="card" style={{ width: "40rem", minHeight: "40rem" }}>
 				<div className="card-body">
-					<h5 className="card-title">Right Hints</h5>
+					<h5 className="card-title">Hints</h5>
 					<div className="card" id="list-field">
 						<div className="card-header">
+							<h5 className="card-title">ZIL or ETH address required</h5>
+						</div>
+						<div className="card-body">
 							<p className="card-text">You need to have a ZIL or ETH wallet in your list to  buy a domain</p>
-						</div>
-						<div className="card-body">
-							<ul style={{ paddingLeft: '15px' }}>
-								<li>Click on the add new wallet button at the top</li>
-								<li>Fill the form</li>
-								<li>Don't change the address</li>
-								<li>Submit is on the left</li>
-							</ul>
-						</div>
-					</div>
-					<div className="card" id="list-field">
-						<div className="card-header">
-							<h5 className="card-title">Test domain name space</h5>
-						</div>
-						<div className="card-body">
-							<p className="card-text">For testing purporses please use folowing name conventions</p>
-							<code>[reseller-test-][reseller-ID]-[any number].zil</code>
-							<p className="card-text">Example.</p>
-							<code>reseller-test-{config.reseller}-{Math.floor(Math.random() * 502562).zil}</code>
 						</div>
 					</div>
 					<div className="card" id="list-field">
@@ -143,7 +50,71 @@ const Search = (props) => {
 							<p className="card-text">You will need to use your API ID instead of hardcoded udtesting in examples above. You can the API ID and token from UD integration team</p>
 						</div>
 					</div>
+					<div className="card" id="list-field">
+						<div className="card-header">
+							<h5 className="card-title">Base URL</h5>
+						</div>
+						<div className="card-body">
+							<p className="card-text">
+								{baseURL}
+							</p>
+						</div>
+					</div>
+					<div className="card" id="list-field">
+						<div className="card-header">
+							<h5 className="card-title">API Calls</h5>
+						</div>
+						<div className="card-body">
+							<div className="card" id="list-field">
+								<div className="card-header">
+									<p className="card-text">
+										/resellers<code>reseller-id</code>/domains<code>/domain-name.zil</code>
+									</p>
+								</div>
+								<div className="card-body">
+									<ul>
+										<li>Method: GET</li>
+										<li>Response:
+	 							<ReactJson src={
+												{
+													domain: {
+														"name": "bogdantest.zil",
+														"owner": "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf",
+														"reselling": null,
+														"auction": null
+													}
+												}
+											}
+												collapsed={true}
+												displayDataTypes={false}
+												indentWidth={1}
+												collapseStringsAfterLength={10}
+												displayObjectSize={false}
+											/>
+										</li>
+										<li>Errors:
+									<ReactJson src={{
+												"errors": [
+													{
+														"code": "DOMAIN_NAME_INVALID",
+														"message": "Domain name is invalid"
+													}
+												]
+											}}
+												collapsed={true}
+												displayDataTypes={false}
+												indentWidth={1}
+												collapseStringsAfterLength={20}
+												displayObjectSize={false}
+											/>
+										</li>
+									</ul>
+								</div>
 
+							</div>
+
+						</div>
+					</div>
 				</div>
 			</div>
 		</div >
@@ -286,7 +257,7 @@ const Search = (props) => {
 										<button type="submit" className="btn btn-primary btn-lg m-0 ml-1">Search</button>
 									</div>
 									<small id="passwordHelpBlock" className="form-text text-muted">
-										*For the purpose of this demo use this domain namespace <code>reseller-testing-udtesting-[random number]</code>
+										*For the purpose of this demo use this domain namespace <code>reseller-test-udtesting-[random number].zil</code>
 									</small>
 								</div>
 							</form>
@@ -322,12 +293,7 @@ const Search = (props) => {
 			<div className="row justify-content-md-center flex-nowrap mt-5">
 				<div className="col-lg-fluid">
 					<div className="container">
-						{_renderLeftHints()}
-					</div>
-				</div>
-				<div className="col-lg-fluid">
-					<div className="container">
-						{_renderRightHints()}
+						{_renderHints()}
 					</div>
 				</div>
 			</div>

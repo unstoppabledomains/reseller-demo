@@ -69,7 +69,6 @@ const Finish = (props) => {
 							: _renderStatusCheck()}
 					</div>
 					<div className="row justify-content-md-center align-items-end">
-						<button className="btn btn-info btn-lg disabled">Post-configure your domain!</button>
 						<Link to="/landing"><button className="btn btn-success btn-lg">Homepage</button></Link>
 					</div>
 					<AppFooter />

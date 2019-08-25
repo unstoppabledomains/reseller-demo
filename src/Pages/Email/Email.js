@@ -115,14 +115,6 @@ function Email(props) {
 					</div>
 				</div>
 			</div>
-			<div className="row justify-content-md-center flex-nowrap mt-5 md-5">
-
-				<div className="col-lg-fluid">
-					<div className="container  md-5">
-						{_renderRightHints()}
-					</div>
-				</div>
-			</div>
 		</>
 	);
 

@@ -4,16 +4,19 @@ import { CardElement, injectStripe } from 'react-stripe-elements';
 const StripeCheckoutForm = (props) => {
 
 	const [name, setName] = useState('Sam');
+	const [spinner, setSpinner] = useState(false);
 
 	const handleSubmit = (ev) => {
 		ev.preventDefault();
 		if (props.stripe) {
+			setSpinner(true);
 			props.stripe
 				.createToken({ name })
 				.then((payload) => {
 					console.log('[token]', payload);
 					if (!payload.error)
 						props.funcs._handleUDPayment(payload);
+					setSpinner(false);
 				});
 			// What should i do with the stripe token? 
 			// Probably i should just send it to our backend
@@ -22,6 +25,9 @@ const StripeCheckoutForm = (props) => {
 			console.log("Stripe.js hasn't loaded yet.");
 		}
 	};
+
+	const _renderSpinner = () => <div className="loader">Searching...</div>
+
 
 	return (
 		<>
@@ -43,6 +49,8 @@ const StripeCheckoutForm = (props) => {
 						/>
 					</label>
 					<button className="btn btn-primary border border-dark shadow" onClick={handleSubmit}>Pay</button>
+					{spinner ? _renderSpinner() : null}
+
 				</div>
 
 			</form>

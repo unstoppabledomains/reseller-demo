@@ -48,7 +48,7 @@ const StripeCheckoutForm = (props) => {
 						<CardElement className="p-2 border border-dark"
 						/>
 					</label>
-					<button className="btn btn-primary border border-dark shadow" onClick={handleSubmit}>Pay</button>
+					<button className="btn btn-primary border border-dark shadow" disabled={spinner} onClick={handleSubmit}>Pay</button>
 					{spinner ? _renderSpinner() : null}
 
 				</div>

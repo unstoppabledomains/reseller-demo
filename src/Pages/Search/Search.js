@@ -14,6 +14,11 @@ function isEmpty(obj) {
 	return true;
 }
 
+
+const renderArrowDown = () => <div className="arrow-bounce bigger">
+	<img width="40" height="40" alt="" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiBoZWlnaHQ9IjMycHgiIGlkPSLQodC70L7QuV8xIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMycHgiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxwYXRoIGQ9Ik0yNC4yODUsMTEuMjg0TDE2LDE5LjU3MWwtOC4yODUtOC4yODhjLTAuMzk1LTAuMzk1LTEuMDM0LTAuMzk1LTEuNDI5LDAgIGMtMC4zOTQsMC4zOTUtMC4zOTQsMS4wMzUsMCwxLjQzbDguOTk5LDkuMDAybDAsMGwwLDBjMC4zOTQsMC4zOTUsMS4wMzQsMC4zOTUsMS40MjgsMGw4Ljk5OS05LjAwMiAgYzAuMzk0LTAuMzk1LDAuMzk0LTEuMDM2LDAtMS40MzFDMjUuMzE5LDEwLjg4OSwyNC42NzksMTAuODg5LDI0LjI4NSwxMS4yODR6IiBmaWxsPSIjMTIxMzEzIiBpZD0iRXhwYW5kX01vcmUiLz48Zy8+PGcvPjxnLz48Zy8+PGcvPjxnLz48L3N2Zz4=" />
+</div>
+
 const baseURL = 'https://unstoppabledomains.com/api/v1/resellers';
 
 const Search = (props) => {
@@ -195,8 +200,6 @@ const Search = (props) => {
 	const _renderResolution = (addresses) =>
 		Object.keys(addresses).map((coin, index) => <p className="card-text" key={index}>{coin} => {addresses[coin]}</p>)
 
-
-
 	const _renderResult = () => {
 
 		if (results.errors != null)
@@ -208,16 +211,15 @@ const Search = (props) => {
 			return (
 				<div className="card" id="big">
 					<div className="card-header">
-						<h5 className="card-title">{domain.name}</h5>
+						<h5 className="card-title">{domain.name} s already taken </h5>
 					</div>
 					<div className="card-body">
-						<h6 className="card-subtitle">This domain is already taken and resolves to:</h6>
+						<h6 className="card-subtitle">It resolves to:</h6>
 						{_renderResolution(domain.resolve.addresses)}
 					</div>
 				</div>
 			)
 		}
-
 
 		if (domain && !domain.reselling) {
 			return (
@@ -245,7 +247,7 @@ const Search = (props) => {
 						</div>
 					</div>
 				</div>
-				<div className="card-body">
+				<div className="card-body d-flex justify-content-md-center">
 					<Link to={{
 						pathname: "/email",
 						state: {
@@ -253,8 +255,8 @@ const Search = (props) => {
 							...results,
 							owner
 						}
-					}} >
-						<button type="button" className="btn btn-primary btn-block">BUY</button>
+					}} style={{ width: '50%' }} >
+						<button type="button" className="btn btn-primary btn-md" style={{ width: '100%' }}>BUY</button>
 					</Link>
 				</div>
 			</div>
@@ -309,6 +311,13 @@ const Search = (props) => {
 						{_renderAppScreen()}
 					</div>
 				</div>
+
+			</div>
+			<div className="row justify-content-md-center flex-nowrap mt-5 mb-5">
+				<div className="col-lg-fluid">
+					{renderArrowDown()}
+
+				</div>
 			</div>
 			<div className="row justify-content-md-center flex-nowrap mt-5">
 				<div className="col-lg-fluid">
@@ -322,7 +331,6 @@ const Search = (props) => {
 					</div>
 				</div>
 			</div>
-
 		</>
 	)
 }

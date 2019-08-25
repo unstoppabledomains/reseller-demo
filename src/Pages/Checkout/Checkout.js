@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { CardHeader, AppFooter } from '../../Utilities/Cards';
-import keys from '../../config';
+import StripeCheckoutForm from './StripeCheckoutForm'
+import { StripeProvider, Elements } from 'react-stripe-elements';
+import config from '../../config'
 
 const Checkout = (props) => {
 
 	const { state } = props.location;
-	const [creditCard, setCreditCard] = useState('4815821033352416');
 	const [transactionResponse, setTransactionResponse] = useState();
 	const [redirect, setRedirect] = useState(false);
 	const [errors, setErrors] = useState(false);
@@ -14,12 +15,12 @@ const Checkout = (props) => {
 
 	if (!state) return <Redirect to="/" />
 
-	const { domain: { name }, owner, email } = state;
-
 	const _redirectToFinish = (e) => {
 		setRedirect(false);
 		return props.history.push({ pathname: '/finish', state: { ...props.location.state, ...transactionResponse } })
 	};
+
+
 	const _mockWalletResolution = () => ({
 		"crypto": {
 			"ZIL": {
@@ -44,13 +45,16 @@ const Checkout = (props) => {
 			method: "POST",
 			body: JSON.stringify(data),
 			headers: {
-				"Authentication": `Bearer ${keys.token}`,
+				"Authentication": `Bearer ${config.token}`,
 				"Content-Type": "application/json"
 			},
 		}).then(res => res.json()).then(_finalizeTransaction);
 	}
 
-	const _handlePayment = (e) => {
+	const _handleUDPayment = (stripeToken) => {
+		console.log('stripeToken = ', stripeToken);
+		const { domain: { name }, email, owner } = state;
+		console.log(state.domain);
 		const apiurl = `https://unstoppabledomains.com/api/v1/resellers/udtesting/users/${email}/orders`;
 		const body = {
 
@@ -63,8 +67,13 @@ const Checkout = (props) => {
 					}]
 			}
 		};
+		console.log('body = ', body);
 		buy(apiurl, body);
 	}
+
+
+
+
 
 
 
@@ -79,19 +88,13 @@ const Checkout = (props) => {
 								<p className="card-title">Payment Flow Credit Card Mock</p>
 							</div>
 							<div className="card-body">
-								<form>
-									<div className="form-row mt-5">
-										<label htmlFor="creditCard" className="align-self-start">Credit card number</label>
-										<input
-											id="creditCard" type="text"
-											value={creditCard} className="form-control"
-											onChange={e => setCreditCard(e.target.value)}
-										/>
-									</div>
-									<div className="form-row mt-5 justify-content-md-center">
-										<button onClick={_handlePayment} className="btn btn-primary btn-lg mt-5">Buy {name}</button>
-									</div>
-								</form>
+								<StripeProvider apiKey={config.stripeKey}>
+									<Elements>
+										<StripeCheckoutForm domain={state.domain} funcs={
+											{ _handleUDPayment }
+										} />
+									</Elements>
+								</StripeProvider >
 							</div>
 						</div>
 						{errors ?

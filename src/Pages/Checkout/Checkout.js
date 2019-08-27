@@ -34,6 +34,13 @@ const Checkout = (props) => {
 
 	const _finalizeTransaction = (res) => {
 		setTransactionResponse(res);
+		const temp = JSON.parse(localStorage.getItem('own_domain'));
+		console.log('temp from finalizing transiction!!! ', temp);
+		console.log('res = ', res);
+		if (temp) {
+			temp.config.orderNumber = res.order.orderNumber;
+			localStorage.setItem('own_domain', JSON.stringify(temp));
+		}
 		if (!res.errors)
 			setRedirect(true);
 		else
@@ -51,14 +58,17 @@ const Checkout = (props) => {
 		}).then(res => res.json()).then(_finalizeTransaction);
 	}
 
-	const _handleUDPayment = (stripeToken) => {
-		console.log('stripeToken = ', stripeToken);
-		const { domain: { name }, email, owner } = state;
-		console.log(state.domain);
-		const apiurl = `https://unstoppabledomains.com/api/v1/resellers/udtesting/users/${email}/orders`;
-		const body = {
+	const _saveToLocal = (data) => localStorage.setItem('own_domain', JSON.stringify(data));
 
+	const _handleUDPayment = ({ token }) => {
+		const { domain: { name }, email, owner } = state;
+		const apiurl = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders`;
+		const body = {
 			order: {
+				payment: {
+					type: "stripe",
+					tokenId: token.id
+				},
 				domains:
 					[{
 						name,
@@ -67,15 +77,9 @@ const Checkout = (props) => {
 					}]
 			}
 		};
-		console.log('body = ', body);
+		_saveToLocal({ ...body.order, config: { email, } });
 		buy(apiurl, body);
 	}
-
-
-
-
-
-
 
 	const _renderAppScreen = () => {
 		return (

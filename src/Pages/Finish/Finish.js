@@ -13,7 +13,7 @@ const Finish = (props) => {
 		const { order: { orderNumber }, email } = propstate;
 		async function _fetchBlockchainStatus() {
 			if (isMined === true) return;
-			const url = `https://unstoppabledomains.com/api/v1/resellers/udtesting/users/${email}/orders/${orderNumber}`
+			const url = `https://unstoppabledomains.com/api/v1/resellers/${keys.reseller}/users/${email}/orders/${orderNumber}`
 			const resp = await fetch(url, {
 				method: "GET",
 				headers: {
@@ -49,11 +49,9 @@ const Finish = (props) => {
 
 	const _renderStatusCheck = () => (
 		<div className="card d-flex align-items-md-center">
-			<div className="card-header">
-				<h3 className="card-title">Order status</h3>
-				<h5 className="card-subtitle">Unfortunately, transactions on blockchain are not completed instantly. Use this page as a reference to the status of your transactions</h5>
-			</div>
 			<div className="card-body">
+				<h1 className="card-title">Order status:</h1>
+				<p className="card-text">Blockhain transaction require some time. You can go back to homepage the transaction is not going to be lost.</p>
 				{_renderSpinner()}
 			</div>
 		</div>
@@ -69,7 +67,7 @@ const Finish = (props) => {
 							: _renderStatusCheck()}
 					</div>
 					<div className="row justify-content-md-center align-items-end">
-						<Link to="/landing"><button className="btn btn-success btn-lg">Homepage</button></Link>
+						<Link to="/"><button className="btn btn-success btn-lg">Homepage</button></Link>
 					</div>
 					<AppFooter />
 				</div>

@@ -22,7 +22,6 @@ const App = () => {
 					<Switch>
 						<Route path="/" exact component={Search} />
 						<Route path="/reseller-demo/" exact component={Search} />
-						<Route path="/landing" exact component={Wallet} />
 						<Route path="/email" exact component={Email} />
 						<Route path="/checkout" exact component={Checkout} />
 						<Route path="/finish" exact component={Finish} />

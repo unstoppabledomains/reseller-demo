@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { CardHeader, AppFooter } from '../../Utilities/Cards';
 import config from '../../config';
@@ -25,6 +25,35 @@ const Search = (props) => {
 	const [userInput, setUserInput] = useState(`reseller-test-${config.reseller}-${Math.floor(Math.random() * 502562)}.zil`);
 	const [results, setResults] = useState(null);
 	const [spinner, setSpinner] = useState(false);
+	const [ownDomains, setOwnDomains] = useState(JSON.parse(localStorage.getItem('own_domain')));
+	const [isMined, setIsMined] = useState(false);
+
+	console.log(ownDomains);
+	useEffect(() => {
+		if (!ownDomains || ownDomains.status) return;
+		const { orderNumber, email } = ownDomains.config;
+		async function _fetchBlockchainStatus() {
+			if (isMined === true) return;
+			const url = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders/${orderNumber}`
+			const resp = await fetch(url, {
+				method: "GET",
+				headers: {
+					"Authentication": `Bearer ${config.token}`,
+					"Content-Type": "application/json"
+				}
+			});
+			const payload = await resp.json();
+			if (resp.status === 200) {
+				setIsMined(payload.order.items[0].blockchain.status === 'MINED');
+				setOwnDomains({ ...ownDomains, mined: true });
+			}
+		}
+		const interval = setInterval(_fetchBlockchainStatus, 5000);
+		return () => clearInterval(interval);
+	}, [isMined, setIsMined, ownDomains]);
+
+
+
 	const owner = "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf";
 	const namicorn = new Namicorn();
 
@@ -118,7 +147,7 @@ const Search = (props) => {
 				</div>
 			</div>
 		</div >
-	);
+	)
 
 	const fetchDomain = (url) => {
 		return fetch(url, {
@@ -127,7 +156,6 @@ const Search = (props) => {
 			},
 		}).then(res => res.json())
 	}
-
 
 	const _handleFormSubmit = async (e) => {
 		e.preventDefault();
@@ -155,7 +183,7 @@ const Search = (props) => {
 
 		setResults({ ...result });
 		setSpinner(false);
-	};
+	}
 
 	const _renderErrors = () => (
 		<div className="card" id="big">
@@ -237,6 +265,39 @@ const Search = (props) => {
 
 	const _renderSpinner = () => <div className="loader">Searching...</div>;
 
+
+	const _renderOwnerShipStatus = () => {
+		// Check the blockchain status -> Mined or Pending ?
+		// Make a button to reset the demo (clear localstorage)
+
+		const _renderProgressBar = () => (
+			<div className="progress">
+				<div className="progress-bar" role="progressbar" style={{ width: "50%" }}
+					aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+			</div>
+		);
+
+
+		return (
+			<div className="card">
+				<div className="card-body">
+					<h5 className="card-title">{ownDomains.domains[0].name}</h5>
+					<p className="card-text">Blockchain status: {ownDomains.mined ? 'MINED' : 'MINING...'} </p>
+					{
+						ownDomains.mined ? <button
+							className="btn btn-primary btn-md"
+							onClick={() => {
+								setOwnDomains(null);
+								return localStorage.clear();
+							}
+							}
+						>Forget about it</button> : _renderProgressBar()
+					}
+				</div>
+			</div>
+		);
+	}
+
 	const _renderAppScreen = () => {
 		return (
 			<div className="container-fluid">
@@ -264,9 +325,12 @@ const Search = (props) => {
 						</div>
 						{spinner ? _renderSpinner() : null}
 						{results ? _renderResult() : null}
-						<div className="row justify-content-md-center align-items-end">
-							<h4 className="card-subtitle">Learn more about .ZIL domain</h4>
-						</div>
+						{ownDomains ? _renderOwnerShipStatus() :
+							<div className="row justify-content-md-center">
+								<h4 className="card-subtitle">Learn more about .ZIL domain</h4>
+							</div>
+						}
+
 					</div>
 					<AppFooter />
 				</div>
@@ -287,7 +351,6 @@ const Search = (props) => {
 			<div className="row justify-content-md-center flex-nowrap mt-5 mb-5">
 				<div className="col-lg-fluid">
 					{renderArrowDown()}
-
 				</div>
 			</div>
 			<div className="row justify-content-md-center flex-nowrap mt-5">

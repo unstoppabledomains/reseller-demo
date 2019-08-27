@@ -16,11 +16,7 @@ const StripeCheckoutForm = (props) => {
 					console.log('[token]', payload);
 					if (!payload.error)
 						props.funcs._handleUDPayment(payload);
-					setSpinner(false);
 				});
-			// What should i do with the stripe token? 
-			// Probably i should just send it to our backend
-			// Which endpoint? 
 		} else {
 			console.log("Stripe.js hasn't loaded yet.");
 		}
@@ -32,6 +28,7 @@ const StripeCheckoutForm = (props) => {
 	return (
 		<>
 			<h1 className="card-title">Pay with credit card</h1>
+			<p className="card-text">Use any future date and this card number for tests <code>4242 4242 4242 4242</code></p>
 			<form onSubmit={handleSubmit}
 				className="form-group mt-3 p3 d-flex flex-column align-items-center">
 				<div className="col-8 d-flex justify-content-md-center flex-column">

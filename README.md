@@ -24,9 +24,10 @@ Returns:
 Whether a domain is in the `test` space (aka `reseller-test-*`)
 `blockchain.status` of the transaction: “PENDING”, “MINED”, “CANCELED”.
 
-IMPORTANT:
+```diff
+! IMPORTANT:
 The blockchain needs time before a transaction is mined. In rare cases, it is possible for someone to front run your purchase, which would result in an order being cancelled. We expect this to happen in less than 1 out of 10,000 cases. Blockchain doesn’t currently support any locking functionality for an upcoming purchase. Please make sure you are using the “Order Status” endpoint and wait until the transaction is mined.
-
+```
 The API currently supports a single domain purchase at a time. UD will extend support to multiple domains in the future.
 
 Order parameters JSON Schema: https://gist.github.com/bogdan/f9911f4022c6441cbe40ff93811e1ea2

@@ -1,68 +1,89 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Reseller demo flow
 
-## Available Scripts
+This Demo show in particular how others can use UD API to resell .ZIL domains
 
-In the project directory, you can run:
 
-### `npm start`
+Enables domain purchase. 
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Requires:
+User email
+`order` parameters:
+`payment` any of: {type: ‘reseller’} - for reseller payback method
+{type: ‘stripe’, tokenId: <token>} - for stripe payment method
+  
+`domains[].name` to be bought
+`domains[].owner` to own the domain after the purchase
+`domains[].resolution` resolver information on the domain name that contains a crypto address for each currency
+Returns:
+`orderNumber` to track the order status and form support requests to UD
+`subtotal` that reseller will be charged for the order
+`items[]` purchased:
+`name` of the domain
+`type` of the item (currently only `ZNS_DOMAIN`)
+Whether a domain is in the `test` space (aka `reseller-test-*`)
+`blockchain.status` of the transaction: “PENDING”, “MINED”, “CANCELED”.
 
-### `npm test`
+IMPORTANT:
+The blockchain needs time before a transaction is mined. In rare cases, it is possible for someone to front run your purchase, which would result in an order being cancelled. We expect this to happen in less than 1 out of 10,000 cases. Blockchain doesn’t currently support any locking functionality for an upcoming purchase. Please make sure you are using the “Order Status” endpoint and wait until the transaction is mined.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The API currently supports a single domain purchase at a time. UD will extend support to multiple domains in the future.
 
-### `npm run build`
+Order parameters JSON Schema: https://gist.github.com/bogdan/f9911f4022c6441cbe40ff93811e1ea2
+About JSON Schema: 
+http://json-schema.org/
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Examples:
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+As a recommended payment method we suggest to use Stripe. You will need to obtain the stripe token and send it to us as
+POST request to https://unstoppabledomains.com/api/v1/resellers/udtesting/users/bogdan+testreseller@unstoppabledomains.com/orders
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+BODY 
+```json
+{ "order": { "payment": { "type": "stripe", "tokenId": "tok_1FAeVFG8PQyZCUJhJp7emswP" }, "domains": [ { "name": "reseller-test-udtesting-17829.zil", "owner": "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf", "resolution": { "crypto": { "ZIL": { "address": "0xe568f2BB42A77F6508911290d581B3Af107b1e4B" }, "ETH": { "address": "0x20B4564DEB7AF89ece828d843D0Ac2c16934a23e" } } } } ] } }
+{
+  "order": {
+    "orderNumber": "-Lmz2FnYCUZdVe_foJ2M",
+    "subtotal": 10,
+    "test": true,
+    "payment": {
+      "type": "stripe"
+    },
+    "items": [
+      {
+        "type": "ZNS_DOMAIN",
+        "name": "reseller-test-udtesting-17829.zil",
+        "blockchain": {
+          "status": "PENDING"
+        }
+      }
+    ]
+  }
+}
+```
 
-### `npm run eject`
+As an alternative UD trust resellers with any payment process they decided to go. If this is the case then reseller need to use the example bellow to make a buy call. We will contact reseller on a monthly basis chargin them for the domain they sold. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+https://unstoppabledomains.com/api/v1/resellers/udtesting/users/buyer-udtesting@example.com/orders
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+BODY 
+```json
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+{ "order": { "domains": [ { "name": "reseller-test-udtesting-24287.zil", "owner": "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf", "resolution": { "crypto": { "ZIL": { "address": "0xe568f2BB42A77F6508911290d581B3Af107b1e4B" }, "ETH": { "address": "0x20B4564DEB7AF89ece828d843D0Ac2c16934a23e" } } } } ] } }
+{
+  "order": {
+    "orderNumber": "-Lm9wiYytgrpf4YCWYv6",
+    "subtotal": 10,
+    "items": [
+      {
+        "type": "ZNS_DOMAIN",
+        "name": "reseller-test-udtesting-24287.zil",
+        "test": true,
+        "blockchain": {
+          "status": “PENDING”
+        }
+      }
+    ]
+  }
+}
+```

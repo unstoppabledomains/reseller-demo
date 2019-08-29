@@ -1,7 +1,9 @@
 ## Reseller demo flow
 
-This Demo show in particular how others can use UD API to resell .ZIL domains
+Link to our demo: https://unstoppabledomains.github.io/reseller-demo/
 
+
+This Demo show in particular how others can use UD API to resell .ZIL domains
 
 Enables domain purchase. 
 

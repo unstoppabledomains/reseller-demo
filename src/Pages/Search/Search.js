@@ -30,7 +30,7 @@ const Search = (props) => {
 
 	console.log(ownDomains);
 	useEffect(() => {
-		if (!ownDomains || ownDomains.status) return;
+		if (!ownDomains || ownDomains.mined) return;
 		const { orderNumber, email } = ownDomains.config;
 		async function _fetchBlockchainStatus() {
 			if (isMined === true) return;
@@ -44,8 +44,10 @@ const Search = (props) => {
 			});
 			const payload = await resp.json();
 			if (resp.status === 200) {
-				setIsMined(payload.order.items[0].blockchain.status === 'MINED');
-				setOwnDomains({ ...ownDomains, mined: true });
+				const mineResult = payload.order.items[0].blockchain.status === 'MINED';
+				setIsMined(mineResult);
+				setOwnDomains({ ...ownDomains, mined: mineResult });
+				localStorage.setItem('own_domain', JSON.stringify({ ...ownDomains, mined: mineResult }));
 			}
 		}
 		const interval = setInterval(_fetchBlockchainStatus, 5000);

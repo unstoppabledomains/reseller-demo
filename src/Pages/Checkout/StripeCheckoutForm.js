@@ -15,7 +15,7 @@ const StripeCheckoutForm = (props) => {
 				.then((payload) => {
 					console.log('[token]', payload);
 					if (!payload.error)
-						props.funcs._handleUDPayment(payload);
+						props.funcs._handleUDPayment(payload, setSpinner);
 				});
 		} else {
 			console.log("Stripe.js hasn't loaded yet.");

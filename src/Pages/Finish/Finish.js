@@ -22,8 +22,12 @@ const Finish = (props) => {
 				}
 			});
 			const payload = await resp.json();
-			if (resp.status === 200)
+			if (resp.status === 200) {
 				setIsMined(payload.order.items[0].blockchain.status === 'MINED');
+				const storage = JSON.parse(localStorage.getItem('own_domain'));
+				storage.mined = true;
+				localStorage.setItem('own_domain', JSON.stringify(storage))
+			}
 		}
 		const interval = setInterval(_fetchBlockchainStatus, 5000);
 		return () => clearInterval(interval);

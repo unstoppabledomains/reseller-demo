@@ -60,7 +60,7 @@ const Checkout = (props) => {
 
 	const _saveToLocal = (data) => localStorage.setItem('own_domain', JSON.stringify(data));
 
-	const _handleUDPayment = ({ token }) => {
+	const _handleUDPayment = ({ token }, setSpinner) => {
 		const { domain: { name }, email, owner } = state;
 		const apiurl = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders`;
 		const body = {
@@ -79,6 +79,7 @@ const Checkout = (props) => {
 		};
 		_saveToLocal({ ...body.order, config: { email, } });
 		buy(apiurl, body);
+		setSpinner(false);
 	}
 
 	const _renderAppScreen = () => {

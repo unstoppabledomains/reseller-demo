@@ -23,9 +23,10 @@ const Finish = (props) => {
 			});
 			const payload = await resp.json();
 			if (resp.status === 200) {
-				setIsMined(payload.order.items[0].blockchain.status === 'MINED');
+				const mineResult = payload.order.items[0].blockchain.status === 'MINED';
+				setIsMined(mineResult);
 				const storage = JSON.parse(localStorage.getItem('own_domain'));
-				storage.mined = true;
+				storage.mined = mineResult;
 				localStorage.setItem('own_domain', JSON.stringify(storage))
 			}
 		}
@@ -55,7 +56,7 @@ const Finish = (props) => {
 		<div className="card d-flex align-items-md-center">
 			<div className="card-body">
 				<h1 className="card-title">Order status:</h1>
-				<p className="card-text">Blockhain transaction require some time. You can go back to homepage the transaction is not going to be lost.</p>
+				<p className="card-text">Blockchain transaction requires some time. You can go back to homepage the transaction is not going to be lost.</p>
 				{_renderSpinner()}
 			</div>
 		</div>

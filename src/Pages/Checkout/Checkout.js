@@ -21,6 +21,7 @@ const Checkout = (props) => {
 	};
 
 
+	// this is the format of resolution for a certain domain. 
 	const _mockWalletResolution = () => ({
 		"crypto": {
 			"ZIL": {
@@ -34,17 +35,11 @@ const Checkout = (props) => {
 
 	const _finalizeTransaction = (res) => {
 		setTransactionResponse(res);
-		const temp = JSON.parse(localStorage.getItem('own_domain'));
-		console.log('temp from finalizing transiction!!! ', temp);
-		console.log('res = ', res);
-		if (temp) {
-			temp.config.orderNumber = res.order.orderNumber;
-			localStorage.setItem('own_domain', JSON.stringify(temp));
-		}
 		if (!res.errors)
 			setRedirect(true);
 		else
 			setErrors(res.errors);
+		return res;
 	}
 
 	const buy = (url, data) => {
@@ -61,6 +56,7 @@ const Checkout = (props) => {
 	const _saveToLocal = (data) => localStorage.setItem('own_domain', JSON.stringify(data));
 
 	const _handleUDPayment = ({ token }, setSpinner) => {
+		console.log('_handleUPPayment ', { token });
 		const { domain: { name }, email, owner } = state;
 		const apiurl = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders`;
 		const body = {
@@ -77,12 +73,16 @@ const Checkout = (props) => {
 					}]
 			}
 		};
-		_saveToLocal({ ...body.order, config: { email, } });
-		buy(apiurl, body);
-		setSpinner(false);
+		buy(apiurl, body, setSpinner).then((res) => {
+			if (res && !res.errors) {
+				_saveToLocal({ ...body.order, config: { email, orderNumber: res.order.orderNumber } });
+			}
+			setSpinner(false)
+		});
 	}
 
 	const _renderAppScreen = () => {
+		const { location: { state: { testNameSpace } } } = props;
 		return (
 			<div className="container-fluid">
 				<div className="card" style={{ width: "45rem", minHeight: "40rem" }}>
@@ -90,14 +90,14 @@ const Checkout = (props) => {
 					<div className="card-body">
 						<div className="card" id="list-field">
 							<div className="card-header">
-								<p className="card-title">Payment Flow Credit Card Mock</p>
+								<p className="card-title">Stripe Payment flow</p>
 							</div>
 							<div className="card-body">
-								<StripeProvider apiKey={config.stripeKey}>
+								<StripeProvider apiKey={testNameSpace ? config.stripeKey : config.stripeKeyLiveDomain}>
 									<Elements>
 										<StripeCheckoutForm domain={state.domain} funcs={
 											{ _handleUDPayment }
-										} />
+										} test={testNameSpace} />
 									</Elements>
 								</StripeProvider >
 							</div>

@@ -23,12 +23,12 @@ const baseURL = 'https://unstoppabledomains.com/api/v1/resellers';
 
 const Search = (props) => {
 	const [userInput, setUserInput] = useState(`reseller-test-${config.reseller}-${Math.floor(Math.random() * 502562)}.zil`);
+	// const [userInput, setUserInput] = useState('terandumdumdumtrasduk.zil');
 	const [results, setResults] = useState(null);
 	const [spinner, setSpinner] = useState(false);
 	const [ownDomains, setOwnDomains] = useState(JSON.parse(localStorage.getItem('own_domain')));
 	const [isMined, setIsMined] = useState(false);
 
-	console.log(ownDomains);
 	useEffect(() => {
 		if (!ownDomains || ownDomains.mined) return;
 		const { orderNumber, email } = ownDomains.config;
@@ -53,8 +53,6 @@ const Search = (props) => {
 		const interval = setInterval(_fetchBlockchainStatus, 5000);
 		return () => clearInterval(interval);
 	}, [isMined, setIsMined, ownDomains]);
-
-
 
 	const owner = "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf";
 	const namicorn = new Namicorn();
@@ -99,7 +97,7 @@ const Search = (props) => {
 							<div className="card" id="list-field">
 								<div className="card-header">
 									<p className="card-text">
-										/resellers<code>reseller-id</code>/domains<code>/domain-name.zil</code>
+										/resellers/<code>reseller-id</code>/domains<code>/domain-name</code>.zil
 									</p>
 								</div>
 								<div className="card-body">
@@ -156,7 +154,7 @@ const Search = (props) => {
 			headers: {
 				Authentication: `Bearer ${config.token}`
 			},
-		}).then(res => res.json())
+		}).then(res => res.json()).then(answer => ({ ...answer, testNameSpace: true }));
 	}
 
 	const _handleFormSubmit = async (e) => {
@@ -172,17 +170,24 @@ const Search = (props) => {
 			await fetchDomain(`${baseURL}/${config.reseller}/domains/${domain}`)
 			: await namicorn.resolve(domain).then(res => (
 				{
+					actual: res,
 					domain: {
 						auction: null,
 						name: domain,
-						reselling: null,
+						reselling: res.reselling ? res.reselling : {
+							price: 10,
+							availableForFree: false,
+							test: false
+						},
 						resolve: isEmpty(res.addresses) ? null : {
 							addresses: res.addresses
-						}
-					}
+						},
+						meta: res.meta
+					},
+					testNameSpace: false
 				}
 			));
-
+		console.log('result == ', result);
 		setResults({ ...result });
 		setSpinner(false);
 	}
@@ -207,12 +212,12 @@ const Search = (props) => {
 			return _renderErrors();
 
 		const { domain } = results;
-		console.log(domain);
+		console.log(results);
 		if (domain && domain.resolve) {
 			return (
 				<div className="card" id="big">
 					<div className="card-header">
-						<h5 className="card-title">{domain.name} s already taken </h5>
+						<h5 className="card-title">{domain.name} is already taken </h5>
 					</div>
 					<div className="card-body">
 						<h6 className="card-subtitle">It resolves to:</h6>
@@ -222,7 +227,9 @@ const Search = (props) => {
 			)
 		}
 
-		if (domain && !domain.reselling) {
+
+
+		if (domain && !domain.reselling && results.testNameSpace) {
 			return (
 				<div className="card" id="big">
 					<div className="card-header">
@@ -241,7 +248,8 @@ const Search = (props) => {
 					<div className="row">
 						<div className="col-9">
 							<h5 className="card-title">{domain.name}</h5>
-							<h6 className="card-subtitle">Domain is available</h6>
+							<h6 className="card-subtitle text-success">Domain is available</h6>
+							<h6 className="card-subtitle mt-1 text-danger">{!results.testNameSpace ? 'THIS IS A LIVE DOMAIN, YOU WILL BE CHARGED AT THE END' : null}</h6>
 						</div>
 						<div className="col-3 d-flex justify-content-end">
 							<h5 className="card-title">$ {domain.reselling && domain.reselling.price}</h5>
@@ -320,7 +328,7 @@ const Search = (props) => {
 										<button type="submit" className="btn btn-primary btn-lg m-0 ml-1">Search</button>
 									</div>
 									<small id="passwordHelpBlock" className="form-text text-muted">
-										*For the purpose of this demo use this domain namespace <code>reseller-test-udtesting-[random number].zil</code>
+										*For this demo use this domain namespace <code>reseller-test-udtesting-[random number].zil</code>
 									</small>
 								</div>
 							</form>

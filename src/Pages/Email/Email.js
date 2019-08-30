@@ -71,39 +71,6 @@ function Email(props) {
 		</div >
 	)
 
-
-	const _renderRightHints = () => (
-		<div className="container-fluid">
-			<div className="card" style={{ width: "45rem", minHeight: "40rem" }}>
-				<div className="card-body">
-					<h5 className="card-title">Hints</h5>
-					<div className="card" id="list-field">
-						<div className="card-header">
-							<h5 className="card-title">Add new wallet</h5>
-						</div>
-						<div className="card-body">
-							<p className="card-text">For testing purporses you can create a mock wallet by pressing plus button on top</p>
-						</div>
-					</div>
-					<div className="card" id="list-field">
-						<div className="card-header">
-							<h5 className="card-title">Clean the list</h5>
-						</div>
-						<div className="card-body">
-							<p className="card-text">You can erase all wallets created earlier by pressing reset button</p>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div >
-	)
-
-
-
-
-
-
 	if (!props.location.state) return <Redirect to="/" />
 
 	return (

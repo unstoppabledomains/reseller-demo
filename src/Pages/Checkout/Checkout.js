@@ -73,6 +73,8 @@ const Checkout = (props) => {
 					}]
 			}
 		};
+		console.log(apiurl);
+		console.log(body);
 		buy(apiurl, body, setSpinner).then((res) => {
 			if (res && !res.errors) {
 				_saveToLocal({ ...body.order, config: { email, orderNumber: res.order.orderNumber } });

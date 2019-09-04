@@ -3,17 +3,6 @@ import { Link } from 'react-router-dom';
 import { CardHeader, AppFooter } from '../../Utilities/Cards';
 import config from '../../config';
 import ReactJson from 'react-json-view';
-import Namicorn from 'namicorn';
-
-
-function isEmpty(obj) {
-	for (var key in obj) {
-		if (obj.hasOwnProperty(key))
-			return false;
-	}
-	return true;
-}
-
 
 const renderArrowDown = () => <div className="arrow-bounce bigger">
 	<img width="40" height="40" alt="" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMyIDMyIiBoZWlnaHQ9IjMycHgiIGlkPSLQodC70L7QuV8xIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMycHgiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxwYXRoIGQ9Ik0yNC4yODUsMTEuMjg0TDE2LDE5LjU3MWwtOC4yODUtOC4yODhjLTAuMzk1LTAuMzk1LTEuMDM0LTAuMzk1LTEuNDI5LDAgIGMtMC4zOTQsMC4zOTUtMC4zOTQsMS4wMzUsMCwxLjQzbDguOTk5LDkuMDAybDAsMGwwLDBjMC4zOTQsMC4zOTUsMS4wMzQsMC4zOTUsMS40MjgsMGw4Ljk5OS05LjAwMiAgYzAuMzk0LTAuMzk1LDAuMzk0LTEuMDM2LDAtMS40MzFDMjUuMzE5LDEwLjg4OSwyNC42NzksMTAuODg5LDI0LjI4NSwxMS4yODR6IiBmaWxsPSIjMTIxMzEzIiBpZD0iRXhwYW5kX01vcmUiLz48Zy8+PGcvPjxnLz48Zy8+PGcvPjxnLz48L3N2Zz4=" />
@@ -23,7 +12,6 @@ const baseURL = 'https://unstoppabledomains.com/api/v1/resellers';
 
 const Search = (props) => {
 	const [userInput, setUserInput] = useState(`reseller-test-${config.reseller}-${Math.floor(Math.random() * 502562)}.zil`);
-	// const [userInput, setUserInput] = useState('terandumdumdumtrasduk.zil');
 	const [results, setResults] = useState(null);
 	const [spinner, setSpinner] = useState(false);
 	const [ownDomains, setOwnDomains] = useState(JSON.parse(localStorage.getItem('own_domain')));
@@ -32,31 +20,31 @@ const Search = (props) => {
 	useEffect(() => {
 		if (!ownDomains || ownDomains.mined) return;
 		const { orderNumber, email } = ownDomains.config;
+
 		async function _fetchBlockchainStatus() {
-			if (isMined === true) return;
 			const url = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders/${orderNumber}`
-			const resp = await fetch(url, {
-				method: "GET",
-				headers: {
-					"Authentication": `Bearer ${config.token}`,
-					"Content-Type": "application/json"
+			try {
+				const resp = await fetch(url, {
+					method: "GET",
+					headers: {
+						"Authentication": `Bearer ${config.token}`,
+						"Content-Type": "application/json"
+					}
+				});
+				const payload = await resp.json();
+				if (resp.status === 200) {
+					const mineResult = payload.order.items[0].blockchain.status === 'MINED';
+					setIsMined(mineResult);
+					setOwnDomains({ ...ownDomains, mined: mineResult });
+					localStorage.setItem('own_domain', JSON.stringify({ ...ownDomains, mined: mineResult }));
 				}
-			});
-			const payload = await resp.json();
-			if (resp.status === 200) {
-				const mineResult = payload.order.items[0].blockchain.status === 'MINED';
-				setIsMined(mineResult);
-				setOwnDomains({ ...ownDomains, mined: mineResult });
-				localStorage.setItem('own_domain', JSON.stringify({ ...ownDomains, mined: mineResult }));
-			}
+			} catch (err) { console.error(err) }
 		}
 		const interval = setInterval(_fetchBlockchainStatus, 5000);
 		return () => clearInterval(interval);
-	}, [isMined, setIsMined, ownDomains]);
+	}, [isMined, ownDomains]);
 
 	const owner = "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf";
-	const namicorn = new Namicorn();
-
 	const _renderHints = () => (
 		<div className="container-fluid">
 			<div className="card" style={{ width: "40rem", minHeight: "40rem" }}>
@@ -152,42 +140,22 @@ const Search = (props) => {
 	const fetchDomain = (url) => {
 		return fetch(url, {
 			headers: {
-				Authentication: `Bearer ${config.token}`
+				Authentication: `Bearer ${config.token}`,
 			},
-		}).then(res => res.json()).then(answer => ({ ...answer, testNameSpace: true }));
+		}).then(res => res.json()).then(answer => {
+			const regextTestpattern = /[reseller-test-udtesting-]+\d+[.zil]+/;
+			return ({ ...answer, testNameSpace: regextTestpattern.test(answer.domain.name) });
+		});
 	}
 
 	const _handleFormSubmit = async (e) => {
 		e.preventDefault();
 		setResults(null);
 		const regexTLDpattern = /[.]\w{3}$/;
-		const regextTestpattern = /[reseller-test-udtesting-]+\d+[.zil]+/;
+
 		const domain = !regexTLDpattern.test(userInput) ? `${userInput}.zil` : userInput;
 		setSpinner(true);
-
-		// const result = await namicorn.resolve(userInput);
-		const result = regextTestpattern.test(userInput) ?
-			await fetchDomain(`${baseURL}/${config.reseller}/domains/${domain}`)
-			: await namicorn.resolve(domain).then(res => (
-				{
-					actual: res,
-					domain: {
-						auction: null,
-						name: domain,
-						reselling: res.reselling ? res.reselling : {
-							price: 10,
-							availableForFree: false,
-							test: false
-						},
-						resolve: isEmpty(res.addresses) ? null : {
-							addresses: res.addresses
-						},
-						meta: res.meta
-					},
-					testNameSpace: false
-				}
-			));
-		console.log('result == ', result);
+		const result = await fetchDomain(`${baseURL}/${config.reseller}/domains/${domain}`)
 		setResults({ ...result });
 		setSpinner(false);
 	}
@@ -229,7 +197,7 @@ const Search = (props) => {
 
 
 
-		if (domain && !domain.reselling && results.testNameSpace) {
+		if (domain && !domain.reselling) {
 			return (
 				<div className="card" id="big">
 					<div className="card-header">
@@ -277,16 +245,12 @@ const Search = (props) => {
 
 
 	const _renderOwnerShipStatus = () => {
-		// Check the blockchain status -> Mined or Pending ?
-		// Make a button to reset the demo (clear localstorage)
-
 		const _renderProgressBar = () => (
 			<div className="progress">
 				<div className="progress-bar" role="progressbar" style={{ width: "50%" }}
 					aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
 			</div>
 		);
-
 
 		return (
 			<div className="card">
@@ -340,7 +304,6 @@ const Search = (props) => {
 								<h4 className="card-subtitle">Learn more about .ZIL domain</h4>
 							</div>
 						}
-
 					</div>
 					<AppFooter />
 				</div>

@@ -5,7 +5,7 @@ import { CardHeader, AppFooter } from '../../Utilities/Cards';
 function Email(props) {
 
 	const [email, setEmail] = useState('example@example.com');
-
+	console.log(props);
 	const checkEmail = (email) => !(/.+@.+\..+/.test(email));
 	const [isValid, setIsValid] = useState(checkEmail(''));
 
@@ -60,10 +60,7 @@ function Email(props) {
 							onClick={_handleFormSubmit}
 							disabled={!isValid}
 							id="margin-top">Next
-
-
 						</button>
-
 					</div>
 				</div>
 				<AppFooter />

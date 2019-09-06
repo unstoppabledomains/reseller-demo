@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { CardHeader, AppFooter } from '../../Utilities/Cards';
 import config from '../../config';
 import ReactJson from 'react-json-view';
@@ -209,7 +209,13 @@ const Search = (props) => {
 				</div>
 			);
 		}
-
+		console.log({
+			state: {
+				// ...props.location.state,
+				...results,
+				owner
+			}
+		});
 		return (
 			<div className="card" id="big">
 				<div className="card-header">
@@ -272,11 +278,22 @@ const Search = (props) => {
 		);
 	}
 
+
+	const _renderSendButton = () => (
+		<button
+			className="btn btn-md btn-primary"
+			onClick={(e) => {
+				return (props.history.push('/send'));
+			}}
+		>
+			Send</button>
+	);
+
 	const _renderAppScreen = () => {
 		return (
 			<div className="container-fluid">
 				<div className="card" style={{ width: "45rem", minHeight: "40rem" }}>
-					<CardHeader title="Buy .ZIL domain" />
+					<CardHeader title="Buy .ZIL domain" secondLine={_renderSendButton} />
 					<div className="card-body d-flex flex-column justify-content-between">
 						<div className="card-fluid">
 							<form className="form-inline " onSubmit={_handleFormSubmit}>

@@ -6,6 +6,7 @@ import Search from './Pages/Search/Search';
 import Email from './Pages/Email/Email';
 import Checkout from './Pages/Checkout/Checkout';
 import Finish from './Pages/Finish/Finish';
+import Send from './Pages/Send';
 
 
 
@@ -25,6 +26,7 @@ const App = () => {
 						<Route path="/email" exact component={Email} />
 						<Route path="/checkout" exact component={Checkout} />
 						<Route path="/finish" exact component={Finish} />
+						<Route path="/send" exact component={Send} />
 					</Switch>
 				</Router>
 			</div>

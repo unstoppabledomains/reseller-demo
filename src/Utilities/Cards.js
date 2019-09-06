@@ -2,7 +2,7 @@ import React from 'react';
 import { MdHome, MdFolderOpen, MdCrop, MdDehaze } from 'react-icons/md';
 
 const CardHeader = ({ title, secondLine }) => (
-	<div className="card-header main-bg">
+	<div className="card-header main-bg d-flex justify-content-between">
 		<h5 className="card-title">{title}</h5>
 		{secondLine ? secondLine() : null}
 	</div>

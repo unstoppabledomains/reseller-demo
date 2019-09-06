@@ -20,6 +20,19 @@ button {
 	margin: 5px;
 }
 
+.linklike {
+		background: none!important;
+		border: none;
+		padding: 0!important;
+		/*optional*/
+		font-family: arial, sans-serif;
+		/*input has OS specific font-family*/
+		color: #069;
+		text-decoration: underline;
+		cursor: pointer;
+}
+
+
 html, body, #root, #root > div{
 	margin: 0;
 	padding: 0;

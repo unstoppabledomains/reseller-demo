@@ -8976,6 +8976,11 @@ react-base16-styling@^0.6.0:
     lodash.flow "^3.3.0"
     pure-color "^1.2.0"
 
+react-coinbase-commerce@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-coinbase-commerce/-/react-coinbase-commerce-1.4.0.tgz#510417381b88956b0ccddf96b53ff6cdbcbc8cc0"
+  integrity sha512-+uRIxOQPsIPHlMNfXX8cBKKqt3URn3g1NFYcKgW4vUeqL7ataXPHb3jEA8HmF88sdgsA9mFrqb3obbK0ou3DUw==
+
 react-dev-utils@^9.0.3:
   version "9.0.3"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-9.0.3.tgz#7607455587abb84599451460eb37cef0b684131a"

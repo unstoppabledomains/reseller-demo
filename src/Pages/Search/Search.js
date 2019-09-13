@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CardHeader, AppFooter } from '../../Utilities/Cards';
 import config from '../../config';
 import ReactJson from 'react-json-view';
@@ -46,7 +46,7 @@ const Search = (props) => {
 
 	const owner = "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf";
 	const _renderHints = () => (
-		<div className="container-fluid">
+		<div >
 			<div className="card" style={{ width: "40rem", minHeight: "40rem" }}>
 				<div className="card-body">
 					<h5 className="card-title">Hints</h5>

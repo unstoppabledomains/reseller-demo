@@ -5,7 +5,7 @@
 	"private": true,
 	"dependencies": {
 		"bootstrap": "4.3.1",
-		"namicorn": "^0.2.23",
+		"namicorn": "^0.2.26",
 		"react": "^16.9.0",
 		"react-coinbase-commerce": "^1.4.0",
 		"react-dom": "^16.9.0",

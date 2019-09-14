@@ -6,6 +6,7 @@ import Drawer from '@material-ui/core/Drawer';
 import ArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import ArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import DocsIcon from '@material-ui/icons/ChromeReaderMode';
+import SideBar from './SideBar';
 
 const Header = ({ classes }) => {
   const [open, setOpen] = React.useState(true);
@@ -49,7 +50,7 @@ const Header = ({ classes }) => {
           paper: classes.drawerPaper
         }}
       >
-        DRAWER
+        <SideBar classes={classes} />
       </Drawer>
     </>
   );

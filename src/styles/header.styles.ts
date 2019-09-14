@@ -29,7 +29,9 @@ export default createStyles((theme: any) => ({
     width: 151
   },
   drawerPaper: {
-    paddingTop: 72
+    paddingTop: 72 + theme.spacing(3),
+    padding: theme.spacing(3),
+    backgroundColor: 'inherit'
   },
   link: {
     display: 'flex',
@@ -37,5 +39,19 @@ export default createStyles((theme: any) => ({
   },
   docsIcon: {
     marginRight: theme.spacing(1)
+  },
+  // SideBar
+  paper: {
+    maxWidth: 320,
+    padding: theme.spacing(3)
+  },
+  bold: {
+    fontWeight: 'bold'
+  },
+  text: {
+    margin: `${theme.spacing(2)}px 0`
+  },
+  checkbox: {
+    fontSize: 30
   }
 }));

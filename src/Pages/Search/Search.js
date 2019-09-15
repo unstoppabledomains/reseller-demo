@@ -309,7 +309,7 @@ const Search = (props) => {
 										<button type="submit" className="btn btn-primary btn-lg m-0 ml-1">Search</button>
 									</div>
 									<small id="passwordHelpBlock" className="form-text text-muted">
-										*For this demo use this domain namespace <code>reseller-test-udtesting-[random number].zil</code>
+										*For this demo use this domain namespace <code>reseller-test-{config.reseller}-[random number].zil</code>
 									</small>
 								</div>
 							</form>

@@ -3,7 +3,13 @@ import { Paper, Typography, Divider, Checkbox, Link } from '@material-ui/core';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
-const SideBar = ({ classes, pointer, handlePointer, step }) => {
+const SideBar = ({
+  classes,
+  pointer,
+  handlePointer,
+  step,
+  randomizeDomain
+}) => {
   // const [activeCard, setActiveCard] = React.useState(1);
   const selectedElement = React.useRef(0);
   const [height, setHeight] = React.useState(0);
@@ -15,9 +21,9 @@ const SideBar = ({ classes, pointer, handlePointer, step }) => {
     });
   }, [selectedElement, step]);
 
-  const randomize = () => {
-    console.log('randomize clicked');
-  };
+  // const randomize = () => {
+  //   console.log('randomize clicked');
+  // };
 
   const setExampleEmail = () => {
     console.log('example email clicked');
@@ -27,7 +33,7 @@ const SideBar = ({ classes, pointer, handlePointer, step }) => {
   };
 
   const randomizeLink = (
-    <span onClick={() => randomize()} className={classes.buttonText}>
+    <span onClick={() => randomizeDomain()} className={classes.buttonText}>
       <br />
       Randomize
     </span>

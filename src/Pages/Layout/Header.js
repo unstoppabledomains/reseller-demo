@@ -9,7 +9,7 @@ import DocsIcon from '@material-ui/icons/ChromeReaderMode';
 import SideBar from './SideBar';
 import DropDownMenu from './DropDownMenu';
 
-const Header = ({ classes, handlePointer, pointer, step }) => {
+const Header = ({ classes, handlePointer, pointer, step, randomizeDomain }) => {
   const [open, setOpen] = React.useState(true);
   const [version, setVersion] = React.useState(0);
 
@@ -78,6 +78,7 @@ const Header = ({ classes, handlePointer, pointer, step }) => {
           pointer={pointer}
           handlePointer={handlePointer}
           step={step}
+          randomizeDomain={randomizeDomain}
         />
       </Drawer>
     </>

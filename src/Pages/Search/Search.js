@@ -29,16 +29,25 @@ const renderArrowDown = () => (
 
 const baseURL = 'https://unstoppabledomains.com/api/v1/resellers';
 
-const Search = ({ classes, history, step, handleNextStep, handlePrevstep }) => {
-  const [userInput, setUserInput] = useState(
-    `reseller-test-${config.reseller}-${Math.floor(Math.random() * 502562)}.zil`
-  );
+const Search = ({
+  classes,
+  history,
+  step,
+  handleNextStep,
+  handlePrevstep,
+  domainName
+}) => {
+  const [userInput, setUserInput] = useState(domainName);
   const [results, setResults] = useState(null);
   const [spinner, setSpinner] = useState(false);
   const [ownDomains, setOwnDomains] = useState(
     JSON.parse(localStorage.getItem('own_domain'))
   );
   const [isMined, setIsMined] = useState(false);
+
+  useEffect(() => {
+    setUserInput(domainName);
+  }, [domainName]);
 
   useEffect(() => {
     if (!ownDomains || ownDomains.mined) return;

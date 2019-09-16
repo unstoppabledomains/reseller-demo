@@ -9,12 +9,13 @@ import Finish from './Pages/Finish/Finish';
 import Send from './Pages/Send';
 import Header from './Pages/Layout/Header';
 import { withStyles } from '@material-ui/styles';
-
+import config from './config';
 import styles from './styles/app.styles';
 
 const App = ({ classes }) => {
   const [step, setStep] = React.useState(0);
   const [pointer, setPointer] = React.useState(true);
+  const [domainName, setDomainName] = React.useState('');
 
   const handlePointer = () => {
     setPointer(!pointer);
@@ -28,6 +29,14 @@ const App = ({ classes }) => {
     if (step) setStep(step - 1);
   };
 
+  const randomizeDomain = () => {
+    setDomainName(
+      `reseller-test-${config.reseller}-${Math.floor(
+        Math.random() * 502562
+      )}.zil`
+    );
+  };
+
   const renderStep = () => {
     switch (step) {
       case 0:
@@ -35,6 +44,7 @@ const App = ({ classes }) => {
           <Search
             handleNextStep={handleNextStep}
             handlePrevStep={handlePrevStep}
+            domainName={domainName}
             step={step}
           />
         );
@@ -44,6 +54,7 @@ const App = ({ classes }) => {
             handleNextStep={handleNextStep}
             handlePrevStep={handlePrevStep}
             step={step}
+            domainName={domainName}
           />
         );
       case 2:
@@ -68,7 +79,12 @@ const App = ({ classes }) => {
   console.log('step', step);
   return (
     <div className={classes.root}>
-      <Header handlePointer={handlePointer} pointer={pointer} step={step} />
+      <Header
+        handlePointer={handlePointer}
+        pointer={pointer}
+        step={step}
+        randomizeDomain={randomizeDomain}
+      />
       <div className={classes.layout}>
         {renderStep()}
         {/* <Router history={history} basename="/">

@@ -10,9 +10,14 @@ export default createStyles((theme: any) => ({
   toolbar: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between',
     height: 72,
     // justifyContent: 'space-between',
     padding: `0 ${theme.spacing(3)}px`
+  },
+  leftSide: {
+    display: 'flex',
+    alignItems: 'center'
   },
   logoDiv: {
     width: 48,
@@ -32,7 +37,7 @@ export default createStyles((theme: any) => ({
     paddingTop: 72 + theme.spacing(3),
     padding: theme.spacing(3),
     backgroundColor: 'inherit',
-    // overflow: 'hidden',
+    border: 'none',
     '&::-webkit-scrollbar': {
       display: 'none'
     }
@@ -45,16 +50,20 @@ export default createStyles((theme: any) => ({
     marginRight: theme.spacing(1)
   },
   buttonText: {
+    cursor: 'pointer',
+    color: theme.palette.primary.main
+  },
+  buttonTextToggle: {
     cursor: 'pointer'
+  },
+  sideBarToggleDiv: {
+    display: 'flex',
+    alignItems: 'center'
   },
   checkboxWrapper: {
     marginLeft: -theme.spacing(1.5)
   },
   // SideBar
-  sideBarRoot: {
-    // overflowY: 'scroll',
-    // height: '100%'
-  },
   paper: {
     width: '100%',
     maxWidth: 320,

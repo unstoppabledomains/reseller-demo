@@ -5,12 +5,11 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 const SideBar = ({ classes }) => {
   const [showPointer, setShowPointer] = React.useState(true);
-  const [activeCard, setActiveCard] = React.useState(2);
+  const [activeCard, setActiveCard] = React.useState(1);
   const selectedElement = React.useRef(0);
   const [height, setHeight] = React.useState(0);
 
   React.useEffect(() => {
-    console.log(selectedElement.current.clientHeight);
     setHeight({
       height: selectedElement.current.clientHeight,
       cardNumber: activeCard
@@ -29,32 +28,21 @@ const SideBar = ({ classes }) => {
   };
 
   const randomizeLink = (
-    <Typography
-      color="primary"
-      onClick={() => randomize()}
-      className={classes.buttonText}
-    >
+    <span onClick={() => randomize()} className={classes.buttonText}>
+      <br />
       Randomize
-    </Typography>
+    </span>
   );
   const emailExampleLink = (
-    <Typography
-      color="primary"
-      onClick={() => setExampleEmail()}
-      className={classes.buttonText}
-    >
+    <span onClick={() => setExampleEmail()} className={classes.buttonText}>
       example@example.com
-    </Typography>
+    </span>
   );
 
   const cCNumberLink = (
-    <Typography
-      color="primary"
-      onClick={() => setCCNumber()}
-      className={classes.buttonText}
-    >
+    <span onClick={() => setCCNumber()} className={classes.buttonText}>
       4242 4242 4242 4242
-    </Typography>
+    </span>
   );
 
   const renderCard = (header, text, element) => (
@@ -75,8 +63,7 @@ const SideBar = ({ classes }) => {
             {header}
           </Typography>
           <Typography className={classes.text}>
-            {text}
-            {element ? element : null}
+            {text} {element ? element : null}
           </Typography>
         </div>
       </Paper>
@@ -84,7 +71,7 @@ const SideBar = ({ classes }) => {
   );
 
   return (
-    <div className={classes.sideBarRoot}>
+    <>
       <Paper className={classes.paper}>
         <Typography variant="h5" className={classes.bold}>
           Reseller Domain Purchase
@@ -137,7 +124,7 @@ const SideBar = ({ classes }) => {
           our development team
         </Typography>
       </div>
-    </div>
+    </>
   );
 };
 

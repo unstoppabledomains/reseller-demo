@@ -31,7 +31,11 @@ export default createStyles((theme: any) => ({
   drawerPaper: {
     paddingTop: 72 + theme.spacing(3),
     padding: theme.spacing(3),
-    backgroundColor: 'inherit'
+    backgroundColor: 'inherit',
+    // overflow: 'hidden',
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    }
   },
   link: {
     display: 'flex',
@@ -40,18 +44,60 @@ export default createStyles((theme: any) => ({
   docsIcon: {
     marginRight: theme.spacing(1)
   },
+  buttonText: {
+    cursor: 'pointer'
+  },
+  checkboxWrapper: {
+    marginLeft: -theme.spacing(1.5)
+  },
   // SideBar
+  sideBarRoot: {
+    // overflowY: 'scroll',
+    // height: '100%'
+  },
   paper: {
+    width: '100%',
     maxWidth: 320,
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
+    marginBottom: theme.spacing(1)
   },
   bold: {
     fontWeight: 'bold'
   },
   text: {
-    margin: `${theme.spacing(2)}px 0`
+    marginTop: theme.spacing(2),
+    fontSize: 16
   },
   checkbox: {
     fontSize: 30
+  },
+  checkboxDiv: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: theme.spacing(1.5)
+  },
+  divider: {
+    marginTop: theme.spacing(2)
+  },
+  selected: {
+    // transform: 'translateX(-48px)',
+    width: '4px !important',
+    backgroundColor: theme.palette.success,
+    marginLeft: -theme.spacing(3),
+    marginRight: `calc(${theme.spacing(3)}px - 4px)`
+    // marginTop: -theme.spacing(3),
+    // marginBottom: -theme.spacing(3)
+  },
+  card: {
+    display: 'flex'
+  },
+  helpDiv: {
+    width: '100%',
+    maxWidth: 320,
+    padding: theme.spacing(3),
+    marginBottom: theme.spacing(1),
+    borderRadius: 6,
+    border: 'solid 1px rgba(186, 190, 208, 0.41)',
+    marginTop: theme.spacing(2)
   }
 }));

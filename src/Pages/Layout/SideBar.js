@@ -9,7 +9,8 @@ const SideBar = ({
   handlePointer,
   step,
   randomizeDomain,
-  setEmail
+  setEmail,
+  isDomainLive
 }) => {
   // const [activeCard, setActiveCard] = React.useState(1);
   const selectedElement = React.useRef(0);
@@ -29,6 +30,9 @@ const SideBar = ({
   // const setExampleEmail = () => {
   //   console.log('example email clicked');
   // };
+
+  console.log(isDomainLive);
+
   const setCCNumber = () => {
     console.log('credit card number clicked');
   };
@@ -74,6 +78,11 @@ const SideBar = ({
           <Typography className={classes.text}>
             {text} {element ? element : null}
           </Typography>
+          {isDomainLive && header[0] === '2' ? (
+            <Typography color="error">
+              THIS IS A LIVE DOMAIN, YOU WILL BE CHARGED AT THE END
+            </Typography>
+          ) : null}
         </div>
       </Paper>
     </div>

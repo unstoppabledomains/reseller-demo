@@ -18,6 +18,7 @@ const App = ({ classes }) => {
   const [domainName, setDomainName] = React.useState('');
   const [emailProps, setEmailProps] = React.useState({});
   const [email, setEmail] = React.useState('');
+  const [domainResults, setDomainResults] = React.useState('');
 
   const handlePointer = () => {
     setPointer(!pointer);
@@ -50,6 +51,7 @@ const App = ({ classes }) => {
             step={step}
             showPointer={pointer}
             setEmailProps={setEmailProps}
+            setDomainResults={setDomainResults}
           />
         );
       case 1:
@@ -61,13 +63,13 @@ const App = ({ classes }) => {
             domainName={domainName}
             showPointer={pointer}
             setEmailProps={setEmailProps}
+            setDomainResults={setDomainResults}
           />
         );
       case 2:
         return (
           <Email
             handleNextStep={handleNextStep}
-            handlePrevStep={handlePrevStep}
             emailProps={emailProps}
             email={email}
             setEmail={setEmail}
@@ -87,7 +89,7 @@ const App = ({ classes }) => {
         break;
     }
   };
-  console.log(emailProps);
+  console.log(domainResults);
 
   console.log('step', step);
   return (
@@ -98,6 +100,11 @@ const App = ({ classes }) => {
         step={step}
         randomizeDomain={randomizeDomain}
         setEmail={setEmail}
+        isDomainLive={
+          domainResults.domain && domainResults.domain.reselling
+            ? !domainResults.domain.reselling.test
+            : false
+        }
       />
       <div className={classes.layout}>
         {renderStep()}

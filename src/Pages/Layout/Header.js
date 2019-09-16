@@ -15,7 +15,8 @@ const Header = ({
   pointer,
   step,
   randomizeDomain,
-  setEmail
+  setEmail,
+  isDomainLive
 }) => {
   const [open, setOpen] = React.useState(true);
   const [version, setVersion] = React.useState(0);
@@ -87,6 +88,7 @@ const Header = ({
           step={step}
           randomizeDomain={randomizeDomain}
           setEmail={setEmail}
+          isDomainLive={isDomainLive}
         />
       </Drawer>
     </>

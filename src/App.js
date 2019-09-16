@@ -13,23 +13,77 @@ import { withStyles } from '@material-ui/styles';
 import styles from './styles/app.styles';
 
 const App = ({ classes }) => {
-	return (
-		<div className={classes.root}>
-			<Header />
-			<div className={classes.layout}>
-				<Router history={history} basename="/">
-					<Switch>
-						<Route path="/" exact component={Search} />
-						<Route path="/reseller-demo/" exact component={Search} />
-						<Route path="/email" exact component={Email} />
-						<Route path="/checkout" exact component={Checkout} />
-						<Route path="/finish" exact component={Finish} />
-						<Route path="/send" exact component={Send} />
-					</Switch>
-				</Router>
-			</div>
-		</div>
-	);
+  const [step, setStep] = React.useState(0);
+  const [pointer, setPointer] = React.useState(true);
+
+  const handlePointer = () => {
+    setPointer(!pointer);
+  };
+
+  const handleNextStep = () => {
+    if (step < 3) setStep(step + 1);
+  };
+
+  const handlePrevStep = () => {
+    if (step) setStep(step - 1);
+  };
+
+  const renderStep = () => {
+    switch (step) {
+      case 0:
+        return (
+          <Search
+            handleNextStep={handleNextStep}
+            handlePrevStep={handlePrevStep}
+            step={step}
+          />
+        );
+      case 1:
+        return (
+          <Search
+            handleNextStep={handleNextStep}
+            handlePrevStep={handlePrevStep}
+            step={step}
+          />
+        );
+      case 2:
+        return (
+          <Email
+            handleNextStep={handleNextStep}
+            handlePrevStep={handlePrevStep}
+          />
+        );
+      case 3:
+        return (
+          <Checkout
+            handleNextStep={handleNextStep}
+            handlePrevStep={handlePrevStep}
+          />
+        );
+      default:
+        break;
+    }
+  };
+
+  console.log('step', step);
+  return (
+    <div className={classes.root}>
+      <Header handlePointer={handlePointer} pointer={pointer} step={step} />
+      <div className={classes.layout}>
+        {renderStep()}
+        {/* <Router history={history} basename="/">
+          <Switch>
+            <Route path="/" exact component={Search} />
+            <Route path="/reseller-demo/" exact component={Search} />
+            <Route path="/email" exact component={Email} /> 2 step
+            <Route path="/checkout" exact component={Checkout} /> 3 step
+            <Route path="/finish" exact component={Finish} />
+            <Route path="/send" exact component={Send} />
+          </Switch>
+        </Router> */}
+      </div>
+    </div>
+  );
 };
 
 export default withStyles(styles)(App);

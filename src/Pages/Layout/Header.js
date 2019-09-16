@@ -9,7 +9,7 @@ import DocsIcon from '@material-ui/icons/ChromeReaderMode';
 import SideBar from './SideBar';
 import DropDownMenu from './DropDownMenu';
 
-const Header = ({ classes }) => {
+const Header = ({ classes, handlePointer, pointer, step }) => {
   const [open, setOpen] = React.useState(true);
   const [version, setVersion] = React.useState(0);
 
@@ -73,7 +73,12 @@ const Header = ({ classes }) => {
           paper: classes.drawerPaper
         }}
       >
-        <SideBar classes={classes} />
+        <SideBar
+          classes={classes}
+          pointer={pointer}
+          handlePointer={handlePointer}
+          step={step}
+        />
       </Drawer>
     </>
   );

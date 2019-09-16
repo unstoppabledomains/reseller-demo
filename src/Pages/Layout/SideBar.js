@@ -3,18 +3,17 @@ import { Paper, Typography, Divider, Checkbox, Link } from '@material-ui/core';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
-const SideBar = ({ classes }) => {
-  const [showPointer, setShowPointer] = React.useState(true);
-  const [activeCard, setActiveCard] = React.useState(1);
+const SideBar = ({ classes, pointer, handlePointer, step }) => {
+  // const [activeCard, setActiveCard] = React.useState(1);
   const selectedElement = React.useRef(0);
   const [height, setHeight] = React.useState(0);
 
   React.useEffect(() => {
     setHeight({
       height: selectedElement.current.clientHeight,
-      cardNumber: activeCard
+      cardNumber: step
     });
-  }, [selectedElement, activeCard]);
+  }, [selectedElement, step]);
 
   const randomize = () => {
     console.log('randomize clicked');
@@ -47,18 +46,18 @@ const SideBar = ({ classes }) => {
 
   const renderCard = (header, text, element) => (
     <div className={classes.card}>
-      {Number(header[0]) === activeCard && height.cardNumber === activeCard ? (
+      {Number(header[0]) === step + 1 && height.cardNumber === step ? (
         <div className={classes.selected} style={{ height: height.height }} />
       ) : null}
       <Paper
         className={classes.paper}
-        ref={Number(header[0]) === activeCard ? selectedElement : null}
+        ref={Number(header[0]) === step + 1 ? selectedElement : null}
       >
         <div>
           <Typography
             variant="h6"
             className={classes.bold}
-            onClick={() => setActiveCard(Number(header[0]))}
+            // onClick={() => setActiveCard(Number(header[0]))}
           >
             {header}
           </Typography>
@@ -82,8 +81,8 @@ const SideBar = ({ classes }) => {
         <Divider className={classes.divider} />
         <div className={classes.checkboxDiv}>
           <Checkbox
-            checked={showPointer}
-            onChange={() => setShowPointer(!showPointer)}
+            checked={pointer}
+            onChange={() => handlePointer()}
             color="primary"
             className={classes.checkboxWrapper}
             icon={<CheckBoxOutlineBlankIcon className={classes.checkbox} />}

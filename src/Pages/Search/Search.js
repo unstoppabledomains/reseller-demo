@@ -50,97 +50,12 @@ const Search = ({ classes, ...props }) => {
 	}, [isMined, ownDomains]);
 
 	const owner = "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf";
-	const _renderHints = () => (
-		<div >
-			<div className="card" style={{ width: "40rem", minHeight: "40rem" }}>
-				<div className="card-body">
-					<h5 className="card-title">Hints</h5>
-					<div className="card" id="list-field">
-						<div className="card-header">
-							<h5 className="card-title">ZIL or ETH address required</h5>
-						</div>
-						<div className="card-body">
-							<p className="card-text">You need to have a ZIL or ETH wallet in your list to  buy a domain</p>
-						</div>
-					</div>
-					<div className="card" id="list-field">
-						<div className="card-header">
-							<h5 className="card-title">Reseller ID</h5>
-						</div>
-						<div className="card-body">
-							<h5 className="card-title">Get your id and API token from UD team</h5>
-							<p className="card-text">You will need to use your API ID instead of hardcoded udtesting in examples above. You can the API ID and token from UD integration team</p>
-						</div>
-					</div>
-					<div className="card" id="list-field">
-						<div className="card-header">
-							<h5 className="card-title">Base URL</h5>
-						</div>
-						<div className="card-body">
-							<p className="card-text">
-								{baseURL}
-							</p>
-						</div>
-					</div>
-					<div className="card" id="list-field">
-						<div className="card-header">
-							<h5 className="card-title">API Calls</h5>
-						</div>
-						<div className="card-body">
-							<div className="card" id="list-field">
-								<div className="card-header">
-									<p className="card-text">
-										/resellers/<code>reseller-id</code>/domains<code>/domain-name</code>.zil
-									</p>
-								</div>
-								<div className="card-body">
-									<ul>
-										<li>Method: GET</li>
-										<li>Response:
-	 							<ReactJson src={
-												{
-													domain: {
-														"name": "bogdantest.zil",
-														"owner": "0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf",
-														"reselling": null,
-														"auction": null
-													}
-												}
-											}
-												collapsed={true}
-												displayDataTypes={false}
-												indentWidth={1}
-												collapseStringsAfterLength={10}
-												displayObjectSize={false}
-											/>
-										</li>
-										<li>Errors:
-									<ReactJson src={{
-												"errors": [
-													{
-														"code": "DOMAIN_NAME_INVALID",
-														"message": "Domain name is invalid"
-													}
-												]
-											}}
-												collapsed={true}
-												displayDataTypes={false}
-												indentWidth={1}
-												collapseStringsAfterLength={20}
-												displayObjectSize={false}
-											/>
-										</li>
-									</ul>
-								</div>
 
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div >
-	)
+	const formatDomainName = (domain) => {
+		const split = domain.split('.');
+		console.log({ split });
+		return <><b>{split[0]}</b>.{split[1]}</>;
+	}
 
 	const fetchDomain = (url) => {
 		return fetch(url, {
@@ -162,10 +77,24 @@ const Search = ({ classes, ...props }) => {
 		setSpinner(true);
 		const result = await fetchDomain(`${baseURL}/${config.reseller}/domains/${domain}`)
 		setResults({ ...result });
+		console.log({ domain, result });
 		setSpinner(false);
 	}
 
+
+
 	const _renderErrors = () => (
+		<>
+			<div className={classes.result}>
+				<div className={classes.row}>
+					<Typography variant="body1">{formatDomainName(userInput)}</Typography>
+				</div>
+			</div>
+		</>
+	);
+
+
+	const _renderErrors_old = () => (
 		<div className="card" id="big">
 			<div className="card-header">
 				<h5 className="card-title">Error</h5>
@@ -204,12 +133,9 @@ const Search = ({ classes, ...props }) => {
 
 		if (domain && !domain.reselling) {
 			return (
-				<div className="card" id="big">
-					<div className="card-header">
-						<h5 className="card-title">{domain.name}</h5>
-					</div>
-					<div className="card-body">
-						<h6 className="card-subtitle">Domain is not available</h6>
+				<div className={classes.notAvailable}>
+					<div className={classes.row}>
+						<Typography variant="body1">{formatDomainName(userInput)}</Typography>
 					</div>
 				</div>
 			);
@@ -221,8 +147,35 @@ const Search = ({ classes, ...props }) => {
 				owner
 			}
 		});
+
+
 		return (
-			<div className="card" id="big">
+			<>
+				<div className={classes.result}>
+					<div className={classes.row}>
+						<Typography variant="body1">{formatDomainName(domain.name)}</Typography>
+						<Typography variant="body1" color="primary" className={classes.bold}>${domain.reselling && domain.reselling.price}.00</Typography>
+					</div>
+					<Typography
+						variant="body2" className={`${classes.label}`}>
+						Domain is available
+					</Typography>
+					<Button
+						variant="contained" color="primary"
+						className={`${classes.button} ${classes.bold} ${classes.wideButton}`}
+						classes={{ label: classes.buttonLabel, root: classes.noOutline }}
+
+					>
+						BUY DOMAIN</Button>
+				</div>
+			</>
+		);
+	}
+
+
+
+
+	{/* <div className="card" id="big">
 				<div className="card-header">
 					<div className="row">
 						<div className="col-9">
@@ -247,10 +200,20 @@ const Search = ({ classes, ...props }) => {
 						<button type="button" className="btn btn-primary btn-md" style={{ width: '100%' }}>BUY</button>
 					</Link>
 				</div>
-			</div>
+			</div> */}
 
-		);
-	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 	const _renderSpinner = () => <div className="loader">Searching...</div>;
 
@@ -343,14 +306,19 @@ const Search = ({ classes, ...props }) => {
 				Find .zil Domain
         </Typography>
 			<div className={classes.inputContainer}>
-				<InputBase margin="normal" fullWidth className={classes.input} />
-
-				<Button variant="contained" color="primary" className={`${classes.button} ${classes.bold}`} classes={{ label: classes.buttonLabel }}>
+				<InputBase fullWidth className={classes.input}
+					value={userInput} onChange={(e) => setUserInput(e.target.value)}
+				/>
+				<Button variant="contained" color="primary"
+					className={`${classes.button} ${classes.bold}`}
+					classes={{ label: classes.buttonLabel }}
+					onClick={_handleFormSubmit}
+				>
 					<SearchIcon />
 					Search
 				</Button>
 			</div>
-
+			{results ? _renderResult() : null}
 		</Paper>
 
 	)

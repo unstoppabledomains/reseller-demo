@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { CardHeader, AppFooter } from '../../Utilities/Cards';
+import { Paper, Typography, Divider, Input, Button, Grid } from '@material-ui/core';
+import InputBase from '@material-ui/core/InputBase'
+import { Search as SearchIcon } from '@material-ui/icons';
+import { withStyles } from '@material-ui/core/styles';
+import styles from '../../styles/search.styles';
 import config from '../../config';
 import ReactJson from 'react-json-view';
 
@@ -10,7 +15,7 @@ const renderArrowDown = () => <div className="arrow-bounce bigger">
 
 const baseURL = 'https://unstoppabledomains.com/api/v1/resellers';
 
-const Search = (props) => {
+const Search = ({ classes, ...props }) => {
 	const [userInput, setUserInput] = useState(`reseller-test-${config.reseller}-${Math.floor(Math.random() * 502562)}.zil`);
 	const [results, setResults] = useState(null);
 	const [spinner, setSpinner] = useState(false);
@@ -329,29 +334,33 @@ const Search = (props) => {
 	}
 
 	return (
-		<>
-			<div className="row justify-content-md-center flex-nowrap mt-5">
-				<div className="col-lg-fluid">
-					<div className="container">
-						{_renderAppScreen()}
-					</div>
-				</div>
 
+		<Paper className={classes.paper}>
+			<Typography variant="h5" className={classes.bold}>
+				Buy .ZIL domain
+			</Typography>
+			<Typography variant="subtitle1" className={classes.text}>
+				Find .zil Domain
+        </Typography>
+			<div className={classes.inputContainer}>
+				<InputBase margin="normal" fullWidth className={classes.input} />
+
+				<Button variant="contained" color="primary" className={`${classes.button} ${classes.bold}`} classes={{ label: classes.buttonLabel }}>
+					<SearchIcon />
+					Search
+				</Button>
 			</div>
-			<div className="row justify-content-md-center flex-nowrap mt-5 mb-5">
-				<div className="col-lg-fluid">
-					{renderArrowDown()}
-				</div>
-			</div>
-			<div className="row justify-content-md-center flex-nowrap mt-5">
-				<div className="col-lg-fluid">
-					<div className="container">
-						{_renderHints()}
-					</div>
-				</div>
-			</div>
-		</>
+
+		</Paper>
+
 	)
 }
 
-export default Search
+export default withStyles(styles)(Search);
+	/* <div className="row justify-content-md-center flex-nowrap mt-5">
+<div className="col-lg-fluid">
+<div className="container">
+{_renderAppScreen()}
+</div>
+</div>
+</div> */

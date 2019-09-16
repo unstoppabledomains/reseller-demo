@@ -11,12 +11,33 @@ export default createStyles((theme: any) => ({
 	},
 	bold: {
 		fontWeight: 'bold',
-		margin: `${theme.spacing(3)}px 0`
 	},
 	text: {
-		margin: `${theme.spacing(2)}px 0`,
 		fontWeight: 600,
-		fontSize: '16px'
+		fontSize: 16,
+		marginTop: theme.spacing(3)
+	},
+	inputContainer: {
+		display: 'flex',
+		alignItems: 'center'
+	},
+	input: {
+		height: 40,
+		padding: theme.spacing(1),
+		borderRadius: 6,
+		border: 'solid 1px rgba(0, 0, 0, 0.2)'
+
+	},
+	button: {
+		minWidth: 131,
+		height: 40,
+		marginLeft: theme.spacing(1),
+		display: 'flex',
+	},
+	buttonLabel: {
+		display: 'flex',
+		justifyContent: 'space-around',
+		alignItems: 'center'
 	}
 
 }));

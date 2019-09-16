@@ -17,6 +17,7 @@ const App = ({ classes }) => {
   const [pointer, setPointer] = React.useState(true);
   const [domainName, setDomainName] = React.useState('');
   const [emailProps, setEmailProps] = React.useState({});
+  const [email, setEmail] = React.useState('');
 
   const handlePointer = () => {
     setPointer(!pointer);
@@ -68,6 +69,11 @@ const App = ({ classes }) => {
             handleNextStep={handleNextStep}
             handlePrevStep={handlePrevStep}
             emailProps={emailProps}
+            email={email}
+            setEmail={setEmail}
+            step={step}
+            showPointer={pointer}
+            setStep={setStep}
           />
         );
       case 3:
@@ -81,6 +87,7 @@ const App = ({ classes }) => {
         break;
     }
   };
+  console.log(emailProps);
 
   console.log('step', step);
   return (
@@ -90,6 +97,7 @@ const App = ({ classes }) => {
         pointer={pointer}
         step={step}
         randomizeDomain={randomizeDomain}
+        setEmail={setEmail}
       />
       <div className={classes.layout}>
         {renderStep()}

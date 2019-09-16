@@ -8,7 +8,8 @@ const SideBar = ({
   pointer,
   handlePointer,
   step,
-  randomizeDomain
+  randomizeDomain,
+  setEmail
 }) => {
   // const [activeCard, setActiveCard] = React.useState(1);
   const selectedElement = React.useRef(0);
@@ -25,9 +26,9 @@ const SideBar = ({
   //   console.log('randomize clicked');
   // };
 
-  const setExampleEmail = () => {
-    console.log('example email clicked');
-  };
+  // const setExampleEmail = () => {
+  //   console.log('example email clicked');
+  // };
   const setCCNumber = () => {
     console.log('credit card number clicked');
   };
@@ -39,7 +40,10 @@ const SideBar = ({
     </span>
   );
   const emailExampleLink = (
-    <span onClick={() => setExampleEmail()} className={classes.buttonText}>
+    <span
+      onClick={() => setEmail('example@example.com')}
+      className={classes.buttonText}
+    >
       example@example.com
     </span>
   );

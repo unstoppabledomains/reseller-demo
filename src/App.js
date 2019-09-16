@@ -46,6 +46,7 @@ const App = ({ classes }) => {
             handlePrevStep={handlePrevStep}
             domainName={domainName}
             step={step}
+            showPointer={pointer}
           />
         );
       case 1:
@@ -55,6 +56,7 @@ const App = ({ classes }) => {
             handlePrevStep={handlePrevStep}
             step={step}
             domainName={domainName}
+            showPointer={pointer}
           />
         );
       case 2:

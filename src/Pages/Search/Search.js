@@ -15,6 +15,7 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from '../../styles/search.styles';
 import config from '../../config';
 import ReactJson from 'react-json-view';
+import Pointer from '../../Utilities/Pointer';
 
 const renderArrowDown = () => (
   <div className="arrow-bounce bigger">
@@ -35,7 +36,8 @@ const Search = ({
   step,
   handleNextStep,
   handlePrevstep,
-  domainName
+  domainName,
+  showPointer
 }) => {
   const [userInput, setUserInput] = useState(domainName);
   const [results, setResults] = useState(null);
@@ -215,6 +217,7 @@ const Search = ({
           <Typography variant="body2" className={`${classes.label}`}>
             Domain is available
           </Typography>
+
           <Button
             variant="contained"
             color="primary"
@@ -223,6 +226,11 @@ const Search = ({
           >
             BUY DOMAIN
           </Button>
+          {step === 1 && showPointer ? (
+            <div style={{ position: 'fixed', transform: 'translateX(208px)' }}>
+              <Pointer />
+            </div>
+          ) : null}
         </div>
       </>
     );
@@ -372,6 +380,11 @@ const Search = ({
         Find .zil Domain
       </Typography>
       <div className={classes.inputContainer}>
+        {step === 0 && showPointer ? (
+          <div style={{ position: 'fixed', transform: 'translateX(-40px)' }}>
+            <Pointer />
+          </div>
+        ) : null}
         <InputBase
           fullWidth
           className={classes.input}
@@ -384,6 +397,7 @@ const Search = ({
           className={`${classes.button} ${classes.bold}`}
           classes={{ label: classes.buttonLabel }}
           onClick={_handleFormSubmit}
+          disabled={!userInput}
         >
           <SearchIcon />
           Search

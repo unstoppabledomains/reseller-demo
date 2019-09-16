@@ -37,7 +37,8 @@ const Search = ({
   handleNextStep,
   handlePrevstep,
   domainName,
-  showPointer
+  showPointer,
+  setEmailProps
 }) => {
   const [userInput, setUserInput] = useState(domainName);
   const [results, setResults] = useState(null);
@@ -83,6 +84,15 @@ const Search = ({
     const interval = setInterval(_fetchBlockchainStatus, 5000);
     return () => clearInterval(interval);
   }, [isMined, ownDomains]);
+
+  const handleBuyDomain = () => {
+    setEmailProps({
+      // ...location.state,
+      ...results,
+      owner
+    });
+    handleNextStep();
+  };
 
   const owner = '0xa823a39d2d5d2b981a10ca8f0516e6eaff78bdcf';
 
@@ -223,6 +233,7 @@ const Search = ({
             color="primary"
             className={`${classes.button} ${classes.bold} ${classes.wideButton}`}
             classes={{ label: classes.buttonLabel, root: classes.noOutline }}
+            onClick={() => handleBuyDomain()}
           >
             BUY DOMAIN
           </Button>

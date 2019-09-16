@@ -16,6 +16,7 @@ const App = ({ classes }) => {
   const [step, setStep] = React.useState(0);
   const [pointer, setPointer] = React.useState(true);
   const [domainName, setDomainName] = React.useState('');
+  const [emailProps, setEmailProps] = React.useState({});
 
   const handlePointer = () => {
     setPointer(!pointer);
@@ -47,6 +48,7 @@ const App = ({ classes }) => {
             domainName={domainName}
             step={step}
             showPointer={pointer}
+            setEmailProps={setEmailProps}
           />
         );
       case 1:
@@ -57,6 +59,7 @@ const App = ({ classes }) => {
             step={step}
             domainName={domainName}
             showPointer={pointer}
+            setEmailProps={setEmailProps}
           />
         );
       case 2:
@@ -64,6 +67,7 @@ const App = ({ classes }) => {
           <Email
             handleNextStep={handleNextStep}
             handlePrevStep={handlePrevStep}
+            emailProps={emailProps}
           />
         );
       case 3:

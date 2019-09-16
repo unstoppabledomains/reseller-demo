@@ -54,6 +54,14 @@ export default createStyles((theme: any) => ({
 		display: 'flex',
 		justifyContent: 'space-between'
 	},
+	warningMargin: {
+		marginTop: theme.spacing(1.5),
+		width: 420,
+	},
+	warningLabel: {
+		marginLeft: theme.spacing(1)
+	},
+	center: { display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: theme.spacing(1.5) },
 	label: {
 		color: '#7782a0'
 	},

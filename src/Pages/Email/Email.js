@@ -90,6 +90,7 @@ const Email = ({
           className={classes.input}
           value={email}
           onChange={handleEmailChange}
+          onKeyDown={e => (e.key === 'Enter' ? handleSubmit() : null)}
         />
       </div>
       {emailError ? (

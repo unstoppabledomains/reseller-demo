@@ -90,10 +90,10 @@ export default createStyles((theme: any) => ({
   },
   selected: {
     // transform: 'translateX(-48px)',
-    width: '4px !important',
+    width: 8,
     backgroundColor: theme.palette.success,
     marginLeft: -theme.spacing(3),
-    marginRight: `calc(${theme.spacing(3)}px - 4px)`
+    marginRight: `calc(${theme.spacing(3)}px - 8px)`
     // marginTop: -theme.spacing(3),
     // marginBottom: -theme.spacing(3)
   },

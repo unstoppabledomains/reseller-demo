@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CardElement, injectStripe } from 'react-stripe-elements';
 import StripeCheckoutForm from './StripeCheckoutForm';
 import { StripeProvider, Elements } from 'react-stripe-elements';
 import config from '../../config';
@@ -14,8 +15,45 @@ import {
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Pointer from '../../Utilities/Pointer';
+import ProtectedIcon from '@material-ui/icons/VerifiedUser';
 
 const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
+  // const _handleUDPayment = ({ token }, setSpinner) => {
+  //   console.log('_handleUPPayment ', { token });
+  //   const {
+  //     domain: { name },
+  //     email,
+  //     owner
+  //   } = state;
+  //   const apiurl = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders`;
+  //   const body = {
+  //     order: {
+  //       payment: {
+  //         type: 'stripe',
+  //         tokenId: token.id
+  //       },
+  //       domains: [
+  //         {
+  //           name,
+  //           owner: userOwner !== '' ? userOwner : owner,
+  //           resolution: _mockWalletResolution()
+  //         }
+  //       ]
+  //     }
+  //   };
+  //   console.log(apiurl);
+  //   console.log(body);
+  //   buy(apiurl, body, setSpinner).then(res => {
+  //     if (res && !res.errors) {
+  //       _saveToLocal({
+  //         ...body.order,
+  //         config: { email, orderNumber: res.order.orderNumber }
+  //       });
+  //     }
+  //     setSpinner(false);
+  //   });
+  // };
+
   return (
     <Paper className={classes.paper}>
       <div className={classes.headerDiv}>
@@ -62,6 +100,23 @@ const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
           // value={email}
           // onChange={handleEmailChange}
         />
+        {/* <StripeProvider
+          apiKey={
+            domainObject.domain &&
+            domainObject.domain.resseler &&
+            domainObject.domain.resseler.test
+              ? config.stripeKey
+              : config.stripeKeyLiveDomain
+          }
+        >
+          <Elements>
+            <StripeCheckoutForm
+              domain={state.domain}
+              funcs={{ _handleUDPayment }}
+              test={testNameSpace}
+            />
+          </Elements>
+        </StripeProvider> */}
       </div>
       {/* {emailError ? (
         <div className={classes.errorDiv}>
@@ -70,6 +125,13 @@ const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
           </Typography>
         </div>
       ) : null} */}
+      <div className={classes.stripeLogoDiv}>
+        <ProtectedIcon className={classes.protectedIcon} />
+        <Typography className={classes.stripeText}>
+          Secured Checkout Powered by
+        </Typography>
+        <img src="/images/stripe-logo.svg" alt="stripe-logo" />
+      </div>
       <Button
         // onClick={() => handleSubmit()}
         color="primary"
@@ -241,13 +303,13 @@ export default withStyles(styles)(Stripe);
 // 					<p className="card-title">Stripe Payment flow</p>
 // 				</div>
 // 				<div className="card-body">
-// 					<StripeProvider apiKey={testNameSpace ? config.stripeKey : config.stripeKeyLiveDomain}>
-// 						<Elements>
-// 							<StripeCheckoutForm domain={state.domain} funcs={
-// 								{ _handleUDPayment }
-// 							} test={testNameSpace} />
-// 						</Elements>
-// 					</StripeProvider >
+// <StripeProvider apiKey={testNameSpace ? config.stripeKey : config.stripeKeyLiveDomain}>
+// 	<Elements>
+// 		<StripeCheckoutForm domain={state.domain} funcs={
+// 			{ _handleUDPayment }
+// 		} test={testNameSpace} />
+// 	</Elements>
+// </StripeProvider >
 // 				</div>
 // 			</div>
 // 			{errors ?

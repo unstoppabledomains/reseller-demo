@@ -1,6 +1,8 @@
 import { createStyles } from '@material-ui/core/styles';
 
 export default createStyles((theme: any) => ({
+  // check for unused styles
+
   paper: {
     minWidth: 528,
     padding: theme.spacing(3)
@@ -63,5 +65,21 @@ export default createStyles((theme: any) => ({
   },
   errorMessage: {
     fontWeight: 600
+  },
+  stripeLogoDiv: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: theme.spacing(3)
+  },
+  protectedIcon: {
+    color: '#6772e5'
+  },
+  stripeText: {
+    color: '#6772e5',
+    fontWeight: 600,
+    fontSize: 14,
+    marginLeft: theme.spacing(1.5),
+    marginRight: theme.spacing(1)
   }
 }));

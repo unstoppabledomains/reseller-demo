@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 // import { history } from './history';
 // import Wallet from './Pages/WalletFront/Wallet';
@@ -19,6 +19,15 @@ const App = ({ classes }) => {
   const [emailProps, setEmailProps] = React.useState({});
   const [email, setEmail] = React.useState('');
   const [domainResults, setDomainResults] = React.useState('');
+
+  useEffect(() => {
+    if (step === 0) {
+      setEmail('');
+      setDomainResults('');
+      setDomainName('');
+      setEmailProps('');
+    }
+  }, [step]);
 
   const handlePointer = () => {
     setPointer(!pointer);

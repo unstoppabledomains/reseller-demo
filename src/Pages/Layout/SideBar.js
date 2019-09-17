@@ -12,7 +12,6 @@ const SideBar = ({
   setEmail,
   isDomainLive
 }) => {
-  // const [activeCard, setActiveCard] = React.useState(1);
   const selectedElement = React.useRef(0);
   const [height, setHeight] = React.useState(0);
 
@@ -22,14 +21,6 @@ const SideBar = ({
       cardNumber: step
     });
   }, [selectedElement, step]);
-
-  // const randomize = () => {
-  //   console.log('randomize clicked');
-  // };
-
-  // const setExampleEmail = () => {
-  //   console.log('example email clicked');
-  // };
 
   const setCCNumber = () => {
     console.log('credit card number clicked');

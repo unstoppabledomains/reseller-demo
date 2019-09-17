@@ -1,16 +1,89 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { CardHeader, AppFooter } from '../../Utilities/Cards';
 import StripeCheckoutForm from './StripeCheckoutForm';
 import { StripeProvider, Elements } from 'react-stripe-elements';
 import config from '../../config';
-
 import CoinbaseCommerceButton from 'react-coinbase-commerce';
 import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
+import styles from '../../styles/stripe.styles';
+import {
+  Paper,
+  withStyles,
+  Typography,
+  Button,
+  InputBase
+} from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import Pointer from '../../Utilities/Pointer';
 
-const Checkout = () => {
-  return <div>checkout</div>;
+const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
+  return (
+    <Paper className={classes.paper}>
+      <div className={classes.headerDiv}>
+        <Typography variant="h5" className={classes.bold}>
+          Pay with credit card
+        </Typography>
+        <Button
+          color="primary"
+          className={classes.searchButton}
+          onClick={() => {
+            setStep(0);
+          }}
+        >
+          <SearchIcon className={classes.searchIcon} />
+          Search new
+        </Button>
+      </div>
+      <div className={classes.domainDiv}>
+        <div>
+          <Typography className={classes.bold}>
+            {domainObject.domain.name.split('.')[0]}
+            <span className={classes.extension}>
+              .{domainObject.domain.name.split('.')[1]}
+            </span>
+          </Typography>
+          <Typography variant="subtitle2" color="textSecondary">
+            Domain is available
+          </Typography>
+        </div>
+        <Typography color="primary" className={classes.bold}>
+          $ {domainObject.domain.reselling.price}.00
+        </Typography>
+      </div>
+      <Typography className={classes.lessBold}>Name</Typography>
+      <div className={classes.inputDiv}>
+        {step === 2 && showPointer ? (
+          <div style={{ position: 'fixed', transform: 'translateX(-40px)' }}>
+            <Pointer />
+          </div>
+        ) : null}
+        <InputBase
+          placeholder="Your Full Name"
+          className={classes.input}
+          // value={email}
+          // onChange={handleEmailChange}
+        />
+      </div>
+      {/* {emailError ? (
+        <div className={classes.errorDiv}>
+          <Typography color="error" className={classes.errorMessage}>
+            {emailError}
+          </Typography>
+        </div>
+      ) : null} */}
+      <Button
+        // onClick={() => handleSubmit()}
+        color="primary"
+        variant="contained"
+        className={classes.button}
+        // disabled={!email}
+      >
+        Pay
+      </Button>
+    </Paper>
+  );
 };
+
+export default withStyles(styles)(Stripe);
 
 // const Checkout = (props) => {
 
@@ -294,5 +367,3 @@ const Checkout = () => {
 // 		</>
 // 	);
 // }
-
-export default Checkout;

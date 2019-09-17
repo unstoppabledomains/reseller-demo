@@ -4,13 +4,14 @@ import React, { useEffect } from 'react';
 // import Wallet from './Pages/WalletFront/Wallet';
 import Search from './Pages/Search/Search';
 import Email from './Pages/Email/Email';
-import Checkout from './Pages/Checkout/Checkout';
+// import Checkout from './Pages/Checkout/Stripe';
 // import Finish from './Pages/Finish/Finish';
 // import Send from './Pages/Send';
 import Header from './Pages/Layout/Header';
 import { withStyles } from '@material-ui/styles';
 import config from './config';
 import styles from './styles/app.styles';
+import Stripe from './Pages/Checkout/Stripe';
 
 const App = ({ classes }) => {
   const [step, setStep] = React.useState(0);
@@ -89,9 +90,13 @@ const App = ({ classes }) => {
         );
       case 3:
         return (
-          <Checkout
+          <Stripe
             handleNextStep={handleNextStep}
             handlePrevStep={handlePrevStep}
+            domainObject={emailProps}
+            step={step}
+            showPointer={pointer}
+            setStep={setStep}
           />
         );
       default:

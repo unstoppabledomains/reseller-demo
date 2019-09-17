@@ -1,12 +1,12 @@
 import React from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import { history } from './history';
+// import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+// import { history } from './history';
 // import Wallet from './Pages/WalletFront/Wallet';
 import Search from './Pages/Search/Search';
 import Email from './Pages/Email/Email';
 import Checkout from './Pages/Checkout/Checkout';
-import Finish from './Pages/Finish/Finish';
-import Send from './Pages/Send';
+// import Finish from './Pages/Finish/Finish';
+// import Send from './Pages/Send';
 import Header from './Pages/Layout/Header';
 import { withStyles } from '@material-ui/styles';
 import config from './config';
@@ -89,9 +89,9 @@ const App = ({ classes }) => {
         break;
     }
   };
-  console.log(domainResults);
 
   console.log('step', step);
+
   return (
     <div className={classes.root}>
       <Header

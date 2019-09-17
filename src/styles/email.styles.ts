@@ -53,5 +53,15 @@ export default createStyles((theme: any) => ({
   inputDiv: {
     display: 'flex',
     alignItems: 'center'
+  },
+  errorDiv: {
+    width: '100%',
+    borderRadius: 6,
+    backgroundColor: '#fff1f1',
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(2)
+  },
+  errorMessage: {
+    fontWeight: 600
   }
 }));

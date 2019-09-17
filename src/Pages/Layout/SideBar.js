@@ -31,8 +31,6 @@ const SideBar = ({
   //   console.log('example email clicked');
   // };
 
-  console.log(isDomainLive);
-
   const setCCNumber = () => {
     console.log('credit card number clicked');
   };

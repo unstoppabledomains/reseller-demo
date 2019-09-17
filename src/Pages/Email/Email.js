@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Pointer from '../../Utilities/Pointer';
 import {
   Paper,
@@ -19,10 +19,28 @@ const Email = ({
   showPointer,
   setStep
 }) => {
-  // const checkEmail = email => !/.+@.+\..+/.test(email);
+  const [emailError, setEmailError] = useState('');
+  const isEmailValid = e => {
+    // eslint-disable-next-line
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      e
+    );
+  };
 
   const handleSubmit = () => {
     console.log('submitting form');
+    if (isEmailValid(email)) {
+      setStep(3);
+    } else {
+      setEmailError('Incorrect email');
+    }
+  };
+
+  const handleEmailChange = e => {
+    if (emailError) {
+      setEmailError('');
+    }
+    setEmail(e.target.value);
   };
 
   return (
@@ -45,8 +63,10 @@ const Email = ({
       <div className={classes.domainDiv}>
         <div>
           <Typography className={classes.bold}>
-            {emailProps.domain.name}
-            <span className={classes.extension}>.zil</span>
+            {emailProps.domain.name.split('.')[0]}
+            <span className={classes.extension}>
+              .{emailProps.domain.name.split('.')[1]}
+            </span>
           </Typography>
           <Typography variant="subtitle2" color="textSecondary">
             Domain is available
@@ -69,9 +89,16 @@ const Email = ({
           placeholder="Your Email"
           className={classes.input}
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={handleEmailChange}
         />
       </div>
+      {emailError ? (
+        <div className={classes.errorDiv}>
+          <Typography color="error" className={classes.errorMessage}>
+            {emailError}
+          </Typography>
+        </div>
+      ) : null}
       <Button
         onClick={() => handleSubmit()}
         color="primary"

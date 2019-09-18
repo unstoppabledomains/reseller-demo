@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../styles/header.styles';
+import styles from '../../../styles/header.styles';
 import { withStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Link } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
@@ -16,7 +16,8 @@ const Header = ({
   step,
   randomizeDomain,
   setEmail,
-  isDomainLive
+  isDomainLive,
+  history
 }) => {
   const [open, setOpen] = React.useState(true);
   const [version, setVersion] = React.useState(0);
@@ -68,6 +69,7 @@ const Header = ({
             <DropDownMenu
               version={version}
               handleVersionChange={handleVersionChange}
+              history={history}
             />
             <img src="/images/github.svg" alt="github" />
           </div>

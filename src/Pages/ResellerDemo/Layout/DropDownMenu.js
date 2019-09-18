@@ -5,20 +5,22 @@ import MenuItem from '@material-ui/core/MenuItem';
 import AppsIcon from '@material-ui/icons/Apps';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CheckIcon from '@material-ui/icons/Check';
-import styles from '../../styles/dropDownMenu.styles';
+import styles from '../../../styles/dropDownMenu.styles';
 
 const menuItems = ['Version 1', 'Version 2'];
 
 const DropDownMenu = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { classes, handleVersionChange, version } = props;
+  const { classes, handleVersionChange, version, history } = props;
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleSort = index => {
+  const handleChangeDemo = index => {
     handleVersionChange(index);
+    if (index === 0) history.push('/');
+    else if (index === 1) history.push('/domain-name-reloution');
     setAnchorEl(null);
   };
 
@@ -48,7 +50,7 @@ const DropDownMenu = props => {
         {menuItems.map((text, index) => (
           <MenuItem
             key={index}
-            onClick={() => handleSort(index)}
+            onClick={() => handleChangeDemo(index)}
             className={classes.menuItem}
           >
             {index === version ? (

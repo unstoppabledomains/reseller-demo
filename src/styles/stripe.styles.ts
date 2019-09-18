@@ -29,7 +29,8 @@ export default createStyles((theme: any) => ({
     backgroundColor: theme.palette.iceBlue,
     padding: theme.spacing(2),
     borderRadius: 6,
-    margin: `${theme.spacing(2)}px 0`,
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(3),
     display: 'flex',
     justifyContent: 'space-between'
   },
@@ -62,7 +63,7 @@ export default createStyles((theme: any) => ({
     borderRadius: 6,
     backgroundColor: '#fff1f1',
     padding: theme.spacing(2),
-    marginTop: theme.spacing(2)
+    marginBottom: theme.spacing(3)
   },
   errorMessage: {
     fontWeight: 600
@@ -84,6 +85,21 @@ export default createStyles((theme: any) => ({
     marginRight: theme.spacing(1)
   },
   stripeForm: {
-    width: '100%'
+    width: '100%',
+    marginTop: theme.spacing(3)
+  },
+  stripeField: {
+    height: 40,
+    borderRadius: 6,
+    border: 'solid 1px rgba(0, 0, 0, 0.2)',
+    padding: theme.spacing(1)
+  },
+  loadingDiv: {
+    width: '100%',
+    height: 60,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: theme.spacing(3)
   }
 }));

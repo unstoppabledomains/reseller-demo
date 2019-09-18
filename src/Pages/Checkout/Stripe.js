@@ -15,19 +15,29 @@ import {
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import Pointer from '../../Utilities/Pointer';
-import ProtectedIcon from '@material-ui/icons/VerifiedUser';
 
-const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
-  const [userOwner, setUserOwner] = useState('');
-  const [transactionResponse, setTransactionResponse] = useState(); // pass next
+const Stripe = ({
+  domainObject,
+  classes,
+  setStep,
+  step,
+  showPointer,
+  email,
+  owner,
+  setTransactionResponse
+}) => {
+  const [userName, setUserName] = useState('');
+
   const [errors, setErrors] = useState();
 
   const _finalizeTransaction = res => {
     setTransactionResponse(res);
+
     if (!res.errors) {
-      console.log('finish');
-      setStep(3);
-    } else setErrors(res.errors);
+      setStep(4);
+    } else {
+      setErrors(res.errors[0].message);
+    }
   };
 
   const buy = (url, data) => {
@@ -49,9 +59,7 @@ const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
   const _handleUDPayment = ({ token }, setSpinner) => {
     console.log('_handleUPPayment ', { token });
     const {
-      domain: { name },
-      email,
-      owner
+      domain: { name }
     } = domainObject;
     const apiurl = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders`;
     const body = {
@@ -63,13 +71,13 @@ const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
         domains: [
           {
             name,
-            owner: userOwner !== '' ? userOwner : owner
+            owner
           }
         ]
       }
     };
-    console.log(apiurl);
-    console.log(body);
+    // console.log(apiurl);
+    // console.log(body);
     buy(apiurl, body, setSpinner).then(res => {
       if (res && !res.errors) {
         _saveToLocal({
@@ -83,10 +91,10 @@ const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
 
   const testNameSpace =
     domainObject.domain &&
-    domainObject.domain.resseler &&
-    domainObject.domain.resseler.test
-      ? domainObject.domain.resseler.test
-      : false;
+    domainObject.domain.reselling &&
+    domainObject.domain.reselling.test;
+
+  // console.log('testNameSpace', testNameSpace, domainObject);
 
   return (
     <Paper className={classes.paper}>
@@ -117,10 +125,18 @@ const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
             Domain is available
           </Typography>
         </div>
+
         <Typography color="primary" className={classes.bold}>
-          $ {domainObject.domain.reselling.price}.00
+          ${domainObject.domain.reselling.price}.00
         </Typography>
       </div>
+      {errors ? (
+        <div className={classes.errorDiv}>
+          <Typography color="error" className={classes.errorMessage}>
+            {errors}
+          </Typography>
+        </div>
+      ) : null}
       <Typography className={classes.lessBold}>Name</Typography>
       <div className={classes.inputDiv}>
         {step === 2 && showPointer ? (
@@ -131,44 +147,20 @@ const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
         <InputBase
           placeholder="Your Full Name"
           className={classes.input}
-          value={userOwner}
-          onChange={e => setUserOwner(e.target.value)}
+          value={userName}
+          onChange={e => setUserName(e.target.value)}
         />
         <StripeProvider
           apiKey={testNameSpace ? config.stripeKey : config.stripeKeyLiveDomain}
         >
           <Elements>
             <StripeCheckoutForm
-              domain={domainObject.domain}
-              funcs={{ _handleUDPayment }}
-              test={testNameSpace}
+              handlePayment={_handleUDPayment}
+              setErrors={setErrors}
             />
           </Elements>
         </StripeProvider>
       </div>
-      {/* {emailError ? (
-        <div className={classes.errorDiv}>
-          <Typography color="error" className={classes.errorMessage}>
-            {emailError}
-          </Typography>
-        </div>
-      ) : null} */}
-      <div className={classes.stripeLogoDiv}>
-        <ProtectedIcon className={classes.protectedIcon} />
-        <Typography className={classes.stripeText}>
-          Secured Checkout Powered by
-        </Typography>
-        <img src="/images/stripe-logo.svg" alt="stripe-logo" />
-      </div>
-      {/* <Button
-        // onClick={() => handleSubmit()}
-        color="primary"
-        variant="contained"
-        className={classes.button}
-        // disabled={!email}
-      >
-        Pay
-      </Button> */}
     </Paper>
   );
 };
@@ -184,7 +176,7 @@ export default withStyles(styles)(Stripe);
 // 	const [paymentMethod, setPaymentMethod] = useState('none');
 // 	const [coinbaseToken, setCoinbaseToken] = useState('');
 // 	const [showNavigation, setShowNavigation] = useState(false);
-// 	const [userOwner, setUserOwner] = useState('');
+// 	const [userName, setUserName] = useState('');
 
 // 	if (!state) return <Redirect to="/" />
 
@@ -242,7 +234,7 @@ export default withStyles(styles)(Stripe);
 // 				domains:
 // 					[{
 // 						name,
-// 						owner: userOwner !== '' ? userOwner : owner,
+// 						owner: userName !== '' ? userName : owner,
 // 						resolution: _mockWalletResolution()
 // 					}]
 // 			}
@@ -269,7 +261,7 @@ export default withStyles(styles)(Stripe);
 // 				"domains": [
 // 					{
 // 						"name": name,
-// 						"owner": userOwner !== '' ? userOwner : owner,
+// 						"owner": userName !== '' ? userName : owner,
 // 						"resolution": {
 // 							..._mockWalletResolution()
 // 						}
@@ -396,13 +388,13 @@ export default withStyles(styles)(Stripe);
 // 								<form onSubmit={(e) => e.preventDefault()}>
 // 									<div className="form-group">
 // 										<label for="exampleInputEmail1">Owner address</label>
-// 										{showNavigation && userOwner !== '' ?
-// 											<h4 className="card-title">{userOwner}</h4>
+// 										{showNavigation && userName !== '' ?
+// 											<h4 className="card-title">{userName}</h4>
 // 											:
 // 											<input
 // 												type="text" className="form-control"
-// 												value={userOwner}
-// 												onChange={(e) => setUserOwner(e.target.value)}
+// 												value={userName}
+// 												onChange={(e) => setUserName(e.target.value)}
 // 											/>
 // 										}
 // 										<small id="emailHelp" className="form-text text-muted">Can be either eth or zil address</small>
@@ -413,7 +405,7 @@ export default withStyles(styles)(Stripe);
 // 										}}>Edit </button>
 // 										:
 // 										<button type="submit" className="btn btn-primary btn-block" onClick={() => {
-// 											if (userOwner !== '')
+// 											if (userName !== '')
 // 												setShowNavigation(true);
 // 										}}>Submit</button>
 // 									}

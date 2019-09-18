@@ -17,7 +17,9 @@ const SideBar = ({
 
   React.useEffect(() => {
     setHeight({
-      height: selectedElement.current.clientHeight,
+      height: selectedElement.current
+        ? selectedElement.current.clientHeight
+        : 0,
       cardNumber: step
     });
   }, [selectedElement, step]);

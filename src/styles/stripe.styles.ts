@@ -101,5 +101,13 @@ export default createStyles((theme: any) => ({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: theme.spacing(3)
+  },
+  coinbaseContainer: {
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: -theme.spacing(3.5),
+    }
+  },
+  coinbaseButton: {
+    display: 'none'
   }
 }));

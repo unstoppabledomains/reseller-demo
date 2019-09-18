@@ -3,6 +3,7 @@ import Search from './Search/Search';
 import Email from './Email/Email';
 import Checkout from './Checkout/Checkout';
 import Header from './Layout/Header';
+import Coinbase from './Checkout/Coinbase';
 import { withStyles } from '@material-ui/styles';
 import config from '../../config';
 import styles from '../../styles/app.styles';
@@ -114,7 +115,11 @@ const App = ({ classes, history }) => {
               setTransactionResponse={setTransactionResponse}
             />
           );
-        else return null;
+        else return <Coinbase 
+            domainObject={emailProps}
+            email={email}
+            owner={owner}
+        />;
       case 5:
         return (
           <Congratulations

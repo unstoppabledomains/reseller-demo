@@ -55,5 +55,5 @@ export default createStyles((theme: any) => ({
   },
   smallIcon: {
     margin: `0 ${theme.spacing(0.5)}px`
-  }
+  },
 }));

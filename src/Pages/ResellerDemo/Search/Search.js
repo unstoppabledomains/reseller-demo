@@ -17,7 +17,6 @@ const baseURL = 'https://unstoppabledomains.com/api/v1/resellers';
 
 const Search = ({
   classes,
-  history,
   step,
   owner,
   setOwner,

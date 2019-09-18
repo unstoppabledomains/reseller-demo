@@ -6,16 +6,13 @@ import Button from '@material-ui/core/Button';
 import ProtectedIcon from '@material-ui/icons/VerifiedUser';
 
 const StripeCheckoutForm = ({
-  // domain,
   handlePayment,
-  // test,
   stripe,
   classes,
   userName,
   setErrors
 }) => {
   const [spinner, setSpinner] = useState(false);
-  // const [errors, setErrors] = useState();
 
   const handleSubmit = ev => {
     ev.preventDefault();
@@ -37,19 +34,6 @@ const StripeCheckoutForm = ({
       console.log("Stripe.js hasn't loaded yet.");
     }
   };
-
-  // const _renderSpinner = () => <div className="loader">Searching...</div>;
-
-  // const _renderErrors = () => (
-  //   <div className="card">
-  //     <div className="card-header">
-  //       <h3 className="card-title">Something went wrong</h3>
-  //     </div>
-  //     <div className="card-body">
-  //       <p className="card-text">{errors.message}</p>
-  //     </div>
-  //   </div>
-  // );
 
   return (
     <>

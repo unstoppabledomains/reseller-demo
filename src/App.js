@@ -25,6 +25,7 @@ const App = ({ classes }) => {
   const [transactionResponse, setTransactionResponse] = useState();
 
   const [domainResults, setDomainResults] = React.useState('');
+  const [paymentMethod, setPaymentMethod] = useState(0);
 
   useEffect(() => {
     if (step === 0) {
@@ -101,21 +102,25 @@ const App = ({ classes }) => {
           />
         );
       case 3:
-        return <Checkout />;
-      case 4:
         return (
-          <Stripe
-            handleNextStep={handleNextStep}
-            handlePrevStep={handlePrevStep}
-            domainObject={emailProps}
-            step={step}
-            showPointer={pointer}
-            setStep={setStep}
-            email={email}
-            owner={owner}
-            setTransactionResponse={setTransactionResponse}
-          />
+          <Checkout setPaymentMethod={setPaymentMethod} setStep={setStep} />
         );
+      case 4:
+        if (paymentMethod === 0)
+          return (
+            <Stripe
+              handleNextStep={handleNextStep}
+              handlePrevStep={handlePrevStep}
+              domainObject={emailProps}
+              step={step}
+              showPointer={pointer}
+              setStep={setStep}
+              email={email}
+              owner={owner}
+              setTransactionResponse={setTransactionResponse}
+            />
+          );
+        else return null;
       default:
         break;
     }

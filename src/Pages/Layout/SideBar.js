@@ -114,7 +114,12 @@ const SideBar = ({
       )}
       {renderCard('3. Enter Email', 'Use any email or just', emailExampleLink)}
       {renderCard(
-        '4. Pay with credit card',
+        '4. Choose payment method',
+        'Use can pay with credit card or crypto',
+        null
+      )}
+      {renderCard(
+        '5. Pay with credit card',
         'Use any future date and this card number for tests',
         cCNumberLink
       )}

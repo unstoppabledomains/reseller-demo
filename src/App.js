@@ -122,6 +122,12 @@ const App = ({ classes }) => {
 						/>
 					);
 				else return null;
+			case 5:
+				return <Congratulations
+					setStep={setStep}
+					email={email}
+					transactionResponse={transactionResponse}
+				/>
 			default:
 				break;
 		}

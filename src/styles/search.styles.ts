@@ -73,6 +73,13 @@ export default createStyles((theme: any) => ({
 	},
 	noOutline: {
 		outline: 'none'
+	},
+	storageDiv: {
+		marginTop: theme.spacing(9),
+		display: 'inline-flex',
+		justifyContent: 'flex-start',
+		position: 'relative',
+		width: '100%'
 	}
 
 }));

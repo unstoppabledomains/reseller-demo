@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import LiveIcon from '@material-ui/icons/NewReleases';
 import InputBase from '@material-ui/core/InputBase';
 import { Search as SearchIcon } from '@material-ui/icons';
@@ -35,7 +36,7 @@ const Search = ({
 		JSON.parse(localStorage.getItem('own_domain'))
 	);
 	const [isMined, setIsMined] = useState(false);
-
+	console.log({ ownDomains });
 	useEffect(() => {
 		if (results && results.domain.reselling && !results.domain.reselling.test)
 			setOwner('');
@@ -248,6 +249,15 @@ const Search = ({
 				</div>
 			) : null}
 			{results ? _renderResult() : null}
+			{ownDomains ?
+				<div className={classes.storageDiv}>
+					<div className={classes.row}>
+						<Typography variant="h5" className={`${classes.bold}`}>Order status for {ownDomains.domains[0].name}:</Typography>
+						{isMined ? <Typography variant="h5" className={classes.bold}>Mined</Typography> :
+							<LinearProgress className={classes.linearProgress} />}
+					</div>
+				</div>
+				: null}
 		</Paper>
 	);
 };

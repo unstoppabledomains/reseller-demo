@@ -1,4 +1,5 @@
 import { createStyles } from '@material-ui/core/styles';
+import { relative } from 'path';
 
 export default createStyles((theme: any) => ({
 	paper: {
@@ -14,10 +15,22 @@ export default createStyles((theme: any) => ({
 	headerText: {
 		fontSize: 40
 	},
+	row: {
+		display: 'inline-flex',
+		justifyContent: 'flex-start',
+		position: 'relative',
+		width: '100%'
+	},
+	linearProgress: {
+		width: '65%',
+		position: 'absolute',
+		bottom: 13,
+		right: 3,
+	},
 	bold: {
 		fontWeight: 'bold'
 	},
-	mainText: {
+	mainDiv: {
 		marginTop: theme.spacing(3)
 	},
 	button: {

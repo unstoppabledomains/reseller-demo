@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import Pointer from '../../Utilities/Pointer';
-import {
-  Paper,
-  withStyles,
-  Typography,
-  Button,
-  InputBase
-} from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import InputBase from '@material-ui/core/InputBase';
 import styles from '../../styles/email.styles';
 import SearchIcon from '@material-ui/icons/Search';
 import helper from '../../Utilities/Helpers';
@@ -41,11 +39,17 @@ const Email = ({
     }
   };
 
-  const handleEmailChange = e => {
-    if (emailError) {
-      setEmailError('');
+  const handleSubmit = () => {
+    console.log('submitting form');
+    if (helper.isAddress(owner) && isEmailValid(email)) {
+      setStep(3);
+    } else if (!helper.isAddress(owner) && !isEmailValid(email)) {
+      setEmailError('Incorrect email and owner');
+    } else if (!isEmailValid(email)) {
+      setEmailError('Incorrect email');
+    } else if (!helper.isAddress(owner)) {
+      setEmailError('Incorrect owner format');
     }
-    setEmail(e.target.value);
   };
 
   return (
@@ -78,9 +82,18 @@ const Email = ({
           </Typography>
         </div>
         <Typography color="primary" className={classes.bold}>
-          $ {emailProps.domain.reselling.price}.00
+          ${emailProps.domain.reselling.price}.00
         </Typography>
       </div>
+
+      {emailError ? (
+        <div className={classes.errorDiv}>
+          <Typography color="error" className={classes.errorMessage}>
+            {emailError}
+          </Typography>
+        </div>
+      ) : null}
+
       <Typography className={classes.lessBold}>
         Please provide an email address
       </Typography>
@@ -98,13 +111,6 @@ const Email = ({
           onKeyDown={e => (e.key === 'Enter' ? handleSubmit() : null)}
         />
       </div>
-      {emailError ? (
-        <div className={classes.errorDiv}>
-          <Typography color="error" className={classes.errorMessage}>
-            {emailError}
-          </Typography>
-        </div>
-      ) : null}
 
       {emailProps.owner === '' ? (
         <>
@@ -116,7 +122,12 @@ const Email = ({
               placeholder="Your ETH or ZIL address"
               className={classes.input}
               value={owner}
-              onChange={e => setOwner(e.target.value)}
+              onChange={e => {
+                if (emailError) {
+                  setEmailError('');
+                }
+                setOwner(e.target.value);
+              }}
               onKeyDown={e => (e.key === 'Enter' ? handleSubmit() : null)}
             />
           </div>
@@ -127,7 +138,7 @@ const Email = ({
         color="primary"
         variant="contained"
         className={classes.button}
-        disabled={!email}
+        disabled={!email || !owner}
       >
         Next
       </Button>

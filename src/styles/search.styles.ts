@@ -83,11 +83,9 @@ export default createStyles((theme: any) => ({
 		width: '100%'
 	},
 	linearProgress: {
-		right: 3,
-		width: 230,
-		bottom: 8,
-		position: "absolute",
-		height: 10
-	}
+		marginTop: theme.spacing(1),
+		height: 2,
+		width: '100%'
+	  },
 
 }));

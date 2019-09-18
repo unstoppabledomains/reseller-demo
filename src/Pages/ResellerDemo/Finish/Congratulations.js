@@ -59,10 +59,15 @@ const Congratulations = ({ classes, email, transactionResponse, setStep }) => {
               Mined
             </Typography>
           ) : (
-            <LinearProgress className={classes.linearProgress} />
+            <div>
+              <Typography variant="h5">Pending</Typography>
+            </div>
           )}
         </div>
-        <Typography variant="body1">
+        {isMined ? null :
+          <LinearProgress className={classes.linearProgress} />
+        }
+        <Typography variant="body1" className={classes.statusText}>
           Blockchain transaction requires some time. You can go back to homepage
           the transaction is not going to be lost.
         </Typography>

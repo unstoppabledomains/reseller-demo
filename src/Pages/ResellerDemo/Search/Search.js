@@ -257,9 +257,14 @@ const Search = ({
                 Mined
               </Typography>
             ) : (
-              <LinearProgress className={classes.linearProgress} />
+              <div>
+              <Typography variant="h5">Pending</Typography>
+            </div>
             )}
           </div>
+          {isMined ? null :
+          <LinearProgress className={classes.linearProgress} />
+        }
         </div>
       ) : null}
     </Paper>

@@ -1,20 +1,9 @@
 import React, { useState } from 'react';
 import config from '../../../config';
 import styles from '../../../styles/stripe.styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import LiveIcon from '@material-ui/icons/NewReleases';
-import InputBase from '@material-ui/core/InputBase';
 import { withStyles } from '@material-ui/core/styles';
 import CoinbaseCommerceButton from 'react-coinbase-commerce';
 import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
-
-
-
 
 const Coinbase = ({
     classes,
@@ -25,7 +14,6 @@ const Coinbase = ({
 }) => {
 
     const [coinbaseToken, setCoinbaseToken] = useState('');
-    console.log({domainObject, email, owner});
     const requestCoinbaseToken = async () => {
         const apiURL = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders`;
         const body = {
@@ -37,7 +25,6 @@ const Coinbase = ({
                     {
                         "name": domainObject.domain.name,
                         "owner": owner,
-
                     }
                 ]
             }
@@ -48,9 +35,7 @@ const Coinbase = ({
                 "Content-Type": "application/json"
             }, body: JSON.stringify(body)
         }).then(resp => resp.json());
-        console.log(response);
         setCoinbaseToken(response.order.payment.tokenId);
-        //Autoclick
         const coinbaseButton = document.querySelector('#coinbase-button');
         if (coinbaseButton)
             coinbaseButton.click();

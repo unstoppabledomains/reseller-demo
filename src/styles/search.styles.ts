@@ -1,7 +1,5 @@
 import { createStyles } from '@material-ui/core/styles';
 
-
-
 export default createStyles((theme: any) => ({
 	paper: {
 		minWidth: 528,
@@ -52,7 +50,8 @@ export default createStyles((theme: any) => ({
 	},
 	row: {
 		display: 'flex',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+		width: '100%'
 	},
 	warningMargin: {
 		marginTop: theme.spacing(1.5),

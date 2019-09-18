@@ -119,6 +119,7 @@ const App = ({ classes, history }) => {
             domainObject={emailProps}
             email={email}
             owner={owner}
+            setStep={setStep}
         />;
       case 5:
         return (

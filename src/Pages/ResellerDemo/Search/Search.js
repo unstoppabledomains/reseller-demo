@@ -33,7 +33,7 @@ const Search = ({
   const [ownDomains, setOwnDomains] = useState(
     JSON.parse(localStorage.getItem('own_domain'))
   );
-  const [isMined, setIsMined] = useState(false);
+  const [isMined, setIsMined] = useState(ownDomains.mined);
   console.log({ ownDomains });
   useEffect(() => {
     if (results && results.domain.reselling && !results.domain.reselling.test)
@@ -79,7 +79,6 @@ const Search = ({
 
   const handleBuyDomain = () => {
     setEmailProps({
-      // ...location.state,
       ...results,
       owner
     });
@@ -254,7 +253,7 @@ const Search = ({
               {ownDomains.domains[0].name}:
             </Typography>
             {isMined ? (
-              <Typography variant="h5" className={classes.bold}>
+              <Typography variant="body2" color="primary" className={classes.bold}>
                 Mined
               </Typography>
             ) : (

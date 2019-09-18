@@ -18,41 +18,75 @@ import Pointer from '../../Utilities/Pointer';
 import ProtectedIcon from '@material-ui/icons/VerifiedUser';
 
 const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
-  // const _handleUDPayment = ({ token }, setSpinner) => {
-  //   console.log('_handleUPPayment ', { token });
-  //   const {
-  //     domain: { name },
-  //     email,
-  //     owner
-  //   } = state;
-  //   const apiurl = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders`;
-  //   const body = {
-  //     order: {
-  //       payment: {
-  //         type: 'stripe',
-  //         tokenId: token.id
-  //       },
-  //       domains: [
-  //         {
-  //           name,
-  //           owner: userOwner !== '' ? userOwner : owner,
-  //           resolution: _mockWalletResolution()
-  //         }
-  //       ]
-  //     }
-  //   };
-  //   console.log(apiurl);
-  //   console.log(body);
-  //   buy(apiurl, body, setSpinner).then(res => {
-  //     if (res && !res.errors) {
-  //       _saveToLocal({
-  //         ...body.order,
-  //         config: { email, orderNumber: res.order.orderNumber }
-  //       });
-  //     }
-  //     setSpinner(false);
-  //   });
-  // };
+  const [userOwner, setUserOwner] = useState('');
+  const [transactionResponse, setTransactionResponse] = useState(); // pass next
+  const [errors, setErrors] = useState();
+
+  const _finalizeTransaction = res => {
+    setTransactionResponse(res);
+    if (!res.errors) {
+      console.log('finish');
+      setStep(3);
+    } else setErrors(res.errors);
+  };
+
+  const buy = (url, data) => {
+    return fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        Authentication: `Bearer ${config.token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(_finalizeTransaction);
+  };
+
+  const _saveToLocal = data =>
+    localStorage.setItem('own_domain', JSON.stringify(data));
+
+  const _handleUDPayment = ({ token }, setSpinner) => {
+    console.log('_handleUPPayment ', { token });
+    const {
+      domain: { name },
+      email,
+      owner
+    } = domainObject;
+    const apiurl = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders`;
+    const body = {
+      order: {
+        payment: {
+          type: 'stripe',
+          tokenId: token.id
+        },
+        domains: [
+          {
+            name,
+            owner: userOwner !== '' ? userOwner : owner
+          }
+        ]
+      }
+    };
+    console.log(apiurl);
+    console.log(body);
+    buy(apiurl, body, setSpinner).then(res => {
+      if (res && !res.errors) {
+        _saveToLocal({
+          ...body.order,
+          config: { email, orderNumber: res.order.orderNumber }
+        });
+      }
+      setSpinner(false);
+    });
+  };
+
+  const testNameSpace =
+    domainObject.domain &&
+    domainObject.domain.resseler &&
+    domainObject.domain.resseler.test
+      ? domainObject.domain.resseler.test
+      : false;
 
   return (
     <Paper className={classes.paper}>
@@ -97,26 +131,20 @@ const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
         <InputBase
           placeholder="Your Full Name"
           className={classes.input}
-          // value={email}
-          // onChange={handleEmailChange}
+          value={userOwner}
+          onChange={e => setUserOwner(e.target.value)}
         />
-        {/* <StripeProvider
-          apiKey={
-            domainObject.domain &&
-            domainObject.domain.resseler &&
-            domainObject.domain.resseler.test
-              ? config.stripeKey
-              : config.stripeKeyLiveDomain
-          }
+        <StripeProvider
+          apiKey={testNameSpace ? config.stripeKey : config.stripeKeyLiveDomain}
         >
           <Elements>
             <StripeCheckoutForm
-              domain={state.domain}
+              domain={domainObject.domain}
               funcs={{ _handleUDPayment }}
               test={testNameSpace}
             />
           </Elements>
-        </StripeProvider> */}
+        </StripeProvider>
       </div>
       {/* {emailError ? (
         <div className={classes.errorDiv}>
@@ -132,7 +160,7 @@ const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
         </Typography>
         <img src="/images/stripe-logo.svg" alt="stripe-logo" />
       </div>
-      <Button
+      {/* <Button
         // onClick={() => handleSubmit()}
         color="primary"
         variant="contained"
@@ -140,7 +168,7 @@ const Stripe = ({ domainObject, classes, setStep, step, showPointer }) => {
         // disabled={!email}
       >
         Pay
-      </Button>
+      </Button> */}
     </Paper>
   );
 };

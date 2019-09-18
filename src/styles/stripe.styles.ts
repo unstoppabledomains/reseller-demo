@@ -54,7 +54,8 @@ export default createStyles((theme: any) => ({
   },
   inputDiv: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'column'
   },
   errorDiv: {
     width: '100%',
@@ -81,5 +82,8 @@ export default createStyles((theme: any) => ({
     fontSize: 14,
     marginLeft: theme.spacing(1.5),
     marginRight: theme.spacing(1)
+  },
+  stripeForm: {
+    width: '100%'
   }
 }));

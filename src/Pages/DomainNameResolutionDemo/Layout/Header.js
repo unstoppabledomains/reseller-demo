@@ -7,11 +7,18 @@ import ArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import ArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import DocsIcon from '@material-ui/icons/ChromeReaderMode';
 import SideBar from './SideBar';
-import DropDownMenu from './DropDownMenu';
+import DropDownMenu from '../../ResellerDemo/Layout/DropDownMenu';
 
-const Header = ({ classes, handlePointer, pointer, step, history }) => {
+const Header = ({
+  classes,
+  handlePointer,
+  pointer,
+  step,
+  history,
+  setDomainName
+}) => {
   const [open, setOpen] = React.useState(true);
-  const [version, setVersion] = React.useState(0);
+  const [version, setVersion] = React.useState(1);
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -79,6 +86,7 @@ const Header = ({ classes, handlePointer, pointer, step, history }) => {
           pointer={pointer}
           handlePointer={handlePointer}
           step={step}
+          setDomainName={setDomainName}
         />
       </Drawer>
     </>

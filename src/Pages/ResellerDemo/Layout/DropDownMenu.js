@@ -7,7 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CheckIcon from '@material-ui/icons/Check';
 import styles from '../../../styles/dropDownMenu.styles';
 
-const menuItems = ['Version 1', 'Version 2'];
+const menuItems = ['Reseller Domain Purchase', 'Domain Name Resolution'];
 
 const DropDownMenu = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -37,7 +37,7 @@ const DropDownMenu = props => {
         className={classes.sortButton}
       >
         <AppsIcon className={classes.leftIconSortMenu} />
-        <span className={classes.buttonText}>Select Demo {version + 1}</span>
+        <span className={classes.buttonText}>Select Demo</span>
       </Button>
       <Menu
         id="simple-menu"

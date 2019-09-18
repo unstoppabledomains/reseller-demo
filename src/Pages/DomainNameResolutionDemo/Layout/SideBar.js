@@ -1,21 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Paper, Typography, Divider, Checkbox, Link } from '@material-ui/core';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
-const SideBar = ({
-  classes,
-  pointer,
-  handlePointer,
-  step,
-  randomizeDomain,
-  setEmail,
-  isDomainLive
-}) => {
-  const selectedElement = React.useRef(1);
-  const [height, setHeight] = React.useState(0);
+const SideBar = ({ classes, pointer, handlePointer, step, setDomainName }) => {
+  const selectedElement = useRef(0);
+  const [height, setHeight] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setHeight({
       height: selectedElement.current
         ? selectedElement.current.clientHeight
@@ -24,29 +16,30 @@ const SideBar = ({
     });
   }, [selectedElement, step]);
 
-  const setCCNumber = () => {
-    console.log('credit card number clicked');
-  };
-
-  const randomizeLink = (
-    <span onClick={() => randomizeDomain()} className={classes.buttonText}>
-      <br />
-      Randomize
-    </span>
-  );
-  const emailExampleLink = (
-    <span
-      onClick={() => setEmail('example@example.com')}
-      className={classes.buttonText}
-    >
-      example@example.com
-    </span>
-  );
-
-  const cCNumberLink = (
-    <span onClick={() => setCCNumber()} className={classes.buttonText}>
-      4242 4242 4242 4242
-    </span>
+  const domainsLinks = (
+    <>
+      <span
+        onClick={() => setDomainName('unstoppable.zil')}
+        className={classes.buttonText}
+      >
+        <br />
+        unstoppable.zil
+      </span>
+      <span
+        onClick={() => setDomainName('tyranids.zil')}
+        className={classes.buttonText}
+      >
+        <br />
+        tyranids.zil
+      </span>
+      <span
+        onClick={() => setDomainName('loveiseverywhere.zil')}
+        className={classes.buttonText}
+      >
+        <br />
+        loveiseverywhere.zil
+      </span>
+    </>
   );
 
   const renderCard = (header, text, element) => (
@@ -59,21 +52,12 @@ const SideBar = ({
         ref={Number(header[0]) === step + 1 ? selectedElement : null}
       >
         <div>
-          <Typography
-            variant="h6"
-            className={classes.bold}
-            // onClick={() => setActiveCard(Number(header[0]))}
-          >
+          <Typography variant="h6" className={classes.bold}>
             {header}
           </Typography>
           <Typography className={classes.text}>
             {text} {element ? element : null}
           </Typography>
-          {isDomainLive && header[0] === '2' ? (
-            <Typography color="error">
-              THIS IS A LIVE DOMAIN, YOU WILL BE CHARGED AT THE END
-            </Typography>
-          ) : null}
         </div>
       </Paper>
     </div>
@@ -83,10 +67,10 @@ const SideBar = ({
     <>
       <Paper className={classes.paper}>
         <Typography variant="h5" className={classes.bold}>
-          Reseller Domain Purchase
+          Domain Name Resolution example
         </Typography>
         <Typography className={classes.text}>
-          This demo shows how to buy a domain from your wallet
+          This demo shows how domain names can replace long wallet addresses
         </Typography>
         <Divider className={classes.divider} />
         <div className={classes.checkboxDiv}>
@@ -103,26 +87,16 @@ const SideBar = ({
           </Typography>
         </div>
       </Paper>
+      {renderCard('1. Type Domain', 'Try out these names:', domainsLinks)}
       {renderCard(
-        '1. Find a domain',
-        'For this demo use this domain namespace reseller-test-udtesting-[random number].zil',
-        randomizeLink
+        '2. Select cryptocurency',
+        'Choose cryptocurency you want to send (Bitcoin or Ethreum).'
       )}
       {renderCard(
-        '2. Buy a Domain',
-        'Press “Buy Domain” button if domain is avaliable'
+        '3. Choose amount',
+        'Type how many crypto or dollars you want to send'
       )}
-      {renderCard('3. Enter Email', 'Use any email or just', emailExampleLink)}
-      {renderCard(
-        '4. Choose payment method',
-        'Use can pay with credit card or crypto',
-        null
-      )}
-      {renderCard(
-        '5. Pay with credit card',
-        'Use any future date and this card number for tests',
-        cCNumberLink
-      )}
+      {renderCard('4. Send Crypto', 'Press “Request Payment” to finish')}
       <div className={classes.helpDiv}>
         <Typography variant="h5" className={classes.bold}>
           Need Help?

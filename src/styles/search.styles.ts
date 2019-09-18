@@ -76,10 +76,19 @@ export default createStyles((theme: any) => ({
 	},
 	storageDiv: {
 		marginTop: theme.spacing(9),
-		display: 'inline-flex',
+		display: 'flex',
+		flexDirection: 'column',
 		justifyContent: 'flex-start',
+		alignItems: 'flex-start',
 		position: 'relative',
 		width: '100%'
+	},
+	linearProgress: {
+		right: 3,
+		width: 230,
+		bottom: 8,
+		position: "absolute",
+		height: 10
 	}
 
 }));

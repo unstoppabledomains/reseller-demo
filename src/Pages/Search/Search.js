@@ -251,8 +251,9 @@ const Search = ({
 			{results ? _renderResult() : null}
 			{ownDomains ?
 				<div className={classes.storageDiv}>
+					<Typography variant="h5" className={`${classes.bold}`}>Order status:</Typography>
 					<div className={classes.row}>
-						<Typography variant="h5" className={`${classes.bold}`}>Order status for {ownDomains.domains[0].name}:</Typography>
+						<Typography variant="body1">{ownDomains.domains[0].name}:</Typography>
 						{isMined ? <Typography variant="h5" className={classes.bold}>Mined</Typography> :
 							<LinearProgress className={classes.linearProgress} />}
 					</div>

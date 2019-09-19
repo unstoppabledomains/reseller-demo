@@ -86,8 +86,7 @@ export default createStyles((theme: any) => ({
     borderRadius: 6,
     backgroundColor: '#fff1f1',
     padding: theme.spacing(2),
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3)
+    marginTop: theme.spacing(3)
   },
   errorMessage: {
     fontWeight: 600

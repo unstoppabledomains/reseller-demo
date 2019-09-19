@@ -36,9 +36,13 @@ const SendCrypto = ({
 }) => {
   const [message, setMessage] = useState('');
 
+  const ethPrice = 220.72;
+  const btcPrice = 10191.2;
+
   const handleExchange = e => {
+    const mult = cryptoCurrency === 'BTC' ? btcPrice : ethPrice;
     setCryptoAmount(Number(e.target.value));
-    setDollarAmount((Number(e.target.value) * 23.42).toFixed(2));
+    setDollarAmount((Number(e.target.value) * mult).toFixed(2));
   };
 
   const handleSendPayment = () => {
@@ -128,21 +132,14 @@ const SendCrypto = ({
               input={
                 <InputBase className={classes.input} style={{ width: 212 }} />
               }
-              disabled={
-                !availableWallets || !Object.keys(availableWallets).length
-              }
+              disabled={!availableWallets}
             >
-              {availableWallets && Object.keys(availableWallets).length
-                ? Object.keys(availableWallets).map(wallet => (
-                    <MenuItem
-                      key={wallet}
-                      classes={{ root: classes.menuItem }}
-                      value={wallet}
-                    >
-                      {wallet}
-                    </MenuItem>
-                  ))
-                : null}
+              <MenuItem classes={{ root: classes.menuItem }} value="BTC">
+                Bitcoin
+              </MenuItem>
+              <MenuItem classes={{ root: classes.menuItem }} value="ETH">
+                Ethereum
+              </MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -154,7 +151,7 @@ const SendCrypto = ({
           </Typography>
         </div>
       ) : null}
-      {domainName && cryptoCurrency ? (
+      {domainName && cryptoCurrency && availableWallets[cryptoCurrency] ? (
         <>
           <Typography variant="subtitle1" className={classes.label}>
             Send to:
@@ -180,7 +177,7 @@ const SendCrypto = ({
 
       <div className={classes.labelsDiv}>
         <Typography variant="subtitle1" className={classes.label}>
-          {cryptoCurrency ? cryptoCurrency : 'BTC'} Amount
+          {cryptoCurrency ? cryptoCurrency : 'BTC'} amount
         </Typography>
         <Typography
           variant="subtitle1"
@@ -202,7 +199,7 @@ const SendCrypto = ({
             style={{ width: 138 }}
             value={cryptoAmount}
             onChange={e => handleExchange(e)}
-            disabled={!cryptoCurrency}
+            disabled={!cryptoCurrency || error}
             startAdornment={
               <InputAdornment position="start">
                 <img src="/images/crypto.svg" alt="crypto" />
@@ -216,7 +213,7 @@ const SendCrypto = ({
             className={classes.input}
             style={{ width: 138 }}
             value={dollarAmount}
-            disabled={!cryptoCurrency}
+            disabled={!cryptoCurrency || error}
             startAdornment={
               <InputAdornment position="start">
                 <DollarIcon color="disabled" />
@@ -237,7 +234,7 @@ const SendCrypto = ({
             color="textSecondary"
             className={classes.textExchange}
           >
-            $10,191.20
+            ${cryptoCurrency === 'BTC' ? btcPrice : ethPrice}
           </Typography>
         </div>
       </div>
@@ -256,7 +253,7 @@ const SendCrypto = ({
         variant="contained"
         color="primary"
         className={classes.button}
-        disabled={!cryptoAmount}
+        disabled={!cryptoAmount || error}
         onClick={() => handleSendPayment()}
       >
         Send payment

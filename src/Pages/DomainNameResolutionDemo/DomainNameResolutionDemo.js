@@ -24,13 +24,14 @@ const DomainNameResotionDemo = ({ classes, history }) => {
       if (cryptoAmount) setCryptoAmount(0);
       if (dollarAmount) setDollarAmount(0);
       if (error) setError('');
-      if (domainName) setDomainName('');
+      // if (domainName) setDomainName('');
     }
     // eslint-disable-next-line
   }, [step]);
 
   useEffect(() => {
     if (step !== 0) setStep(0);
+    if (availableWallets) setAvailableWallets();
     if (cryptoCurrency) setCryptoCurrency('');
     if (cryptoAmount) setCryptoAmount(0);
     if (dollarAmount) setDollarAmount(0);
@@ -40,6 +41,18 @@ const DomainNameResotionDemo = ({ classes, history }) => {
   }, [domainName]);
 
   useEffect(() => {
+    setError('');
+    setCryptoAmount(0);
+    setDollarAmount(0);
+    if (
+      availableWallets &&
+      cryptoCurrency &&
+      !availableWallets[cryptoCurrency]
+    ) {
+      setStep(1);
+      setError(`Sorry this domain does not have ${cryptoCurrency} wallet`);
+      return;
+    }
     if (cryptoCurrency) setStep(2);
   }, [cryptoCurrency]);
 

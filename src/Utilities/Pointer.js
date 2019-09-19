@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import styles from '../styles/pointer.styles';
 
 const Pointer = ({ classes }) => {

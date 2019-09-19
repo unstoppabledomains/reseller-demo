@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import styles from '../../../styles/congratulations.styles';
 import config from '../../../config';
 
@@ -64,9 +64,7 @@ const Congratulations = ({ classes, email, transactionResponse, setStep }) => {
             </div>
           )}
         </div>
-        {isMined ? null :
-          <LinearProgress className={classes.linearProgress} />
-        }
+        {isMined ? null : <LinearProgress className={classes.linearProgress} />}
         <Typography variant="body1" className={classes.statusText}>
           Blockchain transaction requires some time. You can go back to homepage
           the transaction is not going to be lost.

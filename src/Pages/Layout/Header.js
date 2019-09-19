@@ -1,7 +1,10 @@
 import React from 'react';
 import styles from '../../styles/header.styles';
-import { withStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Link } from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import Drawer from '@material-ui/core/Drawer';
 import ArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import ArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';

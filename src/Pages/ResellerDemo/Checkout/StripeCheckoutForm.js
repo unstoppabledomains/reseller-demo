@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
-import { withStyles, CircularProgress, Typography } from '@material-ui/core';
+import withStyles from '@material-ui/styles/withStyles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
 import styles from '../../../styles/stripe.styles';
 import Button from '@material-ui/core/Button';
 import ProtectedIcon from '@material-ui/icons/VerifiedUser';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import config from '../../../config';
 import styles from '../../../styles/stripe.styles';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import CoinbaseCommerceButton from 'react-coinbase-commerce';
 import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
 

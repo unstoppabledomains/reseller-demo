@@ -3,13 +3,11 @@ import StripeCheckoutForm from './StripeCheckoutForm';
 import { StripeProvider, Elements } from 'react-stripe-elements';
 import config from '../../../config';
 import styles from '../../../styles/stripe.styles';
-import {
-  Paper,
-  withStyles,
-  Typography,
-  Button,
-  InputBase
-} from '@material-ui/core';
+import withStyles from '@material-ui/styles/withStyles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import Pointer from '../../../Utilities/Pointer';
 

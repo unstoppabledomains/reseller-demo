@@ -4,7 +4,7 @@ import Email from './Email/Email';
 import Checkout from './Checkout/Checkout';
 import Header from '../Layout/Header';
 import Coinbase from './Checkout/Coinbase';
-import { withStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import config from '../../config';
 import styles from '../../styles/app.styles';
 import Stripe from './Checkout/Stripe';

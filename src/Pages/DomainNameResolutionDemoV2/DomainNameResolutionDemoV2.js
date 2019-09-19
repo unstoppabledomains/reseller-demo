@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../Layout/Header';
-import { withStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import styles from '../../styles/app.styles';
 import SendCrypto from './SendCrypto';
 import Namicorn from 'namicorn';

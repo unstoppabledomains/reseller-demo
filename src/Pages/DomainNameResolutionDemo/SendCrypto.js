@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import {
-  withStyles,
-  Paper,
-  Typography,
-  InputBase,
-  FormControl,
-  Select,
-  MenuItem,
-  Divider,
-  Button,
-  InputAdornment
-} from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import InputBase from '@material-ui/core/InputBase';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import withStyles from '@material-ui/styles/withStyles';
 import styles from '../../styles/sendcrypto.styles';
 import UserIcon from '@material-ui/icons/AccountCircle';
 import GlobeIcon from '@material-ui/icons/Language';

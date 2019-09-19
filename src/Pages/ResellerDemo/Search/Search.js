@@ -32,7 +32,7 @@ const Search = ({
   const [ownDomains, setOwnDomains] = useState(
     JSON.parse(localStorage.getItem('own_domain'))
   );
-  const [isMined, setIsMined] = useState(ownDomains.mined);
+  const [isMined, setIsMined] = useState(ownDomains ? ownDomains.mined : null);
 
   useEffect(() => {
     if (results && results.domain.reselling && !results.domain.reselling.test)

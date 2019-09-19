@@ -1,12 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 import ResellerDemo from './Pages/ResellerDemo/ResellerDemo';
 import DomainNameResolutionDemo from './Pages/DomainNameResolutionDemo/DomainNameResolutionDemo';
 import DomainNameResolutionDemoV2 from './Pages/DomainNameResolutionDemoV2/DomainNameResolutionDemoV2';
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <HashRouter basename="/">
       <Switch>
         <Route
           path="/"
@@ -25,7 +25,7 @@ const App = () => {
           component={DomainNameResolutionDemoV2}
         />
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 

@@ -54,6 +54,7 @@ const DomainNameResotionDemo = ({ classes, history }) => {
       return;
     }
     if (cryptoCurrency) setStep(2);
+    // eslint-disable-next-line
   }, [cryptoCurrency]);
 
   useEffect(() => {
@@ -97,8 +98,6 @@ const DomainNameResotionDemo = ({ classes, history }) => {
       setError('Invalid domain');
     }
   };
-
-  console.log('step', step);
 
   return (
     <div className={classes.root}>

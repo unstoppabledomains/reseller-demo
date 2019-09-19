@@ -34,7 +34,13 @@ const Header = ({
       <AppBar position="absolute" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <div className={classes.leftSide}>
-            <div className={classes.logoDiv} onClick={() => setStep(0)}>
+            <div
+              className={classes.logoDiv}
+              onClick={() => {
+                setDomainName('');
+                setStep(0);
+              }}
+            >
               <img src="/images/logo.svg" alt="logo" />
             </div>
             <div onClick={handleDrawer} className={classes.drawerTrigger}>

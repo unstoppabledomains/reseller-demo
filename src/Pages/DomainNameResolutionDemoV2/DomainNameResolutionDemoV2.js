@@ -19,8 +19,7 @@ const DomainNameResotionDemo = ({ classes, history }) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (step !== 0) setStep(0);
-    if (cryptoCurrency) setCryptoCurrency('');
+    if (domainName && step !== 1) setStep(1);
     if (cryptoAmount) setCryptoAmount(0);
     if (dollarAmount) setDollarAmount(0);
     if (error) setError('');
@@ -28,17 +27,43 @@ const DomainNameResotionDemo = ({ classes, history }) => {
     // eslint-disable-next-line
   }, [domainName]);
 
-  // useEffect(() => {
-  //   if (cryptoCurrency) setStep(2);
-  // }, [cryptoCurrency]);
+  useEffect(() => {
+    if (step === 0) {
+      if (cryptoAmount) setCryptoAmount(0);
+      if (dollarAmount) setDollarAmount(0);
+      if (error) setError('');
+      if (availableWallets) setAvailableWallets();
+      if (domainName) setDomainName('');
+      if (cryptoCurrency) setCryptoCurrency('');
+    }
+    // eslint-disable-next-line
+  }, [step]);
+
+  useEffect(() => {
+    setError('');
+    setCryptoAmount(0);
+    setDollarAmount(0);
+    if (
+      availableWallets &&
+      cryptoCurrency &&
+      !availableWallets[cryptoCurrency]
+    ) {
+      setStep(1);
+      setError(`Sorry this domain does not have ${cryptoCurrency} wallet`);
+      return;
+    } else if (
+      availableWallets &&
+      cryptoCurrency &&
+      availableWallets[cryptoCurrency]
+    ) {
+      setStep(2);
+    }
+    // eslint-disable-next-line
+  }, [availableWallets]);
 
   useEffect(() => {
     if (cryptoAmount) setStep(3);
   }, [cryptoAmount]);
-
-  useEffect(() => {
-    if (availableWallets) setStep(1);
-  }, [availableWallets]);
 
   const handlePointer = () => {
     setPointer(!pointer);
@@ -73,8 +98,6 @@ const DomainNameResotionDemo = ({ classes, history }) => {
       setError('Invalid domain');
     }
   };
-
-  console.log('step', step);
 
   return (
     <div className={classes.root}>

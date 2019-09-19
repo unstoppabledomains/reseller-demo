@@ -66,4 +66,4 @@ const StripeCheckoutForm = ({
   );
 };
 
-export default withStyles(styles)(injectStripe(StripeCheckoutForm));
+export default injectStripe(withStyles(styles)(StripeCheckoutForm));

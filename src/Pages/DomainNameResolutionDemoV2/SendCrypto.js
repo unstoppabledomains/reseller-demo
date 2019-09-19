@@ -4,9 +4,6 @@ import {
   Paper,
   Typography,
   InputBase,
-  FormControl,
-  Select,
-  MenuItem,
   Divider,
   Button,
   InputAdornment
@@ -37,9 +34,13 @@ const SendCrypto = ({
 }) => {
   const [message, setMessage] = useState('');
 
+  const ethPrice = 220.72;
+  const btcPrice = 10191.2;
+
   const handleExchange = e => {
+    const mult = cryptoCurrency === 'BTC' ? btcPrice : ethPrice;
     setCryptoAmount(Number(e.target.value));
-    setDollarAmount((Number(e.target.value) * 23.42).toFixed(2));
+    setDollarAmount((Number(e.target.value) * mult).toFixed(2));
   };
 
   const handleSendPayment = () => {
@@ -51,8 +52,6 @@ const SendCrypto = ({
     setStep(1);
   };
 
-  console.log({ availableWallets });
-
   if (step === 0) {
     return (
       <Paper className={classes.paper}>
@@ -61,7 +60,7 @@ const SendCrypto = ({
         </Typography>
         <div
           className={classes.chooseCryptoDiv}
-          onClick={() => handleChooseCrypto('Bitcoin')}
+          onClick={() => handleChooseCrypto('BTC')}
         >
           {step === 0 && showPointer ? (
             <div style={{ position: 'fixed', transform: 'translateX(-40px)' }}>
@@ -82,7 +81,7 @@ const SendCrypto = ({
         <Divider className={classes.dividerCrypto} />
         <div
           className={classes.chooseCryptoDiv}
-          onClick={() => handleChooseCrypto('Ethereum')}
+          onClick={() => handleChooseCrypto('ETH')}
         >
           <div className={classes.insideCryptoDiv}>
             <img
@@ -157,7 +156,11 @@ const SendCrypto = ({
           </Typography>
         </div>
       ) : null}
-      {domainName && cryptoCurrency ? (
+      {domainName &&
+      cryptoCurrency &&
+      availableWallets &&
+      availableWallets[cryptoCurrency] &&
+      !error ? (
         <>
           <Typography variant="subtitle1" className={classes.label}>
             Send to:
@@ -205,7 +208,7 @@ const SendCrypto = ({
             style={{ width: 138 }}
             value={cryptoAmount}
             onChange={e => handleExchange(e)}
-            disabled={!cryptoCurrency}
+            disabled={!domainName || error}
             startAdornment={
               <InputAdornment position="start">
                 <img src="/images/crypto.svg" alt="crypto" />
@@ -219,7 +222,7 @@ const SendCrypto = ({
             className={classes.input}
             style={{ width: 138 }}
             value={dollarAmount}
-            disabled={!cryptoCurrency}
+            disabled={!domainName || error}
             startAdornment={
               <InputAdornment position="start">
                 <DollarIcon color="disabled" />
@@ -240,7 +243,7 @@ const SendCrypto = ({
             color="textSecondary"
             className={classes.textExchange}
           >
-            $10,191.20
+            ${cryptoCurrency === 'BTC' ? btcPrice : ethPrice}
           </Typography>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { history } from './history';
+// import { history } from './history';
 // import Wallet from './Pages/WalletFront/Wallet';
 import { withStyles } from '@material-ui/styles';
 import styles from './styles/app.styles';
@@ -11,7 +11,7 @@ import DomainNameResolutionDemoV2 from './Pages/DomainNameResolutionDemoV2/Domai
 const App = ({ classes }) => {
   return (
     <div className={classes.root}>
-      <BrowserRouter history={history}>
+      <BrowserRouter>
         <Switch>
           <Route path="/" exact component={ResellerDemo} />
           <Route path="/reseller-demo" exact component={ResellerDemo} />

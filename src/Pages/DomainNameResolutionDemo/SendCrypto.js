@@ -49,8 +49,6 @@ const SendCrypto = ({
     setStep(4);
   };
 
-  console.log({ availableWallets });
-
   if (step === 4) {
     return (
       <Paper className={classes.paper}>
@@ -199,7 +197,7 @@ const SendCrypto = ({
             style={{ width: 138 }}
             value={cryptoAmount}
             onChange={e => handleExchange(e)}
-            disabled={!cryptoCurrency || error}
+            disabled={!cryptoCurrency || !!error}
             startAdornment={
               <InputAdornment position="start">
                 <img src="/images/crypto.svg" alt="crypto" />
@@ -213,7 +211,7 @@ const SendCrypto = ({
             className={classes.input}
             style={{ width: 138 }}
             value={dollarAmount}
-            disabled={!cryptoCurrency || error}
+            disabled={!cryptoCurrency || !!error}
             startAdornment={
               <InputAdornment position="start">
                 <DollarIcon color="disabled" />
@@ -253,7 +251,7 @@ const SendCrypto = ({
         variant="contained"
         color="primary"
         className={classes.button}
-        disabled={!cryptoAmount || error}
+        disabled={!cryptoAmount || !!error}
         onClick={() => handleSendPayment()}
       >
         Send payment

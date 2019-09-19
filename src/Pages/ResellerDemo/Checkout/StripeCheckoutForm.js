@@ -19,14 +19,11 @@ const StripeCheckoutForm = ({
     if (stripe) {
       setSpinner(true);
       stripe.createToken({ userName }).then(payload => {
-        console.log('[token]', payload);
         if (!payload.error) {
           setErrors(null);
           handlePayment(payload, setSpinner);
         } else {
           setErrors(payload.error.message);
-          console.log('ERRROR', payload.error.message);
-
           setSpinner(false);
         }
       });
@@ -56,7 +53,6 @@ const StripeCheckoutForm = ({
           </div>
         ) : (
           <Button
-            // onClick={() => handleSubmit()}
             color="primary"
             variant="contained"
             className={classes.button}

@@ -7,7 +7,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CheckIcon from '@material-ui/icons/Check';
 import styles from '../../../styles/dropDownMenu.styles';
 
-const menuItems = ['Reseller Domain Purchase', 'Domain Name Resolution'];
+const menuItems = [
+  'Reseller Domain Purchase',
+  'Domain Name Resolution',
+  'Domain Name Resolution v2'
+];
 
 const DropDownMenu = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,6 +25,7 @@ const DropDownMenu = props => {
     handleVersionChange(index);
     if (index === 0) history.push('/');
     else if (index === 1) history.push('/domain-name-reloution');
+    else if (index === 2) history.push('/domain-name-reloution-v2');
     setAnchorEl(null);
   };
 

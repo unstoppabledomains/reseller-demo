@@ -7,21 +7,19 @@ import ArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import ArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import DocsIcon from '@material-ui/icons/ChromeReaderMode';
 import SideBar from './SideBar';
-import DropDownMenu from './DropDownMenu';
+import DropDownMenu from '../../ResellerDemo/Layout/DropDownMenu';
 
 const Header = ({
   classes,
   handlePointer,
   pointer,
   step,
-  randomizeDomain,
-  setEmail,
-  isDomainLive,
   history,
+  setDomainName,
   setStep
 }) => {
   const [open, setOpen] = React.useState(true);
-  const [version, setVersion] = React.useState(0);
+  const [version, setVersion] = React.useState(2);
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -89,9 +87,7 @@ const Header = ({
           pointer={pointer}
           handlePointer={handlePointer}
           step={step}
-          randomizeDomain={randomizeDomain}
-          setEmail={setEmail}
-          isDomainLive={isDomainLive}
+          setDomainName={setDomainName}
         />
       </Drawer>
     </>

@@ -76,5 +76,20 @@ export default createStyles((theme: any) => ({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis'
+  },
+  errorDiv: {
+    width: '100%',
+    borderRadius: 6,
+    backgroundColor: '#fff1f1',
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3)
+  },
+  errorMessage: {
+    fontWeight: 600
+  },
+  finalHeader: {
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(3)
   }
 }));

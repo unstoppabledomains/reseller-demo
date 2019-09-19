@@ -15,7 +15,8 @@ const Header = ({
   pointer,
   step,
   history,
-  setDomainName
+  setDomainName,
+  setStep
 }) => {
   const [open, setOpen] = React.useState(true);
   const [version, setVersion] = React.useState(1);
@@ -33,7 +34,7 @@ const Header = ({
       <AppBar position="absolute" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <div className={classes.leftSide}>
-            <div className={classes.logoDiv}>
+            <div className={classes.logoDiv} onClick={() => setStep(0)}>
               <img src="/images/logo.svg" alt="logo" />
             </div>
             <div onClick={handleDrawer} className={classes.drawerTrigger}>

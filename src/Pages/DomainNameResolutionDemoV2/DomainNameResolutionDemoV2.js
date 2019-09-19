@@ -19,17 +19,6 @@ const DomainNameResotionDemo = ({ classes, history }) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (step === 0) {
-      if (cryptoCurrency) setCryptoCurrency('');
-      if (cryptoAmount) setCryptoAmount(0);
-      if (dollarAmount) setDollarAmount(0);
-      if (error) setError('');
-      if (domainName) setDomainName('');
-    }
-    // eslint-disable-next-line
-  }, [step]);
-
-  useEffect(() => {
     if (step !== 0) setStep(0);
     if (cryptoCurrency) setCryptoCurrency('');
     if (cryptoAmount) setCryptoAmount(0);

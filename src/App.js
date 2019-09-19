@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/styles';
 import styles from './styles/app.styles';
 import ResellerDemo from './Pages/ResellerDemo/ResellerDemo';
 import DomainNameResolutionDemo from './Pages/DomainNameResolutionDemo/DomainNameResolutionDemo';
+import DomainNameResolutionDemoV2 from './Pages/DomainNameResolutionDemoV2/DomainNameResolutionDemoV2';
 
 const App = ({ classes }) => {
   return (
@@ -18,6 +19,11 @@ const App = ({ classes }) => {
             path="/domain-name-reloution"
             exact
             component={DomainNameResolutionDemo}
+          />
+          <Route
+            path="/domain-name-reloution-v2"
+            exact
+            component={DomainNameResolutionDemoV2}
           />
         </Switch>
       </BrowserRouter>

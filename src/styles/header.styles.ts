@@ -26,7 +26,8 @@ export default createStyles((theme: any) => ({
     backgroundColor: theme.palette.primary.main,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    cursor: 'pointer'
   },
   drawerTrigger: {
     marginLeft: theme.spacing(2),
@@ -51,6 +52,9 @@ export default createStyles((theme: any) => ({
   },
   buttonText: {
     cursor: 'pointer',
+    color: theme.palette.primary.main
+  },
+  coloredText: {
     color: theme.palette.primary.main
   },
   buttonTextToggle: {

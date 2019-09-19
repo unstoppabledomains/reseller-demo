@@ -39,7 +39,6 @@ const Email = ({
   };
 
   const handleSubmit = () => {
-    console.log('submitting form');
     if (helper.isAddress(owner) && isEmailValid(email)) {
       setStep(3);
     } else if (!helper.isAddress(owner) && !isEmailValid(email)) {

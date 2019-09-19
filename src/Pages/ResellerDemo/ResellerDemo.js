@@ -115,12 +115,15 @@ const App = ({ classes, history }) => {
               setTransactionResponse={setTransactionResponse}
             />
           );
-        else return <Coinbase 
-            domainObject={emailProps}
-            email={email}
-            owner={owner}
-            setStep={setStep}
-        />;
+        else
+          return (
+            <Coinbase
+              domainObject={emailProps}
+              email={email}
+              owner={owner}
+              setStep={setStep}
+            />
+          );
       case 5:
         return (
           <Congratulations
@@ -134,11 +137,10 @@ const App = ({ classes, history }) => {
     }
   };
 
-  console.log('step', step);
-
   return (
     <div className={classes.root}>
       <Header
+        setStep={setStep}
         history={history}
         handlePointer={handlePointer}
         pointer={pointer}

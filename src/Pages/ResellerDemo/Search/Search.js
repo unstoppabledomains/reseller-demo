@@ -34,14 +34,24 @@ const Search = ({
     JSON.parse(localStorage.getItem('own_domain'))
   );
   const [isMined, setIsMined] = useState(ownDomains.mined);
-  console.log({ ownDomains });
+
   useEffect(() => {
     if (results && results.domain.reselling && !results.domain.reselling.test)
       setOwner('');
+    else {
+      setOwner('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+    }
   }, [results, setOwner]);
 
   useEffect(() => {
+    if (results) {
+      setResults('');
+    }
+    if (owner) {
+      setOwner('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+    }
     setUserInput(domainName);
+    // eslint-disable-next-line
   }, [domainName]);
 
   useEffect(() => {
@@ -83,6 +93,16 @@ const Search = ({
       owner
     });
     handleNextStep();
+  };
+
+  const handleUserInputChange = e => {
+    if (results) {
+      setResults('');
+    }
+    if (owner) {
+      setOwner('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+    }
+    setUserInput(e.target.value);
   };
 
   const formatDomainName = domain => {
@@ -147,7 +167,6 @@ const Search = ({
       </div>
     );
 
-    console.log(results);
     if (domain && !domain.reselling) {
       return _renderNotAvailableView();
     }
@@ -222,7 +241,7 @@ const Search = ({
           fullWidth
           className={classes.input}
           value={userInput}
-          onChange={e => setUserInput(e.target.value)}
+          onChange={e => handleUserInputChange(e)}
           onKeyDown={e => (e.key === 'Enter' ? _handleFormSubmit(e) : null)}
         />
         <Button
@@ -253,18 +272,22 @@ const Search = ({
               {ownDomains.domains[0].name}:
             </Typography>
             {isMined ? (
-              <Typography variant="body2" color="primary" className={classes.bold}>
+              <Typography
+                variant="body2"
+                color="primary"
+                className={classes.bold}
+              >
                 Mined
               </Typography>
             ) : (
               <div>
-              <Typography variant="h5">Pending</Typography>
-            </div>
+                <Typography variant="h5">Pending</Typography>
+              </div>
             )}
           </div>
-          {isMined ? null :
-          <LinearProgress className={classes.linearProgress} />
-        }
+          {isMined ? null : (
+            <LinearProgress className={classes.linearProgress} />
+          )}
         </div>
       ) : null}
     </Paper>

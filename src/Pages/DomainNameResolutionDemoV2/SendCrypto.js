@@ -47,6 +47,10 @@ const SendCrypto = ({
 
   console.log({ availableWallets });
 
+  if (step === 0) {
+    return <div>Choose crypto</div>;
+  }
+
   if (step === 4) {
     return (
       <Paper className={classes.paper}>

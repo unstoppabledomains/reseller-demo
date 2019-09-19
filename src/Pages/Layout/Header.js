@@ -55,7 +55,7 @@ const Header = ({
                 setStep(0);
               }}
             >
-              <img src="images/logo.svg" alt="logo" />
+              <img src="images/logo.SVG" alt="logo" />
             </div>
             <div onClick={handleDrawer} className={classes.drawerTrigger}>
               <Typography

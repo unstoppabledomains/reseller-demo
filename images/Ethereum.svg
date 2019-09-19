@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>Ethereum</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Demo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Demo---20-00---Wallet-2" transform="translate(-664.000000, -249.000000)">
+            <g id="Wallet" transform="translate(640.000000, 96.000000)">
+                <g id="Group-4" transform="translate(24.000000, 24.000000)">
+                    <g id="fields" transform="translate(0.000000, 56.000000)">
+                        <g id="Crypto-Copy" transform="translate(0.000000, 73.000000)">
+                            <g id="Group-2">
+                                <g id="Ethereum">
+                                    <rect id="Rectangle" fill="#6481E7" x="0" y="0" width="40" height="40" rx="20"></rect>
+                                    <path d="M20.2018504,9 L27.4037009,19.8027756 L20.2018504,30.6055513 L13,19.8027756 L20.2018504,9 Z M23.281,22.381 L20.2018504,23.9208096 L17.122,22.381 L20.2018504,27 L23.281,22.381 Z M20.2018504,12.6055513 L15.661,19.414 L20.2018504,21.6847416 L24.741,19.414 L20.2018504,12.6055513 Z" id="icon" fill="#FFFFFF"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

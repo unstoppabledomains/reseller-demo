@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import AppsIcon from '@material-ui/icons/Apps';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CheckIcon from '@material-ui/icons/Check';
-import styles from '../../../styles/dropDownMenu.styles';
+import styles from '../../styles/dropDownMenu.styles';
 
 const menuItems = [
   'Reseller Domain Purchase',

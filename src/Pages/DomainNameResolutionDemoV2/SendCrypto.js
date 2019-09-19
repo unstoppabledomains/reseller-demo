@@ -208,7 +208,7 @@ const SendCrypto = ({
             style={{ width: 138 }}
             value={cryptoAmount}
             onChange={e => handleExchange(e)}
-            disabled={!domainName || error}
+            disabled={!domainName || !!error}
             startAdornment={
               <InputAdornment position="start">
                 <img src="/images/crypto.svg" alt="crypto" />
@@ -222,7 +222,7 @@ const SendCrypto = ({
             className={classes.input}
             style={{ width: 138 }}
             value={dollarAmount}
-            disabled={!domainName || error}
+            disabled={!domainName || !!error}
             startAdornment={
               <InputAdornment position="start">
                 <DollarIcon color="disabled" />

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../../styles/header.styles';
+import styles from '../../styles/header.styles';
 import { withStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Link } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
@@ -18,10 +18,19 @@ const Header = ({
   setEmail,
   isDomainLive,
   history,
-  setStep
+  setStep,
+  setDomainName
 }) => {
+  const index =
+    history.location.pathname === '/'
+      ? 0
+      : history.location.pathname === '/domain-name-reloution'
+      ? 1
+      : history.location.pathname === '/domain-name-reloution-v2'
+      ? 2
+      : 0;
   const [open, setOpen] = React.useState(true);
-  const [version, setVersion] = React.useState(0);
+  const [version, setVersion] = React.useState(index);
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -36,7 +45,13 @@ const Header = ({
       <AppBar position="absolute" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <div className={classes.leftSide}>
-            <div className={classes.logoDiv} onClick={() => setStep(0)}>
+            <div
+              className={classes.logoDiv}
+              onClick={() => {
+                setDomainName('');
+                setStep(0);
+              }}
+            >
               <img src="/images/logo.svg" alt="logo" />
             </div>
             <div onClick={handleDrawer} className={classes.drawerTrigger}>
@@ -92,6 +107,8 @@ const Header = ({
           randomizeDomain={randomizeDomain}
           setEmail={setEmail}
           isDomainLive={isDomainLive}
+          setDomainName={setDomainName}
+          history={history}
         />
       </Drawer>
     </>

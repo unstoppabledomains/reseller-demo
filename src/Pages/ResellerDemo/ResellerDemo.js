@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Search from './Search/Search';
 import Email from './Email/Email';
 import Checkout from './Checkout/Checkout';
-import Header from './Layout/Header';
+import Header from '../Layout/Header';
 import Coinbase from './Checkout/Coinbase';
 import { withStyles } from '@material-ui/styles';
 import config from '../../config';
@@ -10,7 +10,7 @@ import styles from '../../styles/app.styles';
 import Stripe from './Checkout/Stripe';
 import Congratulations from './Finish/Congratulations';
 
-const App = ({ classes, history }) => {
+const ResellerDemo = ({ classes, history }) => {
   const [step, setStep] = useState(0);
   const [pointer, setPointer] = useState(true);
   const [domainName, setDomainName] = useState('');
@@ -152,10 +152,11 @@ const App = ({ classes, history }) => {
             ? !domainResults.domain.reselling.test
             : false
         }
+        setDomainName={setDomainName}
       />
       <div className={classes.layout}>{renderStep()}</div>
     </div>
   );
 };
 
-export default withStyles(styles)(App);
+export default withStyles(styles)(ResellerDemo);

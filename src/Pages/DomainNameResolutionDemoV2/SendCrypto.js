@@ -68,7 +68,7 @@ const SendCrypto = ({
 
           <div className={classes.insideCryptoDiv}>
             <img
-              src="/images/Bitcoin.svg"
+              src="images/Bitcoin.svg"
               alt="bitcoin"
               className={classes.cryptoIcon}
             />
@@ -83,7 +83,7 @@ const SendCrypto = ({
         >
           <div className={classes.insideCryptoDiv}>
             <img
-              src="/images/Ethereum.svg"
+              src="images/Ethereum.svg"
               alt="ethereum"
               className={classes.cryptoIcon}
             />
@@ -209,7 +209,7 @@ const SendCrypto = ({
             disabled={!domainName || !!error}
             startAdornment={
               <InputAdornment position="start">
-                <img src="/images/crypto.svg" alt="crypto" />
+                <img src="images/crypto.svg" alt="crypto" />
               </InputAdornment>
             }
           />

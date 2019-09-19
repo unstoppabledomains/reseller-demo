@@ -198,7 +198,7 @@ const SendCrypto = ({
             disabled={!cryptoCurrency || !!error}
             startAdornment={
               <InputAdornment position="start">
-                <img src="/images/crypto.svg" alt="crypto" />
+                <img src="images/crypto.svg" alt="crypto" />
               </InputAdornment>
             }
           />

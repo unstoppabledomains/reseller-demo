@@ -47,7 +47,7 @@ const StripeCheckoutForm = ({
           <Typography className={classes.stripeText}>
             Secured Checkout Powered by
           </Typography>
-          <img src="/images/stripe-logo.svg" alt="stripe-logo" />
+          <img src="images/stripe-logo.svg" alt="stripe-logo" />
         </div>
         {spinner ? (
           <div className={classes.loadingDiv}>

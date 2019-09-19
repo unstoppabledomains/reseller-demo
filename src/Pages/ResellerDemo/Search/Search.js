@@ -21,7 +21,6 @@ const Search = ({
   owner,
   setOwner,
   handleNextStep,
-  handlePrevstep,
   domainName,
   showPointer,
   setEmailProps,

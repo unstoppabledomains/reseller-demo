@@ -116,25 +116,6 @@ const theme = createMuiTheme({
       default: '#F9FAFF'
     }
   }
-  // overrides: {
-  // 	MuiButton: {
-  // 		root: {
-  // 			minWidth: '131px',
-  // 			borderRadius: '4px',
-  // 			boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 1px 0 rgba(0, 0, 0, 0.2)',
-  // 			background: '#4C47F7'
-  // 		},
-  // 		label: {
-  // 			color: '#ffffff',
-  // 			fontSize: '16px',
-  // 			fontWeight: 'bold',
-  // 			fontStyle: 'normal',
-  // 			fontStretch: 'normal',
-  // 			lineHeight: 'normal',
-  // 			letterSpacing: 'normal'
-  // 		}
-  // 	}
-  // }
 });
 
 export default theme;

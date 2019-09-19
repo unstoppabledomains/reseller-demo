@@ -12,7 +12,6 @@ export default createStyles((theme: any) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     height: 72,
-    // justifyContent: 'space-between',
     padding: `0 ${theme.spacing(3)}px`
   },
   leftSide: {
@@ -93,13 +92,10 @@ export default createStyles((theme: any) => ({
     marginTop: theme.spacing(2)
   },
   selected: {
-    // transform: 'translateX(-48px)',
     width: 8,
     backgroundColor: theme.palette.success,
     marginLeft: -theme.spacing(3),
     marginRight: `calc(${theme.spacing(3)}px - 8px)`
-    // marginTop: -theme.spacing(3),
-    // marginBottom: -theme.spacing(3)
   },
   card: {
     display: 'flex'

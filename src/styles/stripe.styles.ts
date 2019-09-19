@@ -2,7 +2,6 @@ import { createStyles } from '@material-ui/core/styles';
 
 export default createStyles((theme: any) => ({
   // check for unused styles
-
   paper: {
     minWidth: 528,
     padding: theme.spacing(3)
@@ -104,7 +103,7 @@ export default createStyles((theme: any) => ({
   },
   coinbaseContainer: {
     [theme.breakpoints.down('sm')]: {
-      marginLeft: -theme.spacing(3.5),
+      marginLeft: -theme.spacing(3.5)
     }
   },
   coinbaseButton: {

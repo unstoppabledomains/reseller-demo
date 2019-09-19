@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>Bitcoin</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Demo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Demo---20-00---Wallet-2" transform="translate(-664.000000, -176.000000)">
+            <g id="Wallet" transform="translate(640.000000, 96.000000)">
+                <g id="Group-4" transform="translate(24.000000, 24.000000)">
+                    <g id="fields" transform="translate(0.000000, 56.000000)">
+                        <g id="Crypto">
+                            <g id="Group-2">
+                                <g id="Bitcoin">
+                                    <rect id="Rectangle" fill="#F5922F" x="0" y="0" width="40" height="40" rx="20"></rect>
+                                    <path d="M22,12.0643785 C24.4137328,12.3877216 26,13.9217158 26,16.5 C26,17.8066622 25.5925809,18.8451074 24.8765128,19.5936812 C26.2001695,20.3022124 27,21.6304361 27,23.5 C27,26.4022916 25.0724776,28 22.25,28 L22,28 L22,30 L20,30 L20,28 L18,28 L18,30 L16,30 L16,28 L14,28 L14,26 L16,26 L16,14 L14,14 L14,12 L16,12 L16,10 L18,10 L18,12 L20,12 L20,10 L22,10 L22,12.0643785 L22,12.0643785 Z M21,14 L18,14 L18,19 L21,19 C22.9561749,19 24,18.1888576 24,16.5 C24,14.8111424 22.9561749,14 21,14 Z M18,21 L18,26 L22.25,26 C24.0421608,26 25,25.2060545 25,23.5 C25,21.7939455 24.0421608,21 22.25,21 L18,21 Z" id="icon" fill="#FFFFFF"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

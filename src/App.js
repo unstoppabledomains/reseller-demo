@@ -1,39 +1,32 @@
-import React from 'react'
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
-import { history } from './history';
-import Wallet from './Pages/WalletFront/Wallet';
-import Search from './Pages/Search/Search';
-import Email from './Pages/Email/Email';
-import Checkout from './Pages/Checkout/Checkout';
-import Finish from './Pages/Finish/Finish';
-import Send from './Pages/Send';
-
-
-
-
+import React from 'react';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import ResellerDemo from './Pages/ResellerDemo/ResellerDemo';
+import DomainNameResolutionDemo from './Pages/DomainNameResolutionDemo/DomainNameResolutionDemo';
+import DomainNameResolutionDemoV2 from './Pages/DomainNameResolutionDemoV2/DomainNameResolutionDemoV2';
 
 const App = () => {
-	return (
-		<div className="App">
-			<div className="container-fluid" id="tall">
-				<div className="row justify-content-md-center">
-					<h1>Reseller buy demo</h1>
-				</div>
-				<Router history={history} basename='/'>
-					<Switch>
-						<Route path="/" exact component={Search} />
-						<Route path="/reseller-demo/" exact component={Search} />
-						<Route path="/email" exact component={Email} />
-						<Route path="/checkout" exact component={Checkout} />
-						<Route path="/finish" exact component={Finish} />
-						<Route path="/send" exact component={Send} />
-					</Switch>
-				</Router>
-			</div>
-		</div>
-	)
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route
+          path="/"
+          exact
+          component={() => <Redirect to="/reseller-demo" />}
+        />
+        <Route path="/reseller-demo" exact component={ResellerDemo} />
+        <Route
+          path="/domain-name-reloution"
+          exact
+          component={DomainNameResolutionDemo}
+        />
+        <Route
+          path="/domain-name-reloution-v2"
+          exact
+          component={DomainNameResolutionDemoV2}
+        />
+      </Switch>
+    </BrowserRouter>
+  );
+};
 
-}
-
-export default App
-
+export default App;

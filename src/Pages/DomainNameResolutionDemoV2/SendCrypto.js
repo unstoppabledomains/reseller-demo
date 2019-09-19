@@ -17,6 +17,7 @@ import GlobeIcon from '@material-ui/icons/Language';
 import WalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import DollarIcon from '@material-ui/icons/MonetizationOnRounded';
 import Pointer from '../../Utilities/Pointer';
+import ArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 const SendCrypto = ({
   classes,
@@ -45,10 +46,56 @@ const SendCrypto = ({
     setStep(4);
   };
 
+  const handleChooseCrypto = crypto => {
+    setCryptoCurrency(crypto);
+    setStep(1);
+  };
+
   console.log({ availableWallets });
 
   if (step === 0) {
-    return <div>Choose crypto</div>;
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h5" className={classes.finalHeader}>
+          Select Cryptocurency
+        </Typography>
+        <div
+          className={classes.chooseCryptoDiv}
+          onClick={() => handleChooseCrypto('Bitcoin')}
+        >
+          {step === 0 && showPointer ? (
+            <div style={{ position: 'fixed', transform: 'translateX(-40px)' }}>
+              <Pointer />
+            </div>
+          ) : null}
+
+          <div className={classes.insideCryptoDiv}>
+            <img
+              src="/images/Bitcoin.svg"
+              alt="bitcoin"
+              className={classes.cryptoIcon}
+            />
+            <Typography className={classes.lessBold}>Bitcoin</Typography>
+          </div>
+          <ArrowRightIcon color="disabled" />
+        </div>
+        <Divider className={classes.dividerCrypto} />
+        <div
+          className={classes.chooseCryptoDiv}
+          onClick={() => handleChooseCrypto('Ethereum')}
+        >
+          <div className={classes.insideCryptoDiv}>
+            <img
+              src="/images/Ethereum.svg"
+              alt="ethereum"
+              className={classes.cryptoIcon}
+            />
+            <Typography className={classes.lessBold}>Ethereum</Typography>
+          </div>
+          <ArrowRightIcon color="disabled" />
+        </div>
+      </Paper>
+    );
   }
 
   if (step === 4) {
@@ -82,74 +129,26 @@ const SendCrypto = ({
       <Typography variant="h5" className={classes.bold}>
         Send Crypto
       </Typography>
-      <div className={classes.inputDiv}>
-        <div>
-          <Typography variant="subtitle1" className={classes.label}>
-            Enter .zil Domain
-          </Typography>
-          <div>
-            {step === 0 && showPointer ? (
-              <div
-                style={{ position: 'fixed', transform: 'translateX(-40px)' }}
-              >
-                <Pointer />
-              </div>
-            ) : null}
-            <InputBase
-              className={classes.input}
-              value={domainName}
-              onChange={e => setDomainName(e.target.value)}
-              startAdornment={
-                <InputAdornment position="start">
-                  <GlobeIcon color="disabled" />
-                </InputAdornment>
-              }
-            />
+
+      <Typography variant="subtitle1" className={classes.label}>
+        Enter .zil Domain
+      </Typography>
+      <div>
+        {step === 1 && showPointer ? (
+          <div style={{ position: 'fixed', transform: 'translateX(-40px)' }}>
+            <Pointer />
           </div>
-        </div>
-        <div>
-          <Typography variant="subtitle1" className={classes.label}>
-            Select Crypto
-          </Typography>
-          <FormControl
-            variant="outlined"
-            classes={{ root: classes.formControl }}
-          >
-            {step === 1 && showPointer ? (
-              <div
-                style={{ position: 'fixed', transform: 'translateX(221px)' }}
-              >
-                <Pointer />
-              </div>
-            ) : null}
-            <Select
-              value={cryptoCurrency}
-              onChange={e => setCryptoCurrency(e.target.value)}
-              inputProps={{
-                name: 'age',
-                id: 'outlined-age-simple'
-              }}
-              input={
-                <InputBase className={classes.input} style={{ width: 212 }} />
-              }
-              disabled={
-                !availableWallets || !Object.keys(availableWallets).length
-              }
-            >
-              {availableWallets && Object.keys(availableWallets).length
-                ? Object.keys(availableWallets).map(wallet => (
-                    <MenuItem
-                      key={wallet}
-                      classes={{ root: classes.menuItem }}
-                      value={wallet}
-                    >
-                      {wallet}
-                    </MenuItem>
-                  ))
-                : null}
-            </Select>
-          </FormControl>
-        </div>
+        ) : null}
+        <InputBase
+          className={classes.inputDemo2}
+          value={domainName}
+          onChange={e => setDomainName(e.target.value)}
+          startAdornment={
+            <InputAdornment position="start">
+              <GlobeIcon color="disabled" />
+            </InputAdornment>
+          }
+        />
       </div>
       {error ? (
         <div className={classes.errorDiv}>

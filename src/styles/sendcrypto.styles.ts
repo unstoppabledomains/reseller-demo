@@ -56,6 +56,10 @@ export default createStyles((theme: any) => ({
     marginTop: theme.spacing(1.5),
     marginBottom: theme.spacing(1.5)
   },
+  dividerCrypto: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
+  },
   exchangeDiv: {
     display: 'flex',
     alignItems: 'center',
@@ -91,5 +95,26 @@ export default createStyles((theme: any) => ({
   finalHeader: {
     fontWeight: 'bold',
     marginBottom: theme.spacing(3)
+  },
+  chooseCryptoDiv: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    cursor: 'pointer'
+  },
+  insideCryptoDiv: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  cryptoIcon: {
+    marginRight: theme.spacing(2)
+  },
+  inputDemo2: {
+    height: 40,
+    padding: theme.spacing(1),
+    borderRadius: 6,
+    border: 'solid 1px rgba(0, 0, 0, 0.2)',
+    width: '100%'
   }
 }));

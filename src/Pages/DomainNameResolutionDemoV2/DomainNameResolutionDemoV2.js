@@ -28,9 +28,9 @@ const DomainNameResotionDemo = ({ classes, history }) => {
     // eslint-disable-next-line
   }, [domainName]);
 
-  useEffect(() => {
-    if (cryptoCurrency) setStep(2);
-  }, [cryptoCurrency]);
+  // useEffect(() => {
+  //   if (cryptoCurrency) setStep(2);
+  // }, [cryptoCurrency]);
 
   useEffect(() => {
     if (cryptoAmount) setStep(3);

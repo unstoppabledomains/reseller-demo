@@ -22,7 +22,7 @@ const Header = ({
   setDomainName
 }) => {
   const index =
-    history.location.pathname === '/'
+    history.location.pathname === '/reseller-demo'
       ? 0
       : history.location.pathname === '/domain-name-reloution'
       ? 1

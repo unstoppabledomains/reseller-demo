@@ -97,7 +97,7 @@ const SideBar = ({
     </div>
   );
 
-  if (history.location.pathname === '/') {
+  if (history.location.pathname === '/reseller-demo') {
     return (
       <>
         <Paper className={classes.paper}>

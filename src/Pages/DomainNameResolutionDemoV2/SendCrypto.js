@@ -37,8 +37,16 @@ const SendCrypto = ({
 
   const handleExchange = e => {
     const mult = cryptoCurrency === 'BTC' ? btcPrice : ethPrice;
-    setCryptoAmount(Number(e.target.value));
-    setDollarAmount((Number(e.target.value) * mult).toFixed(2));
+    if (
+      /(?<=^| )\d+(\.\d+)?(?=$| )/.test(e.target.value) ||
+      /(?<=^| )\d+(\.)?(?=$| )/.test(e.target.value) ||
+      !e.target.value
+    ) {
+      setCryptoAmount(e.target.value);
+      if (e.target.value === '') {
+        setDollarAmount('');
+      } else setDollarAmount((parseFloat(e.target.value) * mult).toFixed(2));
+    }
   };
 
   const handleSendPayment = () => {

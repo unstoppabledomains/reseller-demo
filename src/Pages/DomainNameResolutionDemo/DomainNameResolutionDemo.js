@@ -14,15 +14,15 @@ const DomainNameResotionDemo = ({ classes, history }) => {
   // const [resolvedAddress, setResolvedAddress] = useState('');
   const [availableWallets, setAvailableWallets] = useState();
   const [cryptoCurrency, setCryptoCurrency] = useState('');
-  const [cryptoAmount, setCryptoAmount] = useState(0);
-  const [dollarAmount, setDollarAmount] = useState(0);
+  const [cryptoAmount, setCryptoAmount] = useState('');
+  const [dollarAmount, setDollarAmount] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
     if (step === 0) {
       if (cryptoCurrency) setCryptoCurrency('');
-      if (cryptoAmount) setCryptoAmount(0);
-      if (dollarAmount) setDollarAmount(0);
+      if (cryptoAmount) setCryptoAmount('');
+      if (dollarAmount) setDollarAmount('');
       if (error) setError('');
       // if (domainName) setDomainName('');
     }
@@ -33,8 +33,8 @@ const DomainNameResotionDemo = ({ classes, history }) => {
     if (step !== 0) setStep(0);
     if (availableWallets) setAvailableWallets();
     if (cryptoCurrency) setCryptoCurrency('');
-    if (cryptoAmount) setCryptoAmount(0);
-    if (dollarAmount) setDollarAmount(0);
+    if (cryptoAmount) setCryptoAmount();
+    if (dollarAmount) setDollarAmount();
     if (error) setError('');
     if (domainName) resolve(domainName);
     // eslint-disable-next-line
@@ -42,8 +42,8 @@ const DomainNameResotionDemo = ({ classes, history }) => {
 
   useEffect(() => {
     setError('');
-    setCryptoAmount(0);
-    setDollarAmount(0);
+    setCryptoAmount('');
+    setDollarAmount('');
     if (
       availableWallets &&
       cryptoCurrency &&

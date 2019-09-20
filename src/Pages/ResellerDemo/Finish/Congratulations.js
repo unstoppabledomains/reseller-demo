@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -8,7 +9,6 @@ import styles from '../../../styles/congratulations.styles';
 import config from '../../../config';
 
 const Congratulations = ({ classes, email, transactionResponse, setStep }) => {
-  // console.log(transactionResponse);
   const {
     order: { orderNumber }
   } = transactionResponse;
@@ -42,6 +42,38 @@ const Congratulations = ({ classes, email, transactionResponse, setStep }) => {
     return setStep(1);
   };
 
+  const renderAddrInfo = () => {
+
+    const wallets = {
+      "BTC": "14aKD1kRk1vypENN4CkbnSyXCwb1NmLHxz",
+      "ETH": "0x32Be343B94f860124dC4fEe278FDCBD38C102D88",
+      "LTC": "3CDJNfdWX8m2NwuGUV3nhXHXEeLygMXoAj"
+    };
+
+    const renderWalletsAddr = () => {
+      const result = [];
+      
+      for (const [ticker, addr] of Object.entries(wallets)) {
+        result.push(
+          <div className={classes.row2} key={ticker}>
+            <Typography variant="body1" className={classes.ticker}>{ticker}:</Typography>
+            <Typography variant="body1" className={classes.addr}>{addr}</Typography>
+          </div>
+        );
+      }
+      return result;
+    }
+
+    return (
+      <>
+      <Typography variant="h6" className={`${classes.bold} ${classes.AddrTitle}`}>These addresses in your wallet have been linked to your name.</Typography>
+      {renderWalletsAddr()}
+      </>
+    );
+  }
+
+
+
   return (
     <Paper className={classes.paper}>
       <div className={classes.headerDiv}>
@@ -49,6 +81,8 @@ const Congratulations = ({ classes, email, transactionResponse, setStep }) => {
           Congratulations!
         </Typography>
       </div>
+      <Divider />
+      {renderAddrInfo()}
       <div className={classes.mainDiv}>
         <div className={classes.row}>
           <Typography variant="h5" className={`${classes.bold}`}>

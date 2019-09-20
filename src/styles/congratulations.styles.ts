@@ -23,6 +23,10 @@ export default createStyles((theme: any) => ({
     position: 'relative',
     width: '100%'
   },
+  row2: {
+    display: 'inline-flex',
+    width: '100%'
+  },
   linearProgress: {
     marginTop: theme.spacing(1),
     height: 2
@@ -38,5 +42,19 @@ export default createStyles((theme: any) => ({
     height: 60,
     fontWeight: 'bold',
     marginTop: theme.spacing(3)
+  },
+  AddrTitle: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    textAlign: 'center',
+  },
+  ticker: {
+    marginRight: theme.spacing(3),
+    marginBottom: theme.spacing(1)
+  },
+  addr: {
+    marginRight: theme.spacing(3),
+    marginBottom: theme.spacing(1),
+    marginLeft: theme.spacing(2)
   }
 }));

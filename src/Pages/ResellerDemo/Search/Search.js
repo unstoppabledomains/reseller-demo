@@ -198,7 +198,7 @@ const Search = ({
                   color="error"
                   className={`${classes.warningLabel}`}
                 >
-                  THIS IS A LIVE DOMAIN, YOU WILL BE CHARGED AT THE END
+                  THIS IS A LIVE DOMAIN, CURRENTLY UNAVAILABLE TO BUY FROM THIS DEMO
                 </Typography>
               </div>
             </>
@@ -209,6 +209,7 @@ const Search = ({
             className={`${classes.button} ${classes.bold} ${classes.wideButton}`}
             classes={{ label: classes.buttonLabel, root: classes.noOutline }}
             onClick={() => handleBuyDomain()}
+            disabled={!domain.reselling.test}
           >
             BUY DOMAIN
           </Button>

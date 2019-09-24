@@ -152,7 +152,7 @@ const ResellerDemo = ({ classes, history }) => {
         }
         setDomainName={setDomainName}
       />
-      <div className={classes.layout}>{renderStep()}</div>
+      {/* <div className={classes.layout}>{renderStep()}</div> */}
     </div>
   );
 };

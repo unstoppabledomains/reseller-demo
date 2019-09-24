@@ -13,8 +13,8 @@ const Email = ({
   classes,
   emailProps,
   email,
-  owner,
-  setOwner,
+  ownerPublicKey,
+  setOwnerPublicKey,
   setEmail,
   step,
   showPointer,
@@ -35,18 +35,14 @@ const Email = ({
 
   const handleOwnerChange = e => {
     if (emailError) setEmailError('');
-    setOwner(e.target.value);
+    setOwnerPublicKey(e.target.value);
   };
 
   const handleSubmit = () => {
-    if (helper.isAddress(owner) && isEmailValid(email)) {
+    if (isEmailValid(email)) {
       setStep(3);
-    } else if (!helper.isAddress(owner) && !isEmailValid(email)) {
-      setEmailError('Incorrect email and owner');
-    } else if (!isEmailValid(email)) {
+    } else {
       setEmailError('Incorrect email');
-    } else if (!helper.isAddress(owner)) {
-      setEmailError('Incorrect owner format');
     }
   };
 
@@ -119,7 +115,7 @@ const Email = ({
             <InputBase
               placeholder="Your ETH or ZIL address"
               className={classes.input}
-              value={owner}
+              value={ownerPublicKey}
               onChange={handleOwnerChange}
               onKeyDown={e => (e.key === 'Enter' ? handleSubmit() : null)}
             />
@@ -131,7 +127,7 @@ const Email = ({
         color="primary"
         variant="contained"
         className={classes.button}
-        disabled={!email || !owner}
+        disabled={!email || !ownerPublicKey}
       >
         Next
       </Button>

@@ -5,7 +5,7 @@ import withStyles from '@material-ui/styles/withStyles';
 import CoinbaseCommerceButton from 'react-coinbase-commerce';
 import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
 
-const Coinbase = ({ classes, email, domainObject, owner, setStep }) => {
+const Coinbase = ({ classes, email, domainObject, ownerPublicKey, setStep }) => {
   const [coinbaseToken, setCoinbaseToken] = useState('');
   const requestCoinbaseToken = async () => {
     const apiURL = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders`;
@@ -17,7 +17,10 @@ const Coinbase = ({ classes, email, domainObject, owner, setStep }) => {
         domains: [
           {
             name: domainObject.domain.name,
-            owner: owner
+            owner: {
+              type: 'ETH',
+              owner: ownerPublicKey
+            }
           }
         ]
       }

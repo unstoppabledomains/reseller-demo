@@ -23,6 +23,12 @@ export default createStyles((theme: any) => ({
     fontSize: 16,
     marginTop: theme.spacing(3)
   },
+  loading: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: theme.spacing(3)
+  },
   input: {
     width: 252,
     height: 40,

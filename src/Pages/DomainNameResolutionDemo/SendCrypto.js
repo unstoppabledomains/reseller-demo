@@ -14,6 +14,7 @@ import UserIcon from '@material-ui/icons/AccountCircle';
 import GlobeIcon from '@material-ui/icons/Language';
 import WalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import DollarIcon from '@material-ui/icons/MonetizationOnRounded';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Pointer from '../../Utilities/Pointer';
 
 const SendCrypto = ({
@@ -30,7 +31,8 @@ const SendCrypto = ({
   setCryptoAmount,
   dollarAmount,
   setDollarAmount,
-  error
+  error,
+  spinner
 }) => {
   const [message, setMessage] = useState('');
 
@@ -148,6 +150,11 @@ const SendCrypto = ({
           </FormControl>
         </div>
       </div>
+      {spinner ? (
+        <div className={classes.loading}>
+          <CircularProgress />
+        </div>
+      ) : null}
       {error ? (
         <div className={classes.errorDiv}>
           <Typography color="error" className={classes.errorMessage}>

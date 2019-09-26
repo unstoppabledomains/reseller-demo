@@ -18,7 +18,7 @@ const Stripe = ({
   step,
   showPointer,
   email,
-  owner,
+  ownerPublicKey,
   setTransactionResponse
 }) => {
   const [userName, setUserName] = useState('');
@@ -26,7 +26,6 @@ const Stripe = ({
 
   const _finalizeTransaction = res => {
     setTransactionResponse(res);
-
     if (!res.errors) {
       setStep(5);
     } else {
@@ -45,6 +44,7 @@ const Stripe = ({
       }
     })
       .then(res => res.json())
+      // .then(res => {console.log({res}); return res;})
       .then(_finalizeTransaction);
   };
 
@@ -65,11 +65,15 @@ const Stripe = ({
         domains: [
           {
             name,
-            owner
+            owner: {
+              type: 'ETH',
+              publicKey: ownerPublicKey
+            }
           }
         ]
       }
     };
+    console.log({body});
     buy(apiurl, body, setSpinner).then(res => {
       if (res && !res.errors) {
         _saveToLocal({

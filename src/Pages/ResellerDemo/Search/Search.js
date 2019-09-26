@@ -18,8 +18,8 @@ const baseURL = 'https://unstoppabledomains.com/api/v1/resellers';
 const Search = ({
   classes,
   step,
-  owner,
-  setOwner,
+  ownerPublicKey,
+  setOwnerPublicKey,
   handleNextStep,
   domainName,
   showPointer,
@@ -36,18 +36,18 @@ const Search = ({
 
   useEffect(() => {
     if (results && results.domain.reselling && !results.domain.reselling.test)
-      setOwner('');
+    setOwnerPublicKey('');
     else {
-      setOwner('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+      setOwnerPublicKey('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
     }
-  }, [results, setOwner]);
+  }, [results, setOwnerPublicKey]);
 
   useEffect(() => {
     if (results) {
       setResults('');
     }
-    if (owner) {
-      setOwner('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+    if (ownerPublicKey) {
+      setOwnerPublicKey('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
     }
     setUserInput(domainName);
     // eslint-disable-next-line
@@ -89,7 +89,7 @@ const Search = ({
   const handleBuyDomain = () => {
     setEmailProps({
       ...results,
-      owner
+      ownerPublicKey
     });
     handleNextStep();
   };
@@ -98,8 +98,8 @@ const Search = ({
     if (results) {
       setResults('');
     }
-    if (owner) {
-      setOwner('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+    if (ownerPublicKey) {
+      setOwnerPublicKey('0xe5f8500db8c739f8bf518640760d5b4105716a73bec59a693f0941c879a1bc527969a2418d1c8e6e64476246aa9b74773503789d801b2279910a01119410da15');
     }
     setUserInput(e.target.value);
   };
@@ -198,7 +198,7 @@ const Search = ({
                   color="error"
                   className={`${classes.warningLabel}`}
                 >
-                  THIS IS A LIVE DOMAIN, YOU WILL BE CHARGED AT THE END
+                  THIS IS A LIVE DOMAIN, CURRENTLY UNAVAILABLE TO BUY FROM THIS DEMO
                 </Typography>
               </div>
             </>
@@ -209,6 +209,7 @@ const Search = ({
             className={`${classes.button} ${classes.bold} ${classes.wideButton}`}
             classes={{ label: classes.buttonLabel, root: classes.noOutline }}
             onClick={() => handleBuyDomain()}
+            disabled={!domain.reselling.test}
           >
             BUY DOMAIN
           </Button>

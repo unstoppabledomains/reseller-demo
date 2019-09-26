@@ -17,6 +17,7 @@ const DomainNameResotionDemo = ({ classes, history }) => {
   const [cryptoAmount, setCryptoAmount] = useState('');
   const [dollarAmount, setDollarAmount] = useState('');
   const [error, setError] = useState('');
+  const [spinner, setSpinner] = useState(false);
 
   useEffect(() => {
     if (step === 0) {
@@ -71,30 +72,33 @@ const DomainNameResotionDemo = ({ classes, history }) => {
 
   const checkForErrors = domain => {
     return (
-      domain.indexOf('.') > 0 &&
-      /^((?![0-9]+$)(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}\.)*(?![0-9]+$)(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}$/.test(
-        domain
-      )
+      domain.indexOf('.') > 0 && /^.{1,}\.(zil)$/.test(domain)
     );
   };
 
   const resolve = async domain => {
     if (checkForErrors(domain)) {
-      try {
-        const resolution = await namicorn.resolve(domain);
-        if (resolution.meta.owner) {
-          if (!Object.keys(resolution.addresses).length) {
-            setError('Domain has no wallets connected to it');
+      setSpinner(true);
+      namicorn.resolve(domain)
+        .then((resolution) => {
+          setSpinner(false);
+          if (resolution.meta.owner) {
+            if (!Object.keys(resolution.addresses).length) {
+              setError('Domain has no wallets connected to it');
+            } else {
+              setAvailableWallets(resolution.addresses);
+            }
           } else {
-            setAvailableWallets(resolution.addresses);
+            setError('Domain has no owner');
           }
-        } else {
-          setError('Domain has no owner');
         }
-      } catch (e) {
-        setError('Server error, please try again later');
-      }
+        )
+        .catch(e => {
+          setSpinner(false);
+          setError('Server error, please try again later');
+        });
     } else {
+      setSpinner(false);
       setError('Invalid domain');
     }
   };
@@ -124,6 +128,7 @@ const DomainNameResotionDemo = ({ classes, history }) => {
           dollarAmount={dollarAmount}
           setDollarAmount={setDollarAmount}
           error={error}
+          spinner={spinner}
         />
       </div>
     </div>

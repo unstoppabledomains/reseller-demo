@@ -16,9 +16,7 @@ const ResellerDemo = ({ classes, history }) => {
   const [domainName, setDomainName] = useState('');
   const [emailProps, setEmailProps] = useState({});
   const [email, setEmail] = useState('');
-  const [owner, setOwner] = useState(
-    '0xe7474D07fD2FA286e7e0aa23cd107F8379085037'
-  );
+  const [ownerPublicKey, setOwnerPublicKey] = useState('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
   const [transactionResponse, setTransactionResponse] = useState();
 
   const [domainResults, setDomainResults] = useState('');
@@ -27,7 +25,7 @@ const ResellerDemo = ({ classes, history }) => {
   useEffect(() => {
     if (step === 0) {
       setEmail('');
-      setOwner('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+      setOwnerPublicKey('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
       setDomainResults('');
       setDomainName('');
       setEmailProps('');
@@ -63,8 +61,8 @@ const ResellerDemo = ({ classes, history }) => {
             handlePrevStep={handlePrevStep}
             domainName={domainName}
             step={step}
-            owner={owner}
-            setOwner={setOwner}
+            ownerPublicKey={ownerPublicKey}
+            setOwnerPublicKey={setOwnerPublicKey}
             showPointer={pointer}
             setEmailProps={setEmailProps}
             setDomainResults={setDomainResults}
@@ -77,8 +75,8 @@ const ResellerDemo = ({ classes, history }) => {
             handlePrevStep={handlePrevStep}
             step={step}
             domainName={domainName}
-            owner={owner}
-            setOwner={setOwner}
+            ownerPublicKey={ownerPublicKey}
+            setOwnerPublicKey={setOwnerPublicKey}
             showPointer={pointer}
             setEmailProps={setEmailProps}
             setDomainResults={setDomainResults}
@@ -90,8 +88,8 @@ const ResellerDemo = ({ classes, history }) => {
             handleNextStep={handleNextStep}
             emailProps={emailProps}
             email={email}
-            owner={owner}
-            setOwner={setOwner}
+            ownerPublicKey={ownerPublicKey}
+            setOwnerPublicKey={setOwnerPublicKey}
             setEmail={setEmail}
             step={step}
             showPointer={pointer}
@@ -111,7 +109,7 @@ const ResellerDemo = ({ classes, history }) => {
               showPointer={pointer}
               setStep={setStep}
               email={email}
-              owner={owner}
+              ownerPublicKey={ownerPublicKey}
               setTransactionResponse={setTransactionResponse}
             />
           );
@@ -120,7 +118,7 @@ const ResellerDemo = ({ classes, history }) => {
             <Coinbase
               domainObject={emailProps}
               email={email}
-              owner={owner}
+              ownerPublicKey={ownerPublicKey}
               setStep={setStep}
             />
           );
@@ -154,7 +152,7 @@ const ResellerDemo = ({ classes, history }) => {
         }
         setDomainName={setDomainName}
       />
-      <div className={classes.layout}>{renderStep()}</div>
+      {/* <div className={classes.layout}>{renderStep()}</div> */}
     </div>
   );
 };

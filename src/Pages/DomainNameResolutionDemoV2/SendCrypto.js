@@ -38,8 +38,8 @@ const SendCrypto = ({
   const handleExchange = e => {
     const mult = cryptoCurrency === 'BTC' ? btcPrice : ethPrice;
     if (
-      /(?<=^| )\d+(\.\d+)?(?=$| )/.test(e.target.value) ||
-      /(?<=^| )\d+(\.)?(?=$| )/.test(e.target.value) ||
+      /^([0-9]+)\.?([0-9]*)$/.test(e.target.value) ||
+      /(^([0-9]+)\.?([0-9]*)$)/.test(e.target.value) ||
       !e.target.value
     ) {
       setCryptoAmount(e.target.value);

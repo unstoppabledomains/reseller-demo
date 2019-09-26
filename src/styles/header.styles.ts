@@ -34,6 +34,7 @@ export default createStyles((theme: any) => ({
     width: 155
   },
   drawerPaper: {
+    display: 'block',
     paddingTop: 72 + theme.spacing(3),
     padding: theme.spacing(3),
     backgroundColor: 'rgba(123, 122, 156, 0.1)',

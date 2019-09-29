@@ -38,7 +38,7 @@ const Search = ({
     if (results && results.domain.reselling && !results.domain.reselling.test)
     setOwnerPublicKey('');
     else {
-      setOwnerPublicKey('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+      setOwnerPublicKey('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
     }
   }, [results, setOwnerPublicKey]);
 
@@ -47,7 +47,7 @@ const Search = ({
       setResults('');
     }
     if (ownerPublicKey) {
-      setOwnerPublicKey('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+      setOwnerPublicKey('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
     }
     setUserInput(domainName);
     // eslint-disable-next-line
@@ -99,7 +99,7 @@ const Search = ({
       setResults('');
     }
     if (ownerPublicKey) {
-      setOwnerPublicKey('0xe5f8500db8c739f8bf518640760d5b4105716a73bec59a693f0941c879a1bc527969a2418d1c8e6e64476246aa9b74773503789d801b2279910a01119410da15');
+      setOwnerPublicKey('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
     }
     setUserInput(e.target.value);
   };
@@ -209,7 +209,7 @@ const Search = ({
             className={`${classes.button} ${classes.bold} ${classes.wideButton}`}
             classes={{ label: classes.buttonLabel, root: classes.noOutline }}
             onClick={() => handleBuyDomain()}
-            disabled={!domain.reselling.test}
+            // disabled={!domain.reselling.test}
           >
             BUY DOMAIN
           </Button>

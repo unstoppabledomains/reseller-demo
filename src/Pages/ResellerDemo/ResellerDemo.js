@@ -16,7 +16,7 @@ const ResellerDemo = ({ classes, history }) => {
   const [domainName, setDomainName] = useState('');
   const [emailProps, setEmailProps] = useState({});
   const [email, setEmail] = useState('');
-  const [ownerPublicKey, setOwnerPublicKey] = useState('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+  const [ownerPublicKey, setOwnerPublicKey] = useState('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
   const [transactionResponse, setTransactionResponse] = useState();
 
   const [domainResults, setDomainResults] = useState('');
@@ -25,7 +25,7 @@ const ResellerDemo = ({ classes, history }) => {
   useEffect(() => {
     if (step === 0) {
       setEmail('');
-      setOwnerPublicKey('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+      setOwnerPublicKey('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
       setDomainResults('');
       setDomainName('');
       setEmailProps('');
@@ -120,6 +120,7 @@ const ResellerDemo = ({ classes, history }) => {
               email={email}
               ownerPublicKey={ownerPublicKey}
               setStep={setStep}
+              setTransactionResponse={setTransactionResponse}
             />
           );
       case 5:
@@ -152,7 +153,7 @@ const ResellerDemo = ({ classes, history }) => {
         }
         setDomainName={setDomainName}
       />
-      {/* <div className={classes.layout}>{renderStep()}</div> */}
+      <div className={classes.layout}>{renderStep()}</div>
     </div>
   );
 };

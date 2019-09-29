@@ -39,7 +39,7 @@ const Stripe = ({
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
-        Authentication: `Bearer ${config.token}`,
+        'Authentication': `Bearer ${config.token}`,
         'Content-Type': 'application/json'
       }
     })

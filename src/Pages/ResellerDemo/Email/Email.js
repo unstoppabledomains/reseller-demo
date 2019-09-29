@@ -39,10 +39,15 @@ const Email = ({
   };
 
   const handleSubmit = () => {
-    if (isEmailValid(email)) {
-      setStep(3);
+
+    if (helper.isValidFormat(ownerPublicKey)) {
+      if (isEmailValid(email)) {
+        setStep(3);
+      } else {
+        setEmailError('Incorrect email');
+      }
     } else {
-      setEmailError('Incorrect email');
+      setEmailError('Incorrect owner format');
     }
   };
 
@@ -106,14 +111,14 @@ const Email = ({
         />
       </div>
 
-      {emailProps.owner === '' ? (
+      {emailProps.ownerPublicKey === '' ? (
         <>
           <Typography className={classes.lessBold}>
             Owner crypto address
           </Typography>
           <div className={classes.inputDiv}>
             <InputBase
-              placeholder="Your ETH or ZIL address"
+              placeholder="Your ETH or ZIL public key"
               className={classes.input}
               value={ownerPublicKey}
               onChange={handleOwnerChange}

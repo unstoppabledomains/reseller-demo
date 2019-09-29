@@ -64,6 +64,12 @@ export default createStyles((theme: any) => ({
     padding: theme.spacing(2),
     marginBottom: theme.spacing(3)
   },
+  coinbaseError: {
+    borderRadius: 6,
+    backgroundColor: '#fff1f1',
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(3)
+  },
   errorMessage: {
     fontWeight: 600
   },

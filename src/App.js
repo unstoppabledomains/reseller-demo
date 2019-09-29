@@ -11,7 +11,7 @@ const App = () => {
         <Route
           path="/"
           exact
-          component={() => <Redirect to="/domain-name-reloution" />}
+          component={() => <Redirect to="/reseller-demo" />}
         />
         <Route path="/reseller-demo" exact component={ResellerDemo} />
         <Route

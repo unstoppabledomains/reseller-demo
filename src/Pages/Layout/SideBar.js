@@ -201,7 +201,7 @@ const SideBar = ({
           '3. Choose amount',
           'Type how many crypto or dollars you want to send'
         )}
-        {renderCard('4. Send Crypto', 'Press “Request Payment” to finish')}
+        {renderCard('4. Send Crypto', 'Press “Send Payment” to finish')}
         <div className={classes.helpDiv}>
           <Typography variant="h5" className={classes.bold}>
             Need Help?
@@ -254,7 +254,7 @@ const SideBar = ({
           '3. Choose amount',
           'Type how many crypto or dollars you want to send'
         )}
-        {renderCard('4. Send Crypto', 'Press “Request Payment” to finish')}
+        {renderCard('4. Send Crypto', 'Press “Send Payment” to finish')}
         <div className={classes.helpDiv}>
           <Typography variant="h5" className={classes.bold}>
             Need Help?

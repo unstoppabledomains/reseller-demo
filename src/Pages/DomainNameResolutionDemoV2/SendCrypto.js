@@ -64,7 +64,7 @@ const SendCrypto = ({
     return (
       <Paper className={classes.paper}>
         <Typography variant="h5" className={classes.finalHeader}>
-          Select Cryptocurency
+          Select Cryptocurrency
         </Typography>
         <div
           className={classes.chooseCryptoDiv}

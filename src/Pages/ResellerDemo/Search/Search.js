@@ -12,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import styles from '../../../styles/search.styles';
 import config from '../../../config';
 import Pointer from '../../../Utilities/Pointer';
+import CoinbaseFrame from '../Checkout/CoinbaseFrame';
 
 const baseURL = 'https://unstoppabledomains.com/api/v1/resellers';
 
@@ -222,6 +223,10 @@ const Search = ({
       </>
     );
   };
+
+
+  return <CoinbaseFrame token={'P953CMC2'} />
+
 
   return (
     <Paper className={classes.paper}>

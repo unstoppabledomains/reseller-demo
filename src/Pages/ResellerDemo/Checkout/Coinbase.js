@@ -3,6 +3,7 @@ import config from '../../../config';
 import styles from '../../../styles/stripe.styles';
 import withStyles from '@material-ui/styles/withStyles';
 import CoinbaseCommerceButton from 'react-coinbase-commerce';
+import CoinbaseFrame from './CoinbaseFrame';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
@@ -99,14 +100,15 @@ const Coinbase = ({ classes, email, domainObject, ownerPublicKey, setStep, setTr
         </div>
       ) : null}
       <div className={classes.coinbaseContainer} id="coinbaseParrent">
-        <CoinbaseCommerceButton
+        {/* <CoinbaseCommerceButton
           id="coinbase-button"
           className={classes.coinbaseButton}
           styled={false}
           chargeId={coinbaseToken}
           onChargeSuccess={handlePaymentSuccess}
           onChargeFailure={handlePaymentFailure}
-        />
+        /> */}
+        <CoinbaseFrame token={coinbaseToken} /> 
       </div>
       <style jsx="true" global="true">{`
         .coinbase-commerce-iframe-container {

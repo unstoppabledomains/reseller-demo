@@ -36,14 +36,20 @@ const SideBar = ({
       Randomize
     </span>
   );
-  const emailExampleLink = (
-    <span
-      onClick={() => setEmail('example@example.com')}
-      className={classes.buttonText}
-    >
-      example@example.com
-    </span>
-  );
+  const emailExampleLink = () => {
+    const email = `example-${Math.floor(
+      Math.random() * 502562
+    )}@example.com`;
+      console.log(email);
+    return (
+      <span
+        onClick={() => setEmail(email)}
+        className={classes.buttonText}
+      >
+        {email}
+      </span>
+    );
+  }
 
   const domainsLinks = (
     <>
@@ -138,7 +144,7 @@ const SideBar = ({
         {renderCard(
           '3. Enter Email',
           'Use any email or just',
-          emailExampleLink
+          emailExampleLink()
         )}
         {renderCard(
           '4. Choose payment method',

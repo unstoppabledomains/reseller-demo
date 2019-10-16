@@ -40,7 +40,6 @@ const SideBar = ({
     const email = `example-${Math.floor(
       Math.random() * 502562
     )}@example.com`;
-      console.log(email);
     return (
       <span
         onClick={() => setEmail(email)}

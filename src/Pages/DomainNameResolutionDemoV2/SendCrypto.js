@@ -22,7 +22,7 @@ const SendCrypto = ({
   step,
   setStep,
   showPointer,
-  availableWallets,
+  availableWallet,
   cryptoCurrency,
   setCryptoCurrency,
   cryptoAmount,
@@ -123,7 +123,7 @@ const SendCrypto = ({
               {cryptoCurrency}:&nbsp;
             </Typography>
             <Typography variant="subtitle1" className={classes.trancatedText}>
-              {availableWallets[cryptoCurrency]}
+              {availableWallet}
             </Typography>
           </div>
         </div>
@@ -171,8 +171,7 @@ const SendCrypto = ({
       ) : null}
       {domainName &&
       cryptoCurrency &&
-      availableWallets &&
-      availableWallets[cryptoCurrency] &&
+      availableWallet &&
       !error ? (
         <>
           <Typography variant="subtitle1" className={classes.label}>
@@ -190,7 +189,7 @@ const SendCrypto = ({
                 {cryptoCurrency}:&nbsp;
               </Typography>
               <Typography variant="subtitle1" className={classes.trancatedText}>
-                {availableWallets[cryptoCurrency]}
+                {availableWallet}
               </Typography>
             </div>
           </div>

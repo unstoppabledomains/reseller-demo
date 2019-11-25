@@ -69,7 +69,9 @@ const DomainNameResotionDemo = ({ classes, history }) => {
       }
       const address = await namicorn.addressOrThrow(domain, cryptoCurrency);
       setAvailableWallet(address);
+      setStep(2);
     } catch(e) {
+      setStep(1);
       if (e instanceof ResolutionError) {
         setError(e.message);
       } else {

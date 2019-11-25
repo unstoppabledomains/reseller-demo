@@ -53,18 +53,18 @@ const SideBar = ({
   const domainsLinks = (
     <>
       <span
-        onClick={() => setDomainName('unstoppable.zil')}
-        className={classes.buttonText}
-      >
-        <br />
-        unstoppable.zil
-      </span>
-      <span
         onClick={() => setDomainName('tyranids.zil')}
         className={classes.buttonText}
       >
         <br />
         tyranids.zil
+      </span>
+      <span
+        onClick={() => setDomainName('unstoppable.zil')}
+        className={classes.buttonText}
+      >
+        <br />
+        unstoppable.zil
       </span>
       <span
         onClick={() => setDomainName('loveiseverywhere.zil')}

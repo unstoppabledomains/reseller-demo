@@ -3,7 +3,7 @@ import Header from '../Layout/Header';
 import withStyles from '@material-ui/styles/withStyles';
 import styles from '../../styles/app.styles';
 import SendCrypto from './SendCrypto';
-import Resolution, { ResolutionError, ResolutionErrorCode } from '@unstoppabledomains/resolution';
+import Resolution, { ResolutionError } from '@unstoppabledomains/resolution';
 
 const resolution = new Resolution();
 
@@ -73,7 +73,6 @@ const DomainNameResolutionDemo = ({ classes, history }) => {
     } catch(e) {
       setStep(1);
       if (e instanceof ResolutionError) {
-        e.code === ResolutionErrorCode.RecordNotFound ? setError('Unregistered domain') :
         setError(e.message);
       } else {
         setError('Server error, please try again later');

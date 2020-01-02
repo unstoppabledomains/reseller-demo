@@ -133,7 +133,7 @@ const SideBar = ({
         </Paper>
         {renderCard(
           '1. Find a domain',
-          'For this demo use this domain namespace reseller-test-udtesting-[random number].zil',
+          'For this demo use this domain namespace reseller-test-udtesting-[random number].crypto',
           randomizeLink
         )}
         {renderCard(

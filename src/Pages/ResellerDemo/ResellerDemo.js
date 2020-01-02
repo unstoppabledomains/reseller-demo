@@ -48,7 +48,7 @@ const ResellerDemo = ({ classes, history }) => {
     setDomainName(
       `reseller-test-${config.reseller}-${Math.floor(
         Math.random() * 502562
-      )}.zil`
+      )}.crypto`
     );
   };
 

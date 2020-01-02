@@ -124,11 +124,7 @@ const Search = ({
   const _handleFormSubmit = async e => {
     e.preventDefault();
     setResults(null);
-    const regexTLDpattern = /[.]\w{3}$/;
-
-    const domain = !regexTLDpattern.test(userInput)
-      ? `${userInput}.zil`
-      : userInput;
+    const domain = userInput;
     setSpinner(true);
     const result = await fetchDomain(
       `${baseURL}/${config.reseller}/domains/${domain}`
@@ -226,10 +222,10 @@ const Search = ({
   return (
     <Paper className={classes.paper}>
       <Typography variant="h5" className={classes.bold}>
-        Buy .ZIL domain
+        Buy .Crypto domain
       </Typography>
       <Typography variant="subtitle1" className={classes.text}>
-        Find .zil Domain
+        Find .crypto Domain
       </Typography>
       <div className={classes.inputContainer}>
         {step === 0 && showPointer ? (

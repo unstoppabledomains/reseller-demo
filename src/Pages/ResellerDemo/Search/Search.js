@@ -18,8 +18,8 @@ const baseURL = 'https://unstoppabledomains.com/api/v1/resellers';
 const Search = ({
   classes,
   step,
-  ownerPublicKey,
-  setOwnerPublicKey,
+  ownerAddress,
+  setOwnerAddress,
   handleNextStep,
   domainName,
   showPointer,
@@ -36,18 +36,18 @@ const Search = ({
 
   useEffect(() => {
     if (results && results.domain.reselling && !results.domain.reselling.test)
-    setOwnerPublicKey('');
+    setOwnerAddress('');
     else {
-      setOwnerPublicKey('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
+      setOwnerAddress('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
     }
-  }, [results, setOwnerPublicKey]);
+  }, [results, setOwnerAddress]);
 
   useEffect(() => {
     if (results) {
       setResults('');
     }
-    if (ownerPublicKey) {
-      setOwnerPublicKey('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
+    if (ownerAddress) {
+      setOwnerAddress('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
     }
     setUserInput(domainName);
     // eslint-disable-next-line
@@ -89,7 +89,7 @@ const Search = ({
   const handleBuyDomain = () => {
     setEmailProps({
       ...results,
-      ownerPublicKey
+      ownerAddress
     });
     handleNextStep();
   };
@@ -98,8 +98,8 @@ const Search = ({
     if (results) {
       setResults('');
     }
-    if (ownerPublicKey) {
-      setOwnerPublicKey('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
+    if (ownerAddress) {
+      setOwnerAddress('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
     }
     setUserInput(e.target.value);
   };

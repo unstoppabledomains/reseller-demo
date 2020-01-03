@@ -18,7 +18,7 @@ const Stripe = ({
   step,
   showPointer,
   email,
-  ownerPublicKey,
+  ownerAddress,
   setTransactionResponse
 }) => {
   const [userName, setUserName] = useState('');
@@ -66,8 +66,7 @@ const Stripe = ({
           {
             name,
             owner: {
-              type: 'ETH',
-              publicKey: ownerPublicKey
+              address: ownerAddress
             }
           }
         ]

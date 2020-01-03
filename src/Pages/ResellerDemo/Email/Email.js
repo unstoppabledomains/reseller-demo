@@ -13,8 +13,8 @@ const Email = ({
   classes,
   emailProps,
   email,
-  ownerPublicKey,
-  setOwnerPublicKey,
+  ownerAddress,
+  setOwnerAddress,
   setEmail,
   step,
   showPointer,
@@ -35,12 +35,12 @@ const Email = ({
 
   const handleOwnerChange = e => {
     if (emailError) setEmailError('');
-    setOwnerPublicKey(e.target.value);
+    setOwnerAddress(e.target.value);
   };
 
   const handleSubmit = () => {
 
-    if (helper.isValidFormat(ownerPublicKey)) {
+    if (helper.isValidFormat(ownerAddress)) {
       if (isEmailValid(email)) {
         setStep(3);
       } else {
@@ -111,7 +111,7 @@ const Email = ({
         />
       </div>
 
-      {emailProps.ownerPublicKey === '' ? (
+      {emailProps.ownerAddress === '' ? (
         <>
           <Typography className={classes.lessBold}>
             Owner crypto address
@@ -120,7 +120,7 @@ const Email = ({
             <InputBase
               placeholder="Your ETH or ZIL public key"
               className={classes.input}
-              value={ownerPublicKey}
+              value={ownerAddress}
               onChange={handleOwnerChange}
               onKeyDown={e => (e.key === 'Enter' ? handleSubmit() : null)}
             />
@@ -132,7 +132,7 @@ const Email = ({
         color="primary"
         variant="contained"
         className={classes.button}
-        disabled={!email || !ownerPublicKey}
+        disabled={!email || !ownerAddress}
       >
         Next
       </Button>

@@ -27,6 +27,8 @@ const Congratulations = ({ classes, email, transactionResponse, setStep }) => {
       });
       const payload = await resp.json();
       if (resp.status === 200) {
+        console.log({payload});
+        
         const mineResult = payload.order.items[0].blockchain.status === 'MINED';
         setIsMined(mineResult);
         const storage = JSON.parse(localStorage.getItem('own_domain'));

@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
 
-const Coinbase = ({ classes, email, domainObject, ownerPublicKey, setStep, setTransactionResponse }) => {
+const Coinbase = ({ classes, email, domainObject, ownerAddress, setStep, setTransactionResponse }) => {
   const [coinbaseToken, setCoinbaseToken] = useState('');
   const [errors, setErrors] = useState()
 
@@ -38,8 +38,7 @@ const Coinbase = ({ classes, email, domainObject, ownerPublicKey, setStep, setTr
           {
             name: domainObject.domain.name,
             owner: {
-              type: 'ETH',
-              publicKey: ownerPublicKey
+             address: ownerAddress
             }
           }
         ]

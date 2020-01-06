@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import StripeCheckoutForm from './StripeCheckoutForm';
-import { StripeProvider, Elements } from 'react-stripe-elements';
-import config from '../../../config';
-import styles from '../../../styles/stripe.styles';
-import withStyles from '@material-ui/styles/withStyles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
-import Pointer from '../../../Utilities/Pointer';
+import React, { useState } from "react";
+import StripeCheckoutForm from "./StripeCheckoutForm";
+import { StripeProvider, Elements } from "react-stripe-elements";
+import config from "../../../config";
+import styles from "../../../styles/stripe.styles";
+import withStyles from "@material-ui/styles/withStyles";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from "@material-ui/icons/Search";
+import Pointer from "../../../Utilities/Pointer";
+import defaultResolution from "../../../config/defaultResolution";
 
 const Stripe = ({
   domainObject,
@@ -21,7 +22,7 @@ const Stripe = ({
   ownerAddress,
   setTransactionResponse
 }) => {
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
   const [errors, setErrors] = useState();
 
   const _finalizeTransaction = res => {
@@ -35,21 +36,23 @@ const Stripe = ({
   };
 
   const buy = (url, data) => {
-    return fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Authentication': `Bearer ${config.token}`,
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      // .then(res => {console.log({res}); return res;})
-      .then(_finalizeTransaction);
+    return (
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          Authentication: `Bearer ${config.token}`,
+          "Content-Type": "application/json"
+        }
+      })
+        .then(res => res.json())
+        // .then(res => {console.log({res}); return res;})
+        .then(_finalizeTransaction)
+    );
   };
 
   const _saveToLocal = data =>
-    localStorage.setItem('own_domain', JSON.stringify(data));
+    localStorage.setItem("own_domain", JSON.stringify(data));
 
   const _handleUDPayment = ({ token }, setSpinner) => {
     const {
@@ -59,7 +62,7 @@ const Stripe = ({
     const body = {
       order: {
         payment: {
-          type: 'stripe',
+          type: "stripe",
           tokenId: token.id
         },
         domains: [
@@ -67,12 +70,18 @@ const Stripe = ({
             name,
             owner: {
               address: ownerAddress
+            },
+            resolution: {
+              crypto: Object.keys(defaultResolution).reduce((a, v) => {
+                a[v] = { address: defaultResolution[v] };
+                return a;
+              }, {})
             }
           }
         ]
       }
     };
-    console.log({body});
+    console.log({ body });
     buy(apiurl, body, setSpinner).then(res => {
       if (res && !res.errors) {
         _saveToLocal({
@@ -109,9 +118,9 @@ const Stripe = ({
       <div className={classes.domainDiv}>
         <div>
           <Typography className={classes.bold}>
-            {domainObject.domain.name.split('.')[0]}
+            {domainObject.domain.name.split(".")[0]}
             <span className={classes.extension}>
-              .{domainObject.domain.name.split('.')[1]}
+              .{domainObject.domain.name.split(".")[1]}
             </span>
           </Typography>
           <Typography variant="subtitle2" color="textSecondary">
@@ -133,7 +142,7 @@ const Stripe = ({
       <Typography className={classes.lessBold}>Name</Typography>
       <div className={classes.inputDiv}>
         {step === 2 && showPointer ? (
-          <div style={{ position: 'fixed', transform: 'translateX(-40px)' }}>
+          <div style={{ position: "fixed", transform: "translateX(-40px)" }}>
             <Pointer />
           </div>
         ) : null}

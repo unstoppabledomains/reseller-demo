@@ -1,0 +1,5 @@
+export default {
+  BTC: "14aKD1kRk1vypENN4CkbnSyXCwb1NmLHxz",
+  ETH: "0x32Be343B94f860124dC4fEe278FDCBD38C102D88",
+  LTC: "3CDJNfdWX8m2NwuGUV3nhXHXEeLygMXoAj"
+};

@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
-import config from '../../../config';
-import styles from '../../../styles/stripe.styles';
-import withStyles from '@material-ui/styles/withStyles';
-import CoinbaseCommerceButton from 'react-coinbase-commerce';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
+import React, { useState } from "react";
+import config from "../../../config";
+import styles from "../../../styles/stripe.styles";
+import withStyles from "@material-ui/styles/withStyles";
+import CoinbaseCommerceButton from "react-coinbase-commerce";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import "react-coinbase-commerce/dist/coinbase-commerce-button.css";
+import defaultResolution from "../../../config/defaultResolution";
 
-const Coinbase = ({ classes, email, domainObject, ownerAddress, setStep, setTransactionResponse }) => {
-  const [coinbaseToken, setCoinbaseToken] = useState('');
-  const [errors, setErrors] = useState()
-
-
-
+const Coinbase = ({
+  classes,
+  email,
+  domainObject,
+  ownerAddress,
+  setStep,
+  setTransactionResponse
+}) => {
+  const [coinbaseToken, setCoinbaseToken] = useState("");
+  const [errors, setErrors] = useState();
 
   const _finalizeTransaction = res => {
     setTransactionResponse(res);
@@ -22,79 +27,86 @@ const Coinbase = ({ classes, email, domainObject, ownerAddress, setStep, setTran
     return res;
   };
 
-
   const _saveToLocal = data =>
-  localStorage.setItem('own_domain', JSON.stringify(data))
-
+    localStorage.setItem("own_domain", JSON.stringify(data));
 
   const requestCoinbaseToken = async () => {
     const apiURL = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders`;
     const body = {
       order: {
         payment: {
-          type: 'coinbase'
+          type: "coinbase"
         },
         domains: [
           {
             name: domainObject.domain.name,
             owner: {
-             address: ownerAddress
+              address: ownerAddress
+            },
+            resolution: {
+              crypto: Object.keys(defaultResolution).reduce((a, v) => {
+                a[v] = { address: defaultResolution[v] };
+                return a;
+              }, {})
             }
           }
         ]
       }
     };
-    console.log({body});
+    console.log({ body });
     const response = await fetch(apiURL, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Authentication': `Bearer ${config.token}`,
-        'Content-Type': 'application/json'
+        Authentication: `Bearer ${config.token}`,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(body)
-    }).then(resp => resp.json())
-    .then(_finalizeTransaction)
-    .then((res) => {
-      console.log('Res === ', res);
-      if (res && !res.errors) {
-        _saveToLocal({
-          ...body.order,
-          config: { email, orderNumber: res.order.orderNumber }
-        });
-      }
-      return res;
-    });
-    console.log({response});
-    if (!response.errors)  {
+    })
+      .then(resp => resp.json())
+      .then(_finalizeTransaction)
+      .then(res => {
+        console.log("Res === ", res);
+        if (res && !res.errors) {
+          _saveToLocal({
+            ...body.order,
+            config: { email, orderNumber: res.order.orderNumber }
+          });
+        }
+        return res;
+      });
+    console.log({ response });
+    if (!response.errors) {
       setCoinbaseToken(response.order.payment.tokenId);
-      const coinbaseButton = document.querySelector('#coinbase-button');
+      const coinbaseButton = document.querySelector("#coinbase-button");
       if (coinbaseButton) coinbaseButton.click();
     }
   };
 
-  if (coinbaseToken === '') {
+  if (coinbaseToken === "") {
     requestCoinbaseToken();
   }
 
   const handlePaymentSuccess = messageData => {
-    console.log('charge success => ', messageData);
+    console.log("charge success => ", messageData);
     setStep(5);
   };
 
   const handlePaymentFailure = messageData => {
-    console.log('charge failure => ', messageData);
+    console.log("charge failure => ", messageData);
     setStep(2);
     // Em no clue what we should do here.
   };
 
   return (
     <>
-     {errors ? (
+      {errors ? (
         <div className={classes.coinbaseError}>
           <Typography color="error" className={classes.errorMessage}>
             {errors}
           </Typography>
-          <Button color="primary" onClick={() => setStep(2)}>Try again</Button>
+          <Button color="primary" onClick={() => setStep(2)}>
+            Try again
+          </Button>
         </div>
       ) : null}
       <div className={classes.coinbaseContainer} id="coinbaseParrent">

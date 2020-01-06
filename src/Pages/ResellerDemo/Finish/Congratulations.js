@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import withStyles from '@material-ui/styles/withStyles';
-import styles from '../../../styles/congratulations.styles';
-import config from '../../../config';
+import React, { useState, useEffect } from "react";
+import Paper from "@material-ui/core/Paper";
+import Divider from "@material-ui/core/Divider";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import withStyles from "@material-ui/styles/withStyles";
+import styles from "../../../styles/congratulations.styles";
+import config from "../../../config";
+import defaultResolution from "../../../config/defaultResolution";
 
 const Congratulations = ({ classes, email, transactionResponse, setStep }) => {
   const {
@@ -19,21 +20,21 @@ const Congratulations = ({ classes, email, transactionResponse, setStep }) => {
       if (isMined === true) return;
       const url = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders/${orderNumber}`;
       const resp = await fetch(url, {
-        method: 'GET',
+        method: "GET",
         headers: {
           Authentication: `Bearer ${config.token}`,
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         }
       });
       const payload = await resp.json();
       if (resp.status === 200) {
-        console.log({payload});
-        
-        const mineResult = payload.order.items[0].blockchain.status === 'MINED';
+        console.log({ payload });
+
+        const mineResult = payload.order.items[0].blockchain.status === "MINED";
         setIsMined(mineResult);
-        const storage = JSON.parse(localStorage.getItem('own_domain'));
+        const storage = JSON.parse(localStorage.getItem("own_domain"));
         storage.mined = mineResult;
-        localStorage.setItem('own_domain', JSON.stringify(storage));
+        localStorage.setItem("own_domain", JSON.stringify(storage));
       }
     }
     const interval = setInterval(_fetchBlockchainStatus, 5000);
@@ -45,36 +46,36 @@ const Congratulations = ({ classes, email, transactionResponse, setStep }) => {
   };
 
   const renderAddrInfo = () => {
-
-    const wallets = {
-      "BTC": "14aKD1kRk1vypENN4CkbnSyXCwb1NmLHxz",
-      "ETH": "0x32Be343B94f860124dC4fEe278FDCBD38C102D88",
-      "LTC": "3CDJNfdWX8m2NwuGUV3nhXHXEeLygMXoAj"
-    };
-
     const renderWalletsAddr = () => {
       const result = [];
-      
-      for (const [ticker, addr] of Object.entries(wallets)) {
+
+      for (const [ticker, addr] of Object.entries(defaultResolution)) {
         result.push(
           <div className={classes.row2} key={ticker}>
-            <Typography variant="body1" className={classes.ticker}>{ticker}:</Typography>
-            <Typography variant="body1" className={classes.addr}>{addr}</Typography>
+            <Typography variant="body1" className={classes.ticker}>
+              {ticker}:
+            </Typography>
+            <Typography variant="body1" className={classes.addr}>
+              {addr}
+            </Typography>
           </div>
         );
       }
       return result;
-    }
+    };
 
     return (
       <>
-      <Typography variant="h6" className={`${classes.bold} ${classes.AddrTitle}`}>These addresses in your wallet have been linked to your name.</Typography>
-      {renderWalletsAddr()}
+        <Typography
+          variant="h6"
+          className={`${classes.bold} ${classes.AddrTitle}`}
+        >
+          These addresses in your wallet have been linked to your name.
+        </Typography>
+        {renderWalletsAddr()}
       </>
     );
-  }
-
-
+  };
 
   return (
     <Paper className={classes.paper}>

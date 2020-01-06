@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import LiveIcon from '@material-ui/icons/NewReleases';
-import InputBase from '@material-ui/core/InputBase';
-import { Search as SearchIcon } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
-import styles from '../../../styles/search.styles';
-import config from '../../../config';
-import Pointer from '../../../Utilities/Pointer';
+import React, { useState, useEffect } from "react";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import LiveIcon from "@material-ui/icons/NewReleases";
+import InputBase from "@material-ui/core/InputBase";
+import { Search as SearchIcon } from "@material-ui/icons";
+import { withStyles } from "@material-ui/core/styles";
+import styles from "../../../styles/search.styles";
+import config from "../../../config";
+import Pointer from "../../../Utilities/Pointer";
 
-const baseURL = 'https://unstoppabledomains.com/api/v1/resellers';
+const baseURL = "https://unstoppabledomains.com/api/v1/resellers";
 
 const Search = ({
   classes,
@@ -30,24 +30,28 @@ const Search = ({
   const [results, setResults] = useState(null);
   const [spinner, setSpinner] = useState(false);
   const [ownDomains, setOwnDomains] = useState(
-    JSON.parse(localStorage.getItem('own_domain'))
+    JSON.parse(localStorage.getItem("own_domain"))
   );
   const [isMined, setIsMined] = useState(ownDomains ? ownDomains.mined : null);
 
   useEffect(() => {
     if (results && results.domain.reselling && !results.domain.reselling.test)
-    setOwnerAddress('');
+      setOwnerAddress("");
     else {
-      setOwnerAddress('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
+      setOwnerAddress(
+        "0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099"
+      );
     }
   }, [results, setOwnerAddress]);
 
   useEffect(() => {
     if (results) {
-      setResults('');
+      setResults("");
     }
     if (ownerAddress) {
-      setOwnerAddress('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
+      setOwnerAddress(
+        "0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099"
+      );
     }
     setUserInput(domainName);
     // eslint-disable-next-line
@@ -61,20 +65,20 @@ const Search = ({
       const url = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders/${orderNumber}`;
       try {
         const resp = await fetch(url, {
-          method: 'GET',
+          method: "GET",
           headers: {
             Authentication: `Bearer ${config.token}`,
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           }
         });
         const payload = await resp.json();
         if (resp.status === 200) {
           const mineResult =
-            payload.order.items[0].blockchain.status === 'MINED';
+            payload.order.items[0].blockchain.status === "MINED";
           setIsMined(mineResult);
           setOwnDomains({ ...ownDomains, mined: mineResult });
           localStorage.setItem(
-            'own_domain',
+            "own_domain",
             JSON.stringify({ ...ownDomains, mined: mineResult })
           );
         }
@@ -96,16 +100,18 @@ const Search = ({
 
   const handleUserInputChange = e => {
     if (results) {
-      setResults('');
+      setResults("");
     }
     if (ownerAddress) {
-      setOwnerAddress('0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099');
+      setOwnerAddress(
+        "0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099"
+      );
     }
     setUserInput(e.target.value);
   };
 
   const formatDomainName = domain => {
-    const split = domain.split('.');
+    const split = domain.split(".");
     return (
       <>
         <b>{split[0]}</b>.{split[1]}
@@ -124,7 +130,7 @@ const Search = ({
   const _handleFormSubmit = async e => {
     e.preventDefault();
     setResults(null);
-    const domain = userInput;
+    const domain = userInput.replace(".crypto", "") + ".crypto";
     setSpinner(true);
     const result = await fetchDomain(
       `${baseURL}/${config.reseller}/domains/${domain}`
@@ -194,7 +200,8 @@ const Search = ({
                   color="error"
                   className={`${classes.warningLabel}`}
                 >
-                  THIS IS A LIVE DOMAIN, CURRENTLY UNAVAILABLE TO BUY FROM THIS DEMO
+                  THIS IS A LIVE DOMAIN, CURRENTLY UNAVAILABLE TO BUY FROM THIS
+                  DEMO
                 </Typography>
               </div>
             </>
@@ -210,7 +217,7 @@ const Search = ({
             BUY DOMAIN
           </Button>
           {step === 1 && showPointer ? (
-            <div style={{ position: 'fixed', transform: 'translateX(208px)' }}>
+            <div style={{ position: "fixed", transform: "translateX(208px)" }}>
               <Pointer />
             </div>
           ) : null}
@@ -229,7 +236,7 @@ const Search = ({
       </Typography>
       <div className={classes.inputContainer}>
         {step === 0 && showPointer ? (
-          <div style={{ position: 'fixed', transform: 'translateX(-40px)' }}>
+          <div style={{ position: "fixed", transform: "translateX(-40px)" }}>
             <Pointer />
           </div>
         ) : null}
@@ -238,7 +245,7 @@ const Search = ({
           className={classes.input}
           value={userInput}
           onChange={e => handleUserInputChange(e)}
-          onKeyDown={e => (e.key === 'Enter' ? _handleFormSubmit(e) : null)}
+          onKeyDown={e => (e.key === "Enter" ? _handleFormSubmit(e) : null)}
         />
         <Button
           variant="contained"

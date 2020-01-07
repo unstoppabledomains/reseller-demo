@@ -38,9 +38,7 @@ const Search = ({
     if (results && results.domain.reselling && !results.domain.reselling.test)
       setOwnerAddress("");
     else {
-      setOwnerAddress(
-        "0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099"
-      );
+      setOwnerAddress("0x32Be343B94f860124dC4fEe278FDCBD38C102D88");
     }
   }, [results, setOwnerAddress]);
 
@@ -49,9 +47,7 @@ const Search = ({
       setResults("");
     }
     if (ownerAddress) {
-      setOwnerAddress(
-        "0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099"
-      );
+      setOwnerAddress("0x32Be343B94f860124dC4fEe278FDCBD38C102D88");
     }
     setUserInput(domainName);
     // eslint-disable-next-line
@@ -103,9 +99,7 @@ const Search = ({
       setResults("");
     }
     if (ownerAddress) {
-      setOwnerAddress(
-        "0x27cc170d80feadd93799a28cb0eafc0bd965ef0612d332bd2a4d67fe64e4fde5cc0be64e6382c0eb569de6d0e125ac9ba6bc8607c9e7f230116626ab0706f099"
-      );
+      setOwnerAddress("0x32Be343B94f860124dC4fEe278FDCBD38C102D88");
     }
     setUserInput(e.target.value);
   };

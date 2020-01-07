@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import Pointer from '../../../Utilities/Pointer';
-import { withStyles } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
-import styles from '../../../styles/email.styles';
-import SearchIcon from '@material-ui/icons/Search';
-import helper from '../../../Utilities/Helpers';
+import React, { useState } from "react";
+import Pointer from "../../../Utilities/Pointer";
+import { withStyles } from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import InputBase from "@material-ui/core/InputBase";
+import styles from "../../../styles/email.styles";
+import SearchIcon from "@material-ui/icons/Search";
+import helper from "../../../Utilities/Helpers";
 
 const Email = ({
   classes,
@@ -20,7 +20,7 @@ const Email = ({
   showPointer,
   setStep
 }) => {
-  const [emailError, setEmailError] = useState('');
+  const [emailError, setEmailError] = useState("");
   const isEmailValid = e => {
     // eslint-disable-next-line
     return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
@@ -29,25 +29,24 @@ const Email = ({
   };
 
   const handleEmailChange = e => {
-    if (emailError) setEmailError('');
+    if (emailError) setEmailError("");
     setEmail(e.target.value);
   };
 
   const handleOwnerChange = e => {
-    if (emailError) setEmailError('');
+    if (emailError) setEmailError("");
     setOwnerAddress(e.target.value);
   };
 
   const handleSubmit = () => {
-
-    if (helper.isValidFormat(ownerAddress)) {
+    if (helper.isAddress(ownerAddress)) {
       if (isEmailValid(email)) {
         setStep(3);
       } else {
-        setEmailError('Incorrect email');
+        setEmailError("Incorrect email");
       }
     } else {
-      setEmailError('Incorrect owner format');
+      setEmailError("Incorrect owner format");
     }
   };
 
@@ -71,9 +70,9 @@ const Email = ({
       <div className={classes.domainDiv}>
         <div>
           <Typography className={classes.bold}>
-            {emailProps.domain.name.split('.')[0]}
+            {emailProps.domain.name.split(".")[0]}
             <span className={classes.extension}>
-              .{emailProps.domain.name.split('.')[1]}
+              .{emailProps.domain.name.split(".")[1]}
             </span>
           </Typography>
           <Typography variant="subtitle2" color="textSecondary">
@@ -98,7 +97,7 @@ const Email = ({
       </Typography>
       <div className={classes.inputDiv}>
         {step === 2 && showPointer ? (
-          <div style={{ position: 'fixed', transform: 'translateX(-40px)' }}>
+          <div style={{ position: "fixed", transform: "translateX(-40px)" }}>
             <Pointer />
           </div>
         ) : null}
@@ -107,22 +106,22 @@ const Email = ({
           className={classes.input}
           value={email}
           onChange={handleEmailChange}
-          onKeyDown={e => (e.key === 'Enter' ? handleSubmit() : null)}
+          onKeyDown={e => (e.key === "Enter" ? handleSubmit() : null)}
         />
       </div>
 
-      {emailProps.ownerAddress === '' ? (
+      {emailProps.ownerAddress === "" ? (
         <>
           <Typography className={classes.lessBold}>
             Owner crypto address
           </Typography>
           <div className={classes.inputDiv}>
             <InputBase
-              placeholder="Your ETH or ZIL public key"
+              placeholder="Your ETH address"
               className={classes.input}
               value={ownerAddress}
               onChange={handleOwnerChange}
-              onKeyDown={e => (e.key === 'Enter' ? handleSubmit() : null)}
+              onKeyDown={e => (e.key === "Enter" ? handleSubmit() : null)}
             />
           </div>
         </>

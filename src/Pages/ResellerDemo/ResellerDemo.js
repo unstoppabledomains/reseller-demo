@@ -1,34 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import Search from './Search/Search';
-import Email from './Email/Email';
-import Checkout from './Checkout/Checkout';
-import Header from '../Layout/Header';
-import Coinbase from './Checkout/Coinbase';
-import withStyles from '@material-ui/styles/withStyles';
-import config from '../../config';
-import styles from '../../styles/app.styles';
-import Stripe from './Checkout/Stripe';
-import Congratulations from './Finish/Congratulations';
+import React, { useEffect, useState } from "react";
+import Search from "./Search/Search";
+import Email from "./Email/Email";
+import Checkout from "./Checkout/Checkout";
+import Header from "../Layout/Header";
+import Coinbase from "./Checkout/Coinbase";
+import withStyles from "@material-ui/styles/withStyles";
+import config from "../../config";
+import styles from "../../styles/app.styles";
+import Stripe from "./Checkout/Stripe";
+import Congratulations from "./Finish/Congratulations";
 
 const ResellerDemo = ({ classes, history }) => {
   const [step, setStep] = useState(0);
   const [pointer, setPointer] = useState(true);
-  const [domainName, setDomainName] = useState('');
+  const [domainName, setDomainName] = useState("");
   const [emailProps, setEmailProps] = useState({});
-  const [email, setEmail] = useState('');
-  const [ownerAddress, setOwnerAddress] = useState('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+  const [email, setEmail] = useState("");
+  const [ownerAddress, setOwnerAddress] = useState(
+    "0x32Be343B94f860124dC4fEe278FDCBD38C102D88"
+  );
   const [transactionResponse, setTransactionResponse] = useState();
 
-  const [domainResults, setDomainResults] = useState('');
+  const [domainResults, setDomainResults] = useState("");
   const [paymentMethod, setPaymentMethod] = useState(0);
 
   useEffect(() => {
     if (step === 0) {
-      setEmail('');
-      setOwnerAddress('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
-      setDomainResults('');
-      setDomainName('');
-      setEmailProps('');
+      setEmail("");
+      setOwnerAddress("0x32Be343B94f860124dC4fEe278FDCBD38C102D88");
+      setDomainResults("");
+      setDomainName("");
+      setEmailProps("");
     }
   }, [step]);
 

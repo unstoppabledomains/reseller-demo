@@ -14,6 +14,7 @@ const Congratulations = ({ classes, email, transactionResponse, setStep }) => {
     order: { orderNumber }
   } = transactionResponse;
   const [isMined, setIsMined] = useState(false);
+  const [txHash, setTxHash] = useState("");
   useEffect(() => {
     if (isMined) return;
     async function _fetchBlockchainStatus() {
@@ -31,6 +32,7 @@ const Congratulations = ({ classes, email, transactionResponse, setStep }) => {
         console.log({ payload });
 
         const mineResult = payload.order.items[0].blockchain.status === "MINED";
+        setTxHash(payload.order.items[0].blockchain.txHash);
         setIsMined(mineResult);
         const storage = JSON.parse(localStorage.getItem("own_domain"));
         storage.mined = mineResult;
@@ -100,6 +102,27 @@ const Congratulations = ({ classes, email, transactionResponse, setStep }) => {
               <Typography variant="h5">Pending</Typography>
             </div>
           )}
+        </div>
+        <div className={classes.row}>
+          {txHash ? (
+            <>
+              <Typography
+                variant="h5"
+                className={`${classes.bold}`}
+                style={{ width: "100%" }}
+              >
+                Tx Hash:{" "}
+              </Typography>
+              <a
+                href={`https://etherscan.io/tx/${txHash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ wordBreak: "break-all" }}
+              >
+                {txHash}
+              </a>
+            </>
+          ) : null}
         </div>
         {isMined ? null : <LinearProgress className={classes.linearProgress} />}
         <Typography variant="body1" className={classes.statusText}>

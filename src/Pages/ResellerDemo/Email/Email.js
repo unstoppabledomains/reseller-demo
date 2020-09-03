@@ -18,28 +18,28 @@ const Email = ({
   setEmail,
   step,
   showPointer,
-  setStep
+  setStep,
 }) => {
   const [emailError, setEmailError] = useState("");
-  const isEmailValid = e => {
+  const isEmailValid = (e) => {
     // eslint-disable-next-line
     return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
       e
     );
   };
 
-  const handleEmailChange = e => {
+  const handleEmailChange = (e) => {
     if (emailError) setEmailError("");
     setEmail(e.target.value);
   };
 
-  const handleOwnerChange = e => {
+  const handleOwnerChange = (e) => {
     if (emailError) setEmailError("");
     setOwnerAddress(e.target.value);
   };
 
   const handleSubmit = () => {
-    if (helper.isAddress(ownerAddress)) {
+    if (helper.isAddress(ownerAddress, emailProps.domain.name)) {
       if (isEmailValid(email)) {
         setStep(3);
       } else {
@@ -106,7 +106,7 @@ const Email = ({
           className={classes.input}
           value={email}
           onChange={handleEmailChange}
-          onKeyDown={e => (e.key === "Enter" ? handleSubmit() : null)}
+          onKeyDown={(e) => (e.key === "Enter" ? handleSubmit() : null)}
         />
       </div>
 
@@ -117,11 +117,13 @@ const Email = ({
           </Typography>
           <div className={classes.inputDiv}>
             <InputBase
-              placeholder="Your ETH address"
+              placeholder={`Your ${
+                emailProps.domain.name.endsWith(".crypto") ? "ETH" : "ZIL"
+              } address`}
               className={classes.input}
               value={ownerAddress}
               onChange={handleOwnerChange}
-              onKeyDown={e => (e.key === "Enter" ? handleSubmit() : null)}
+              onKeyDown={(e) => (e.key === "Enter" ? handleSubmit() : null)}
             />
           </div>
         </>

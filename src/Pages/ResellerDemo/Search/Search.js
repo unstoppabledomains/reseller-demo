@@ -24,7 +24,7 @@ const Search = ({
   domainName,
   showPointer,
   setEmailProps,
-  setDomainResults
+  setDomainResults,
 }) => {
   const [userInput, setUserInput] = useState(domainName);
   const [results, setResults] = useState(null);
@@ -34,20 +34,11 @@ const Search = ({
   );
   const [isMined, setIsMined] = useState(ownDomains ? ownDomains.mined : null);
 
-  useEffect(() => {
-    if (results && results.domain.reselling && !results.domain.reselling.test)
-      setOwnerAddress("");
-    else {
-      setOwnerAddress("0x32Be343B94f860124dC4fEe278FDCBD38C102D88");
-    }
-  }, [results, setOwnerAddress]);
+  useEffect(() => {}, [results]);
 
   useEffect(() => {
     if (results) {
       setResults("");
-    }
-    if (ownerAddress) {
-      setOwnerAddress("0x32Be343B94f860124dC4fEe278FDCBD38C102D88");
     }
     setUserInput(domainName);
     // eslint-disable-next-line
@@ -64,8 +55,8 @@ const Search = ({
           method: "GET",
           headers: {
             Authentication: `Bearer ${config.token}`,
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         });
         const payload = await resp.json();
         if (resp.status === 200) {
@@ -89,22 +80,19 @@ const Search = ({
   const handleBuyDomain = () => {
     setEmailProps({
       ...results,
-      ownerAddress
+      ownerAddress,
     });
     handleNextStep();
   };
 
-  const handleUserInputChange = e => {
+  const handleUserInputChange = (e) => {
     if (results) {
       setResults("");
-    }
-    if (ownerAddress) {
-      setOwnerAddress("0x32Be343B94f860124dC4fEe278FDCBD38C102D88");
     }
     setUserInput(e.target.value);
   };
 
-  const formatDomainName = domain => {
+  const formatDomainName = (domain) => {
     const split = domain.split(".");
     return (
       <>
@@ -113,18 +101,21 @@ const Search = ({
     );
   };
 
-  const fetchDomain = url => {
+  const fetchDomain = (url) => {
     return fetch(url, {
       headers: {
-        Authentication: `Bearer ${config.token}`
-      }
-    }).then(res => res.json());
+        Authentication: `Bearer ${config.token}`,
+      },
+    }).then((res) => res.json());
   };
 
-  const _handleFormSubmit = async e => {
+  const _handleFormSubmit = async (e) => {
     e.preventDefault();
     setResults(null);
-    const domain = userInput.replace(".crypto", "") + ".crypto";
+    let domain = userInput;
+    if (!userInput.endsWith(".crypto") && !userInput.endsWith(".zil")) {
+      domain = userInput + ".crypto";
+    }
     setSpinner(true);
     const result = await fetchDomain(
       `${baseURL}/${config.reseller}/domains/${domain}`
@@ -223,10 +214,10 @@ const Search = ({
   return (
     <Paper className={classes.paper}>
       <Typography variant="h5" className={classes.bold}>
-        Buy .Crypto domain
+        Buy domain
       </Typography>
       <Typography variant="subtitle1" className={classes.text}>
-        Find .crypto Domain
+        Find Domain
       </Typography>
       <div className={classes.inputContainer}>
         {step === 0 && showPointer ? (
@@ -238,8 +229,8 @@ const Search = ({
           fullWidth
           className={classes.input}
           value={userInput}
-          onChange={e => handleUserInputChange(e)}
-          onKeyDown={e => (e.key === "Enter" ? _handleFormSubmit(e) : null)}
+          onChange={(e) => handleUserInputChange(e)}
+          onKeyDown={(e) => (e.key === "Enter" ? _handleFormSubmit(e) : null)}
         />
         <Button
           variant="contained"

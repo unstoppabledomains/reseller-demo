@@ -1,4 +1,4 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme } from "@material-ui/core";
 
 // Add custom poperties - containers
 const theme = createMuiTheme({
@@ -35,9 +35,15 @@ const theme = createMuiTheme({
     }
   },
   palette: {
-    success: "#4AC76C",
-    link: "#2d64ff",
-    iceBlue: "#E6F6FF",
+    success: {
+      main: "#4AC76C"
+    },
+    link: {
+      main: "#2d64ff"
+    },
+    iceBlue: {
+      main: "#E6F6FF"
+    },
     // 'main's taken from previous fonts and logo
     // 'light' & 'dark' were calculated with material color picker
     // https://material.io/tools/color/#!/?primary.color=4C47F7&secondary.color=2fe9ff

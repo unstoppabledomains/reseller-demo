@@ -55,7 +55,7 @@ const Header = ({
                 setStep(0);
               }}
             >
-              <img src="images/logo.svg" alt="logo" />
+              <img src={process.env.PUBLIC_URL + "/images/logo.svg"} alt="logo" />
             </div>
             <div onClick={handleDrawer} className={classes.drawerTrigger}>
               <Typography
@@ -90,7 +90,7 @@ const Header = ({
               handleVersionChange={handleVersionChange}
               history={history}
             />
-            <img src="images/github.svg" alt="github" />
+            <img src={process.env.PUBLIC_URL + "/images/github.svg"} alt="github" />
           </div>
         </Toolbar>
       </AppBar>

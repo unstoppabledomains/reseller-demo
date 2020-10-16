@@ -16,9 +16,7 @@ const ResellerDemo = ({ classes, history }) => {
   const [domainName, setDomainName] = useState("");
   const [emailProps, setEmailProps] = useState({});
   const [email, setEmail] = useState("");
-  const [ownerAddress, setOwnerAddress] = useState(
-    "0x32Be343B94f860124dC4fEe278FDCBD38C102D88"
-  );
+  const [ownerAddress, setOwnerAddress] = useState("");
   const [transactionResponse, setTransactionResponse] = useState();
 
   const [domainResults, setDomainResults] = useState("");
@@ -27,7 +25,7 @@ const ResellerDemo = ({ classes, history }) => {
   useEffect(() => {
     if (step === 0) {
       setEmail("");
-      setOwnerAddress("0x32Be343B94f860124dC4fEe278FDCBD38C102D88");
+      setOwnerAddress("");
       setDomainResults("");
       setDomainName("");
       setEmailProps("");

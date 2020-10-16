@@ -20,12 +20,12 @@ const Stripe = ({
   showPointer,
   email,
   ownerAddress,
-  setTransactionResponse
+  setTransactionResponse,
 }) => {
   const [userName, setUserName] = useState("");
   const [errors, setErrors] = useState();
 
-  const _finalizeTransaction = res => {
+  const _finalizeTransaction = (res) => {
     setTransactionResponse(res);
     if (!res.errors) {
       setStep(5);
@@ -42,51 +42,51 @@ const Stripe = ({
         body: JSON.stringify(data),
         headers: {
           Authentication: `Bearer ${config.token}`,
-          "Content-Type": "application/json"
-        }
+          "Content-Type": "application/json",
+        },
       })
-        .then(res => res.json())
+        .then((res) => res.json())
         // .then(res => {console.log({res}); return res;})
         .then(_finalizeTransaction)
     );
   };
 
-  const _saveToLocal = data =>
+  const _saveToLocal = (data) =>
     localStorage.setItem("own_domain", JSON.stringify(data));
 
   const _handleUDPayment = ({ token }, setSpinner) => {
     const {
-      domain: { name }
+      domain: { name },
     } = domainObject;
     const apiurl = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders`;
     const body = {
       order: {
         payment: {
           type: "stripe",
-          tokenId: token.id
+          tokenId: token.id,
         },
         domains: [
           {
             name,
             owner: {
-              address: ownerAddress
+              address: ownerAddress,
             },
             resolution: {
               crypto: Object.keys(defaultResolution).reduce((a, v) => {
                 a[v] = { address: defaultResolution[v] };
                 return a;
-              }, {})
-            }
-          }
-        ]
-      }
+              }, {}),
+            },
+          },
+        ],
+      },
     };
     console.log({ body });
-    buy(apiurl, body, setSpinner).then(res => {
+    buy(apiurl, body, setSpinner).then((res) => {
       if (res && !res.errors) {
         _saveToLocal({
           ...body.order,
-          config: { email, orderNumber: res.order.orderNumber }
+          config: { email, orderNumber: res.order.orderNumber },
         });
       }
       setSpinner(false);
@@ -150,7 +150,7 @@ const Stripe = ({
           placeholder="Your Full Name"
           className={classes.input}
           value={userName}
-          onChange={e => setUserName(e.target.value)}
+          onChange={(e) => setUserName(e.target.value)}
         />
         <StripeProvider
           apiKey={testNameSpace ? config.stripeKey : config.stripeKeyLiveDomain}

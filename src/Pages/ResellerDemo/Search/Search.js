@@ -1,53 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import LiveIcon from '@material-ui/icons/NewReleases';
-import InputBase from '@material-ui/core/InputBase';
-import { Search as SearchIcon } from '@material-ui/icons';
-import { withStyles } from '@material-ui/core/styles';
-import styles from '../../../styles/search.styles';
-import config from '../../../config';
-import Pointer from '../../../Utilities/Pointer';
+import React, { useState, useEffect } from "react";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import LiveIcon from "@material-ui/icons/NewReleases";
+import InputBase from "@material-ui/core/InputBase";
+import { Search as SearchIcon } from "@material-ui/icons";
+import { withStyles } from "@material-ui/core/styles";
+import styles from "../../../styles/search.styles";
+import config from "../../../config";
+import Pointer from "../../../Utilities/Pointer";
 
-const baseURL = 'https://unstoppabledomains.com/api/v1/resellers';
+const baseURL = "https://unstoppabledomains.com/api/v1/resellers";
 
 const Search = ({
   classes,
   step,
-  owner,
-  setOwner,
+  ownerAddress,
+  setOwnerAddress,
   handleNextStep,
   domainName,
   showPointer,
   setEmailProps,
-  setDomainResults
+  setDomainResults,
 }) => {
   const [userInput, setUserInput] = useState(domainName);
   const [results, setResults] = useState(null);
   const [spinner, setSpinner] = useState(false);
   const [ownDomains, setOwnDomains] = useState(
-    JSON.parse(localStorage.getItem('own_domain'))
+    JSON.parse(localStorage.getItem("own_domain"))
   );
-  const [isMined, setIsMined] = useState(ownDomains.mined);
+  const [isMined, setIsMined] = useState(ownDomains ? ownDomains.mined : null);
 
-  useEffect(() => {
-    if (results && results.domain.reselling && !results.domain.reselling.test)
-      setOwner('');
-    else {
-      setOwner('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
-    }
-  }, [results, setOwner]);
+  useEffect(() => {}, [results]);
 
   useEffect(() => {
     if (results) {
-      setResults('');
-    }
-    if (owner) {
-      setOwner('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+      setResults("");
     }
     setUserInput(domainName);
     // eslint-disable-next-line
@@ -61,20 +52,20 @@ const Search = ({
       const url = `https://unstoppabledomains.com/api/v1/resellers/${config.reseller}/users/${email}/orders/${orderNumber}`;
       try {
         const resp = await fetch(url, {
-          method: 'GET',
+          method: "GET",
           headers: {
             Authentication: `Bearer ${config.token}`,
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         });
         const payload = await resp.json();
         if (resp.status === 200) {
           const mineResult =
-            payload.order.items[0].blockchain.status === 'MINED';
+            payload.order.items[0].blockchain.status === "MINED";
           setIsMined(mineResult);
           setOwnDomains({ ...ownDomains, mined: mineResult });
           localStorage.setItem(
-            'own_domain',
+            "own_domain",
             JSON.stringify({ ...ownDomains, mined: mineResult })
           );
         }
@@ -89,23 +80,20 @@ const Search = ({
   const handleBuyDomain = () => {
     setEmailProps({
       ...results,
-      owner
+      ownerAddress,
     });
     handleNextStep();
   };
 
-  const handleUserInputChange = e => {
+  const handleUserInputChange = (e) => {
     if (results) {
-      setResults('');
-    }
-    if (owner) {
-      setOwner('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
+      setResults("");
     }
     setUserInput(e.target.value);
   };
 
-  const formatDomainName = domain => {
-    const split = domain.split('.');
+  const formatDomainName = (domain) => {
+    const split = domain.split(".");
     return (
       <>
         <b>{split[0]}</b>.{split[1]}
@@ -113,22 +101,21 @@ const Search = ({
     );
   };
 
-  const fetchDomain = url => {
+  const fetchDomain = (url) => {
     return fetch(url, {
       headers: {
-        Authentication: `Bearer ${config.token}`
-      }
-    }).then(res => res.json());
+        Authentication: `Bearer ${config.token}`,
+      },
+    }).then((res) => res.json());
   };
 
-  const _handleFormSubmit = async e => {
+  const _handleFormSubmit = async (e) => {
     e.preventDefault();
     setResults(null);
-    const regexTLDpattern = /[.]\w{3}$/;
-
-    const domain = !regexTLDpattern.test(userInput)
-      ? `${userInput}.zil`
-      : userInput;
+    let domain = userInput;
+    if (!userInput.endsWith(".crypto") && !userInput.endsWith(".zil")) {
+      domain = userInput + ".crypto";
+    }
     setSpinner(true);
     const result = await fetchDomain(
       `${baseURL}/${config.reseller}/domains/${domain}`
@@ -198,7 +185,8 @@ const Search = ({
                   color="error"
                   className={`${classes.warningLabel}`}
                 >
-                  THIS IS A LIVE DOMAIN, YOU WILL BE CHARGED AT THE END
+                  THIS IS A LIVE DOMAIN, CURRENTLY UNAVAILABLE TO BUY FROM THIS
+                  DEMO
                 </Typography>
               </div>
             </>
@@ -209,11 +197,12 @@ const Search = ({
             className={`${classes.button} ${classes.bold} ${classes.wideButton}`}
             classes={{ label: classes.buttonLabel, root: classes.noOutline }}
             onClick={() => handleBuyDomain()}
+            // disabled={!domain.reselling.test}
           >
             BUY DOMAIN
           </Button>
           {step === 1 && showPointer ? (
-            <div style={{ position: 'fixed', transform: 'translateX(208px)' }}>
+            <div style={{ position: "fixed", transform: "translateX(208px)" }}>
               <Pointer />
             </div>
           ) : null}
@@ -225,14 +214,14 @@ const Search = ({
   return (
     <Paper className={classes.paper}>
       <Typography variant="h5" className={classes.bold}>
-        Buy .ZIL domain
+        Buy domain
       </Typography>
       <Typography variant="subtitle1" className={classes.text}>
-        Find .zil Domain
+        Find Domain
       </Typography>
       <div className={classes.inputContainer}>
         {step === 0 && showPointer ? (
-          <div style={{ position: 'fixed', transform: 'translateX(-40px)' }}>
+          <div style={{ position: "fixed", transform: "translateX(-40px)" }}>
             <Pointer />
           </div>
         ) : null}
@@ -240,8 +229,8 @@ const Search = ({
           fullWidth
           className={classes.input}
           value={userInput}
-          onChange={e => handleUserInputChange(e)}
-          onKeyDown={e => (e.key === 'Enter' ? _handleFormSubmit(e) : null)}
+          onChange={(e) => handleUserInputChange(e)}
+          onKeyDown={(e) => (e.key === "Enter" ? _handleFormSubmit(e) : null)}
         />
         <Button
           variant="contained"

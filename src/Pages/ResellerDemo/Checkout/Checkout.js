@@ -48,37 +48,37 @@ const Checkout = ({ classes, setPaymentMethod, setStep }) => {
           <React.Fragment>
             <ProtectedIcon className={classes.protectedIcon} />
             <Typography className={classes.stripeText}>Secured by</Typography>
-            <img src="/images/stripe-logo.svg" alt="stripe-logo" />
+            <img src={process.env.PUBLIC_URL + "/images/stripe-logo.svg"} alt="stripe-logo" />
           </React.Fragment>
         )}
         {renderPaymentMethod(
           <div className={classes.mainIconDiv}>
-            <img src="/images/crypto-icon.svg" alt="icon" />
+            <img src={process.env.PUBLIC_URL + "/images/crypto-icon.svg"} alt="icon" />
           </div>,
           'Crypto',
           <React.Fragment>
             <img
-              src="/images/bitcoin-logo.svg"
+              src={process.env.PUBLIC_URL + "/images/bitcoin-logo.svg"}
               alt="icon"
               className={classes.smallIcon}
             />
             <img
-              src="/images/bitcoin-cash-logo.svg"
+              src={process.env.PUBLIC_URL + "/images/bitcoin-cash-logo.svg"}
               className={classes.smallIcon}
               alt="icon"
             />
             <img
-              src="/images/ethereum-logo.svg"
+              src={process.env.PUBLIC_URL + "/images/ethereum-logo.svg"}
               className={classes.smallIcon}
               alt="icon"
             />
             <img
-              src="/images/usd-coin-logo.svg"
+              src={process.env.PUBLIC_URL + "/images/usd-coin-logo.svg"}
               className={classes.smallIcon}
               alt="icon"
             />
             <img
-              src="/images/litecoin-logo.svg"
+              src={process.env.PUBLIC_URL + "/images/litecoin-logo.svg"}
               className={classes.smallIcon}
               alt="icon"
             />

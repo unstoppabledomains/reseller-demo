@@ -1,69 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../Layout/Header';
-import { withStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/styles/withStyles';
 import styles from '../../styles/app.styles';
 import SendCrypto from './SendCrypto';
-import Namicorn from 'namicorn';
+import Resolution, { ResolutionError } from '@unstoppabledomains/resolution';
 
-const namicorn = new Namicorn();
+const resolution = new Resolution();
 
-const DomainNameResotionDemo = ({ classes, history }) => {
+const DomainNameResolutionDemo = ({ classes, history }) => {
   const [step, setStep] = useState(0);
   const [pointer, setPointer] = useState(true);
   const [domainName, setDomainName] = useState('');
   // const [resolvedAddress, setResolvedAddress] = useState('');
-  const [availableWallets, setAvailableWallets] = useState();
+  const [availableWallet, setAvailableWallet] = useState();
   const [cryptoCurrency, setCryptoCurrency] = useState('');
-  const [cryptoAmount, setCryptoAmount] = useState(0);
-  const [dollarAmount, setDollarAmount] = useState(0);
+  const [cryptoAmount, setCryptoAmount] = useState('');
+  const [dollarAmount, setDollarAmount] = useState('');
   const [error, setError] = useState('');
+  const [spinner, setSpinner] = useState(false);
+
 
   useEffect(() => {
-    if (step === 0) {
-      if (cryptoCurrency) setCryptoCurrency('');
-      if (cryptoAmount) setCryptoAmount(0);
-      if (dollarAmount) setDollarAmount(0);
-      if (error) setError('');
-      // if (domainName) setDomainName('');
-    }
-    // eslint-disable-next-line
-  }, [step]);
-
-  useEffect(() => {
-    if (step !== 0) setStep(0);
-    if (availableWallets) setAvailableWallets();
-    if (cryptoCurrency) setCryptoCurrency('');
-    if (cryptoAmount) setCryptoAmount(0);
-    if (dollarAmount) setDollarAmount(0);
+    if (domainName && step !== 1) setStep(1);
+    if (cryptoAmount) setCryptoAmount('');
+    if (dollarAmount) setDollarAmount('');
     if (error) setError('');
+    if (availableWallet) setAvailableWallet('');
     if (domainName) resolve(domainName);
     // eslint-disable-next-line
   }, [domainName]);
 
   useEffect(() => {
-    setError('');
-    setCryptoAmount(0);
-    setDollarAmount(0);
-    if (
-      availableWallets &&
-      cryptoCurrency &&
-      !availableWallets[cryptoCurrency]
-    ) {
-      setStep(1);
-      setError(`Sorry this domain does not have ${cryptoCurrency} wallet`);
-      return;
+    if (step === 0) {
+      if (cryptoAmount) setCryptoAmount('');
+      if (dollarAmount) setDollarAmount('');
+      if (error) setError('');
+      if (availableWallet) setAvailableWallet('');
+      if (domainName) setDomainName('');
+      if (cryptoCurrency) setCryptoCurrency('');
     }
-    if (cryptoCurrency) setStep(2);
     // eslint-disable-next-line
-  }, [cryptoCurrency]);
+  }, [step]);
 
   useEffect(() => {
     if (cryptoAmount) setStep(3);
   }, [cryptoAmount]);
-
-  useEffect(() => {
-    if (availableWallets) setStep(1);
-  }, [availableWallets]);
 
   const handlePointer = () => {
     setPointer(!pointer);
@@ -78,24 +59,26 @@ const DomainNameResotionDemo = ({ classes, history }) => {
     );
   };
 
+
   const resolve = async domain => {
-    if (checkForErrors(domain)) {
-      try {
-        const resolution = await namicorn.resolve(domain);
-        if (resolution.meta.owner) {
-          if (!Object.keys(resolution.addresses).length) {
-            setError('Domain has no wallets connected to it');
-          } else {
-            setAvailableWallets(resolution.addresses);
-          }
-        } else {
-          setError('Domain has no owner');
-        }
-      } catch (e) {
+    try {
+      setSpinner(true);
+      if (!checkForErrors(domain)) {
+        setError('Invalid domain');
+        return;
+      }
+      const address = await resolution.addressOrThrow(domain, cryptoCurrency);
+      setAvailableWallet(address);
+      setStep(2);
+    } catch(e) {
+      setStep(1);
+      if (e instanceof ResolutionError) {
+        setError(e.message);
+      } else {
         setError('Server error, please try again later');
       }
-    } else {
-      setError('Invalid domain');
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -116,7 +99,7 @@ const DomainNameResotionDemo = ({ classes, history }) => {
           step={step}
           setStep={setStep}
           showPointer={pointer}
-          availableWallets={availableWallets}
+          availableWallet={availableWallet}
           cryptoCurrency={cryptoCurrency}
           setCryptoCurrency={setCryptoCurrency}
           setCryptoAmount={setCryptoAmount}
@@ -124,10 +107,11 @@ const DomainNameResotionDemo = ({ classes, history }) => {
           dollarAmount={dollarAmount}
           setDollarAmount={setDollarAmount}
           error={error}
+          spinner={spinner}
         />
       </div>
     </div>
   );
 };
 
-export default withStyles(styles)(DomainNameResotionDemo);
+export default withStyles(styles)(DomainNameResolutionDemo);

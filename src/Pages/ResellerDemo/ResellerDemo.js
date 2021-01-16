@@ -1,36 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import Search from './Search/Search';
-import Email from './Email/Email';
-import Checkout from './Checkout/Checkout';
-import Header from '../Layout/Header';
-import Coinbase from './Checkout/Coinbase';
-import withStyles from '@material-ui/styles/withStyles';
-import config from '../../config';
-import styles from '../../styles/app.styles';
-import Stripe from './Checkout/Stripe';
-import Congratulations from './Finish/Congratulations';
+import React, { useEffect, useState } from "react";
+import Search from "./Search/Search";
+import Email from "./Email/Email";
+import Checkout from "./Checkout/Checkout";
+import Header from "../Layout/Header";
+import Coinbase from "./Checkout/Coinbase";
+import withStyles from "@material-ui/styles/withStyles";
+import config from "../../config";
+import styles from "../../styles/app.styles";
+import Stripe from "./Checkout/Stripe";
+import Congratulations from "./Finish/Congratulations";
 
 const ResellerDemo = ({ classes, history }) => {
   const [step, setStep] = useState(0);
   const [pointer, setPointer] = useState(true);
-  const [domainName, setDomainName] = useState('');
+  const [domainName, setDomainName] = useState("");
   const [emailProps, setEmailProps] = useState({});
-  const [email, setEmail] = useState('');
-  const [owner, setOwner] = useState(
-    '0xe7474D07fD2FA286e7e0aa23cd107F8379085037'
-  );
+  const [email, setEmail] = useState("");
+  const [ownerAddress, setOwnerAddress] = useState("");
   const [transactionResponse, setTransactionResponse] = useState();
 
-  const [domainResults, setDomainResults] = useState('');
+  const [domainResults, setDomainResults] = useState("");
   const [paymentMethod, setPaymentMethod] = useState(0);
 
   useEffect(() => {
     if (step === 0) {
-      setEmail('');
-      setOwner('0xe7474D07fD2FA286e7e0aa23cd107F8379085037');
-      setDomainResults('');
-      setDomainName('');
-      setEmailProps('');
+      setEmail("");
+      setOwnerAddress("");
+      setDomainResults("");
+      setDomainName("");
+      setEmailProps("");
     }
   }, [step]);
 
@@ -50,7 +48,7 @@ const ResellerDemo = ({ classes, history }) => {
     setDomainName(
       `reseller-test-${config.reseller}-${Math.floor(
         Math.random() * 502562
-      )}.zil`
+      )}.crypto`
     );
   };
 
@@ -63,8 +61,8 @@ const ResellerDemo = ({ classes, history }) => {
             handlePrevStep={handlePrevStep}
             domainName={domainName}
             step={step}
-            owner={owner}
-            setOwner={setOwner}
+            ownerAddress={ownerAddress}
+            setOwnerAddress={setOwnerAddress}
             showPointer={pointer}
             setEmailProps={setEmailProps}
             setDomainResults={setDomainResults}
@@ -77,8 +75,8 @@ const ResellerDemo = ({ classes, history }) => {
             handlePrevStep={handlePrevStep}
             step={step}
             domainName={domainName}
-            owner={owner}
-            setOwner={setOwner}
+            ownerAddress={ownerAddress}
+            setOwnerAddress={setOwnerAddress}
             showPointer={pointer}
             setEmailProps={setEmailProps}
             setDomainResults={setDomainResults}
@@ -90,8 +88,8 @@ const ResellerDemo = ({ classes, history }) => {
             handleNextStep={handleNextStep}
             emailProps={emailProps}
             email={email}
-            owner={owner}
-            setOwner={setOwner}
+            ownerAddress={ownerAddress}
+            setOwnerAddress={setOwnerAddress}
             setEmail={setEmail}
             step={step}
             showPointer={pointer}
@@ -111,7 +109,7 @@ const ResellerDemo = ({ classes, history }) => {
               showPointer={pointer}
               setStep={setStep}
               email={email}
-              owner={owner}
+              ownerAddress={ownerAddress}
               setTransactionResponse={setTransactionResponse}
             />
           );
@@ -120,8 +118,9 @@ const ResellerDemo = ({ classes, history }) => {
             <Coinbase
               domainObject={emailProps}
               email={email}
-              owner={owner}
+              ownerAddress={ownerAddress}
               setStep={setStep}
+              setTransactionResponse={setTransactionResponse}
             />
           );
       case 5:

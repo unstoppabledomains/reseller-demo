@@ -36,30 +36,35 @@ const SideBar = ({
       Randomize
     </span>
   );
-  const emailExampleLink = (
-    <span
-      onClick={() => setEmail('example@example.com')}
-      className={classes.buttonText}
-    >
-      example@example.com
-    </span>
-  );
+  const emailExampleLink = () => {
+    const email = `example-${Math.floor(
+      Math.random() * 502562
+    )}@example.com`;
+    return (
+      <span
+        onClick={() => setEmail(email)}
+        className={classes.buttonText}
+      >
+        {email}
+      </span>
+    );
+  }
 
   const domainsLinks = (
     <>
-      <span
-        onClick={() => setDomainName('unstoppable.zil')}
-        className={classes.buttonText}
-      >
-        <br />
-        unstoppable.zil
-      </span>
       <span
         onClick={() => setDomainName('tyranids.zil')}
         className={classes.buttonText}
       >
         <br />
         tyranids.zil
+      </span>
+      <span
+        onClick={() => setDomainName('unstoppable.zil')}
+        className={classes.buttonText}
+      >
+        <br />
+        unstoppable.zil
       </span>
       <span
         onClick={() => setDomainName('loveiseverywhere.zil')}
@@ -128,7 +133,7 @@ const SideBar = ({
         </Paper>
         {renderCard(
           '1. Find a domain',
-          'For this demo use this domain namespace reseller-test-udtesting-[random number].zil',
+          'For this demo use this domain namespace reseller-test-udtesting-[random number].crypto',
           randomizeLink
         )}
         {renderCard(
@@ -138,7 +143,7 @@ const SideBar = ({
         {renderCard(
           '3. Enter Email',
           'Use any email or just',
-          emailExampleLink
+          emailExampleLink()
         )}
         {renderCard(
           '4. Choose payment method',
@@ -167,59 +172,7 @@ const SideBar = ({
         </div>
       </>
     );
-  } else if (history.location.pathname === '/domain-name-reloution') {
-    return (
-      <>
-        <Paper className={classes.paper}>
-          <Typography variant="h5" className={classes.bold}>
-            Domain Name Resolution example
-          </Typography>
-          <Typography className={classes.text}>
-            This demo shows how domain names can replace long wallet addresses
-          </Typography>
-          <Divider className={classes.divider} />
-          <div className={classes.checkboxDiv}>
-            <Checkbox
-              checked={pointer}
-              onChange={() => handlePointer()}
-              color="primary"
-              className={classes.checkboxWrapper}
-              icon={<CheckBoxOutlineBlankIcon className={classes.checkbox} />}
-              checkedIcon={<CheckBoxIcon className={classes.checkbox} />}
-            />
-            <Typography variant="subtitle1" className={classes.bold}>
-              Show guiding pointer
-            </Typography>
-          </div>
-        </Paper>
-        {renderCard('1. Type Domain', 'Try out these names:', domainsLinks)}
-        {renderCard(
-          '2. Select cryptocurency',
-          'Choose cryptocurency you want to send (Bitcoin or Ethreum).'
-        )}
-        {renderCard(
-          '3. Choose amount',
-          'Type how many crypto or dollars you want to send'
-        )}
-        {renderCard('4. Send Crypto', 'Press “Request Payment” to finish')}
-        <div className={classes.helpDiv}>
-          <Typography variant="h5" className={classes.bold}>
-            Need Help?
-          </Typography>
-          <Typography variant="body2" className={classes.text}>
-            <Link
-              href="mailto:support@unstoppabledomains.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Please contact
-            </Link>{' '}
-            our development team
-          </Typography>
-        </div>
-      </>
-    );
-  } else if (history.location.pathname === '/domain-name-reloution-v2') {
+  } else if (history.location.pathname === '/domain-name-resolution') {
     return (
       <>
         <Paper className={classes.paper}>
@@ -254,7 +207,7 @@ const SideBar = ({
           '3. Choose amount',
           'Type how many crypto or dollars you want to send'
         )}
-        {renderCard('4. Send Crypto', 'Press “Request Payment” to finish')}
+        {renderCard('4. Send Crypto', 'Press “Send Payment” to finish')}
         <div className={classes.helpDiv}>
           <Typography variant="h5" className={classes.bold}>
             Need Help?

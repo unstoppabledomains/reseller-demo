@@ -31,12 +31,13 @@ export default createStyles((theme: any) => ({
   drawerTrigger: {
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
-    width: 151
+    width: 155
   },
   drawerPaper: {
+    display: 'block',
     paddingTop: 72 + theme.spacing(3),
     padding: theme.spacing(3),
-    backgroundColor: 'inherit',
+    backgroundColor: 'rgba(123, 122, 156, 0.1)',
     border: 'none',
     '&::-webkit-scrollbar': {
       display: 'none'
@@ -61,7 +62,9 @@ export default createStyles((theme: any) => ({
   },
   sideBarToggleDiv: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-between'
   },
   checkboxWrapper: {
     marginLeft: -theme.spacing(1.5)

@@ -10,7 +10,6 @@ import styles from '../../styles/dropDownMenu.styles';
 const menuItems = [
   'Reseller Domain Purchase',
   'Domain Name Resolution',
-  'Domain Name Resolution v2'
 ];
 
 const DropDownMenu = props => {
@@ -24,8 +23,7 @@ const DropDownMenu = props => {
   const handleChangeDemo = index => {
     handleVersionChange(index);
     if (index === 0) history.push('/');
-    else if (index === 1) history.push('/domain-name-reloution');
-    else if (index === 2) history.push('/domain-name-reloution-v2');
+    else if (index === 1) history.push('/domain-name-resolution');
     setAnchorEl(null);
   };
 

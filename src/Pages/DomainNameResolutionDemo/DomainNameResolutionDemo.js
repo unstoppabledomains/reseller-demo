@@ -1,43 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import Header from '../Layout/Header';
-import withStyles from '@material-ui/styles/withStyles';
-import styles from '../../styles/app.styles';
-import SendCrypto from './SendCrypto';
-import Resolution, { ResolutionError } from '@unstoppabledomains/resolution';
+import React, { useEffect, useState } from "react";
+import Header from "../Layout/Header";
+import withStyles from "@material-ui/styles/withStyles";
+import styles from "../../styles/app.styles";
+import SendCrypto from "./SendCrypto";
+import Resolution, { ResolutionError } from "@unstoppabledomains/resolution";
 
 const resolution = new Resolution();
 
 const DomainNameResolutionDemo = ({ classes, history }) => {
   const [step, setStep] = useState(0);
   const [pointer, setPointer] = useState(true);
-  const [domainName, setDomainName] = useState('');
+  const [domainName, setDomainName] = useState("");
   // const [resolvedAddress, setResolvedAddress] = useState('');
   const [availableWallet, setAvailableWallet] = useState();
-  const [cryptoCurrency, setCryptoCurrency] = useState('');
-  const [cryptoAmount, setCryptoAmount] = useState('');
-  const [dollarAmount, setDollarAmount] = useState('');
-  const [error, setError] = useState('');
+  const [cryptoCurrency, setCryptoCurrency] = useState("");
+  const [cryptoAmount, setCryptoAmount] = useState("");
+  const [dollarAmount, setDollarAmount] = useState("");
+  const [error, setError] = useState("");
   const [spinner, setSpinner] = useState(false);
-
 
   useEffect(() => {
     if (domainName && step !== 1) setStep(1);
-    if (cryptoAmount) setCryptoAmount('');
-    if (dollarAmount) setDollarAmount('');
-    if (error) setError('');
-    if (availableWallet) setAvailableWallet('');
+    if (cryptoAmount) setCryptoAmount("");
+    if (dollarAmount) setDollarAmount("");
+    if (error) setError("");
+    if (availableWallet) setAvailableWallet("");
     if (domainName) resolve(domainName);
     // eslint-disable-next-line
   }, [domainName]);
 
   useEffect(() => {
     if (step === 0) {
-      if (cryptoAmount) setCryptoAmount('');
-      if (dollarAmount) setDollarAmount('');
-      if (error) setError('');
-      if (availableWallet) setAvailableWallet('');
-      if (domainName) setDomainName('');
-      if (cryptoCurrency) setCryptoCurrency('');
+      if (cryptoAmount) setCryptoAmount("");
+      if (dollarAmount) setDollarAmount("");
+      if (error) setError("");
+      if (availableWallet) setAvailableWallet("");
+      if (domainName) setDomainName("");
+      if (cryptoCurrency) setCryptoCurrency("");
     }
     // eslint-disable-next-line
   }, [step]);
@@ -50,32 +49,31 @@ const DomainNameResolutionDemo = ({ classes, history }) => {
     setPointer(!pointer);
   };
 
-  const checkForErrors = domain => {
+  const checkForErrors = (domain) => {
     return (
-      domain.indexOf('.') > 0 &&
+      domain.indexOf(".") > 0 &&
       /^((?![0-9]+$)(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}\.)*(?![0-9]+$)(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}$/.test(
         domain
       )
     );
   };
 
-
-  const resolve = async domain => {
+  const resolve = async (domain) => {
     try {
       setSpinner(true);
       if (!checkForErrors(domain)) {
-        setError('Invalid domain');
+        setError("Invalid domain");
         return;
       }
-      const address = await resolution.addressOrThrow(domain, cryptoCurrency);
+      const address = await resolution.addr(domain, cryptoCurrency);
       setAvailableWallet(address);
       setStep(2);
-    } catch(e) {
+    } catch (e) {
       setStep(1);
       if (e instanceof ResolutionError) {
         setError(e.message);
       } else {
-        setError('Server error, please try again later');
+        setError("Server error, please try again later");
       }
     } finally {
       setSpinner(false);

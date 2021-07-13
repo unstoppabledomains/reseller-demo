@@ -76,7 +76,7 @@ const Header = ({
               </Typography>
             </div>
             <Link
-              href="https://unstoppabledomains.github.io/unstoppabledocs/"
+              href="https://apidocs.unstoppabledomains.com/"
               target="_blank"
               rel="noopener noreferrer"
               className={classes.link}

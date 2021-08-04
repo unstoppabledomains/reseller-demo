@@ -113,9 +113,6 @@ const Search = ({
     e.preventDefault();
     setResults(null);
     let domain = userInput;
-    if (!userInput.endsWith(".crypto") && !userInput.endsWith(".zil")) {
-      domain = userInput + ".crypto";
-    }
     setSpinner(true);
     const result = await fetchDomain(
       `${baseURL}/${config.reseller}/domains/${domain}`

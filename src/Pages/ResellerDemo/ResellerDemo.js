@@ -45,10 +45,12 @@ const ResellerDemo = ({ classes, history }) => {
   };
 
   const randomizeDomain = () => {
+    const tlds = ['.crypto', '.coin', '.x', '.wallet', '.bitcoin', '.nft', '.dao', '.888'];
+
     setDomainName(
       `reseller-test-${config.reseller}-${Math.floor(
         Math.random() * 502562
-      )}.crypto`
+      )}${tlds[Math.floor(Math.random() * tlds.length)]}`
     );
   };
 

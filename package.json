@@ -13,7 +13,8 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.4.1",
     "react-stripe-elements": "^4.0.1",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "@snyk/protect": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -21,7 +22,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d ./build"
+    "deploy": "gh-pages -d ./build",
+    "prepare": "yarn run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,5 +43,6 @@
   },
   "devDependencies": {
     "gh-pages": "^2.1.1"
-  }
+  },
+  "snyk": true
 }
